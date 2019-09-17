@@ -61,7 +61,7 @@ public class AssetPaintTool implements IPaintTool {
 
     @Override
     public void activateTool(MouseEvent e, RPGMap map) {
-        MapLayer mapLayer = map.getActiveLayer();
+        MapLayer mapLayer = map.getActiveLayer().getActiveGraphicLayer();
         try {
             MapAsset asset = getRandomFromPalette();
             AssetTile tile = new AssetTile(asset);

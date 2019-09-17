@@ -51,6 +51,16 @@ public class MapLayer {
         return tiles;
     }
 
+    public List<MapTile> getTilesOverlapping(MapTile tile){
+        List<MapTile> tiles = new ArrayList<>();
+        for(MapTile mapTile: getTiles()){
+            if(mapTile.getGridx() == tile.getGridx() && mapTile.getGridy() == tile.getGridy()){
+                tiles.add(mapTile);
+            }
+        }
+        return tiles;
+    }
+
     public List<MapTile> getTiles() {
         return tiles;
     }

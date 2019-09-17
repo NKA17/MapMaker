@@ -18,42 +18,19 @@ public class RPGMap {
     private int gridHeight = 40;
     private int xoffset = 0;
     private int yoffset = 0;
-    private List<MapLayer> layers = new ArrayList<>();
-    private MapGridLayer mapGridLayer = new MapGridLayer(gridHeight,gridWidth, Configuration.TILE_WIDTH,Configuration.TILE_HEIGHT);
-    private MapLayer tileLayer = new MapLayer();
-    private MapLayer edgeLayer = new MapLayer();
+    private List<MapSet> layerSets = new ArrayList<>();
     private BufferedImage mapImage =  new BufferedImage(Configuration.TILE_WIDTH * gridWidth, Configuration.TILE_HEIGHT*gridHeight,BufferedImage.TYPE_4BYTE_ABGR);
-    private GraphicLayer activeLayer;
+    private MapSet activeLayer;
 
     public RPGMap(){
+        MapSet defaultSet = new MapSet(gridWidth,gridHeight);
         mapImage.createGraphics();
-        tileLayer = createTileLayer("./src/main/resources/assets/map/floor/grass/grass 3.jpg");
-        layers.add(tileLayer);
+        MapLayer tileLayer = createTileLayer("./src/main/resources/assets/map/floor/grass/grass 3.jpg");
+        defaultSet.setTileLayer(tileLayer);
 
-        activeLayer = new GraphicLayer();
-        layers.add(activeLayer);
-
-        edgeLayer = new MapLayer();
-        layers.add(edgeLayer);
+        activeLayer = defaultSet;
+        layerSets.add(defaultSet);
     }
-
-    public void toggleGrid(){
-        if(layers.contains(mapGridLayer)){
-            hideGrid();
-        }else {
-            showGrid();
-        }
-    }
-
-
-    public MapTile getMapTile(int xOnScreen, int yOnScreen){
-        return tileLayer.getTile(xOnScreen,yOnScreen,xoffset,yoffset);
-    }
-
-    public List<MapTile> getEdgeTiles(int xOnScreen, int yOnScreen){
-        return edgeLayer.getTiles(xOnScreen,yOnScreen,xoffset,yoffset);
-    }
-
     public int getXoffset() {
         return xoffset;
     }
@@ -70,29 +47,6 @@ public class RPGMap {
         this.yoffset = yoffset;
     }
 
-    public MapLayer getTileLayer() {
-        return tileLayer;
-    }
-
-    public void setTileLayer(MapLayer tileLayer) {
-        this.tileLayer = tileLayer;
-    }
-
-    public MapLayer getEdgeLayer() {
-        return edgeLayer;
-    }
-
-    public void setEdgeLayer(MapLayer edgeLayer) {
-        this.edgeLayer = edgeLayer;
-    }
-
-    public void showGrid(){
-        layers.add(1,mapGridLayer);
-    }
-
-    public void hideGrid(){
-        layers.remove(mapGridLayer);
-    }
 
 
     public MapLayer createTileLayer(String defaultAsset){
@@ -114,17 +68,9 @@ public class RPGMap {
         return mapLayer;
     }
 
-    public List<MapLayer> getLayers() {
-        return layers;
-    }
-
-    public void setLayers(List<MapLayer> layers) {
-        this.layers = layers;
-    }
-
     public void draw(Graphics g){
         Graphics g2d = mapImage.getGraphics();
-        for(MapLayer mapLayer: layers){
+        for(MapSet mapLayer: layerSets){
             mapLayer.draw(g2d,xoffset,yoffset);
         }
         g.drawImage(mapImage,xoffset,yoffset,null);
@@ -147,11 +93,20 @@ public class RPGMap {
         }
     }
 
-    public MapLayer getActiveLayer() {
+
+    public MapTile getMapTile(int xOnScreen, int yOnScreen){
+        return getActiveLayer().getMapTile(xOnScreen,yOnScreen,xoffset,yoffset);
+    }
+
+    public List<MapTile> getEdgeTiles(int xOnScreen, int yOnScreen){
+        return getActiveLayer().getEdgeTiles(xOnScreen,yOnScreen,xoffset,yoffset);
+    }
+
+    public MapSet getActiveLayer() {
         return activeLayer;
     }
 
-    public void setActiveLayer(GraphicLayer activeLayer) {
+    public void setActiveLayer(MapSet activeLayer) {
         this.activeLayer = activeLayer;
     }
 }
