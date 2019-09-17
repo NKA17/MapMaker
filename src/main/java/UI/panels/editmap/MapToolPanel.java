@@ -59,7 +59,7 @@ public class MapToolPanel extends ApplicationPanel {
         gridTool.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e) {
-                getMap().toggleGrid();
+                getMap().getActiveLayer().toggleGrid();
                 getMapViewPanel().repaint();
             }
         });

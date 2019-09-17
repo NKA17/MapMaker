@@ -84,7 +84,7 @@ public class EdgePaintTool implements IPaintTool {
                 (e.getY() - map.getYoffset()-10) / Configuration.TILE_HEIGHT);
 
 
-        List<MapTile> mapTiles = map.getEdgeTiles(e.getX()-10, e.getY()-10);
+        List<MapTile> mapTiles = map.getActiveLayer().getEdgeLayer().getTilesOverlapping(edgeTile);
 
         if(!isBottomEdge(e,edgeTile,map) && !isRightEdge(e,edgeTile,map)) {
             return;
@@ -92,13 +92,13 @@ public class EdgePaintTool implements IPaintTool {
             if(isRightEdge(e,edgeTile,map) && !isBottomEdge(e,edgeTile,map)){
                 for(MapTile tile: mapTiles){
                     if(tile.getAssetResource().getName().contains("_vert")){
-                        map.getEdgeLayer().getTiles().remove(tile);
+                        map.getActiveLayer().getEdgeLayer().getTiles().remove(tile);
                     }
                 }
             }else{
                 for(MapTile tile: mapTiles){
                     if(!tile.getAssetResource().getName().contains("_vert")){
-                        map.getEdgeLayer().getTiles().remove(tile);
+                        map.getActiveLayer().getEdgeLayer().getTiles().remove(tile);
                     }
                 }
             }
@@ -110,7 +110,7 @@ public class EdgePaintTool implements IPaintTool {
                 for(MapTile tile: mapTiles){
                     if((!isDrag || !tile.getAssetResource().getName().equals(asset.getName().replace(".png","_vert.png")))
                             && tile.getAssetResource().getName().contains("_vert")){
-                        map.getEdgeLayer().getTiles().remove(tile);
+                        map.getActiveLayer().getEdgeLayer().getTiles().remove(tile);
                     }
                 }
                 asset = vertPalette.get(index);
@@ -120,7 +120,7 @@ public class EdgePaintTool implements IPaintTool {
                 for(MapTile tile: mapTiles){
                     if((!isDrag || !tile.getAssetResource().getName().equals(asset.getName()))
                             && !tile.getAssetResource().getName().contains("_vert")){
-                        map.getEdgeLayer().getTiles().remove(tile);
+                        map.getActiveLayer().getEdgeLayer().getTiles().remove(tile);
                     }
                 }
                 asset.setImageOffsetX(-(asset.getImage().getWidth()-Configuration.TILE_WIDTH)/4);
@@ -129,8 +129,8 @@ public class EdgePaintTool implements IPaintTool {
                 if(mapTile.getAssetResource().getName().equals(asset.getName()))
                     return;
             }
-            map.getEdgeLayer().getTiles().add(edgeTile);
-            System.out.println(map.getEdgeLayer().getTiles().size());
+            map.getActiveLayer().getEdgeLayer().getTiles().add(edgeTile);
+            System.out.println(map.getActiveLayer().getEdgeLayer().getTiles().size());
         }
     }
 
