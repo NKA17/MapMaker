@@ -1,12 +1,10 @@
-package UI.mapview;
+package model.map.structure;
 
 import UI.app.assets.MapAsset;
-import UI.mapview.tiles.EdgeTile;
-import UI.mapview.tiles.MapTile;
-import UI.mapview.tiles.PatternTile;
+import model.map.tiles.MapTile;
+import model.map.tiles.PatternTile;
 import application.config.Configuration;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;

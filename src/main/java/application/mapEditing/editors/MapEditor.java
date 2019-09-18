@@ -1,6 +1,6 @@
 package application.mapEditing.editors;
 
-import UI.mapview.RPGMap;
+import model.map.structure.RPGMap;
 import UI.panels.editmap.MapViewPanel;
 import application.mapEditing.toolInterfaces.ITool;
 import application.mapEditing.tools.NoneTool;

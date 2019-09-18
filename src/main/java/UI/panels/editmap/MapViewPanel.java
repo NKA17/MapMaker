@@ -1,16 +1,10 @@
 package UI.panels.editmap;
 
-import UI.app.ApplicationPage;
-import UI.app.ApplicationPanel;
-import UI.mapview.RPGMap;
+import UI.app.view.ApplicationPanel;
+import model.map.structure.RPGMap;
 import application.mapEditing.editors.MapEditor;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.net.URL;
 
 public class MapViewPanel extends ApplicationPanel {
     private RPGMap map = new RPGMap();

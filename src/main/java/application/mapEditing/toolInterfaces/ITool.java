@@ -1,6 +1,6 @@
 package application.mapEditing.toolInterfaces;
 
-import UI.mapview.RPGMap;
+import model.map.structure.RPGMap;
 
 import java.awt.event.MouseEvent;
 

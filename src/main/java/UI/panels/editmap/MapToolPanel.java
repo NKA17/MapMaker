@@ -1,20 +1,22 @@
 package UI.panels.editmap;
 
-import UI.app.ApplicationPanel;
-import UI.mapview.RPGMap;
-import UI.pages.editmap.EditMapPage;
+import UI.app.assets.MapAsset;
+import UI.app.view.ApplicationPanel;
+import model.map.mechanics.FogFactory;
+import model.map.structure.RPGMap;
 import UI.pages.paletteSelect.PaletteSelectPage;
 import UI.pages.start.StartPage;
 import UI.windows.BasicWindow;
 import application.mapEditing.editors.MapEditor;
 import application.mapEditing.tools.DragTool;
-import application.mapEditing.tools.PaintTool;
 import application.mapEditing.tools.Tools;
+import model.map.tiles.MapTile;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 public class MapToolPanel extends ApplicationPanel {
 
@@ -132,6 +134,25 @@ public class MapToolPanel extends ApplicationPanel {
             }
         });
 
+        JButton fog = new JButton("Show Fog");
+        fog.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                MapAsset asset = new MapAsset(
+                        new File("C:\\Users\\Nate\\IdeaProjects\\RPGMapMaker\\src\\main\\resources\\" +
+                                "assets\\map\\floor\\0mechanics\\black.png"));
+                for(MapTile tile: FogFactory.floodFog(map.getActiveLayer())){
+                    for(MapTile floor: map.getActiveLayer().getTileLayer().getTiles()){
+                        if(floor.getGridy() == tile.getGridy() && floor.getGridx() == tile.getGridx()){
+                            floor.setAssetResource(tile.getAssetResource());
+                        }
+                    }
+                }
+                getMapViewPanel().repaint();
+            }
+        });
+
         JButton close = new JButton("Home");
         close.addActionListener(new ActionListener()
         {
@@ -202,6 +223,12 @@ public class MapToolPanel extends ApplicationPanel {
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridx = 0;
         gbc.gridy = 5;
+        gbc.insets = new Insets(4,4,4,10);
+        add(fog,gbc);
+
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.gridx = 0;
+        gbc.gridy = 6;
         gbc.insets = new Insets(4,4,4,10);
         add(close,gbc);
     }

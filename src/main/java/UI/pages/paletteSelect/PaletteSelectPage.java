@@ -1,10 +1,9 @@
 package UI.pages.paletteSelect;
 
-import UI.app.ApplicationPage;
-import UI.app.ApplicationPanel;
+import UI.app.view.ApplicationPage;
+import UI.app.view.ApplicationPanel;
 import UI.panels.paletteSelect.AssetSelectScrollPanel;
 import application.mapEditing.toolInterfaces.IPaintTool;
-import application.mapEditing.tools.PaintTool;
 
 import javax.swing.*;
 import java.awt.*;

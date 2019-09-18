@@ -1,4 +1,4 @@
-package UI.mapview.tiles;
+package model.map.tiles;
 
 import UI.app.assets.MapAsset;
 import application.config.Configuration;

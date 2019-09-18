@@ -1,4 +1,4 @@
-package UI.mapview.tiles;
+package model.map.tiles;
 
 public class MapAssetInventory {
 }

@@ -1,30 +1,26 @@
 package application.mapEditing.tools;
 
 import UI.app.assets.MapAsset;
-import UI.mapview.RPGMap;
-import UI.mapview.tiles.MapTile;
-import UI.mapview.tiles.PatternTile;
+import model.map.structure.RPGMap;
+import model.map.tiles.MapTile;
+import model.map.tiles.PatternTile;
 import application.config.Configuration;
 import application.mapEditing.toolInterfaces.IPaintTool;
-import application.mapEditing.toolInterfaces.ITool;
 
-import javax.imageio.ImageIO;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class PaintTool implements IPaintTool {
+public class TilePaintTool implements IPaintTool {
     private List<MapAsset> palette = new ArrayList<>();
 
-    public PaintTool(){
+    public TilePaintTool(){
         addAssetToPaint("./src/main/resources/assets/map/floor/wood/wood 1.png");
     }
 
-    public PaintTool(String... assetPath){
+    public TilePaintTool(String... assetPath){
         for(String path: assetPath){
             addAssetToPaint(path);
         }

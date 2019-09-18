@@ -1,10 +1,9 @@
 package application.mapEditing.tools;
 
 import UI.app.assets.MapAsset;
-import UI.mapview.MapLayer;
-import UI.mapview.RPGMap;
-import UI.mapview.tiles.AssetTile;
-import UI.mapview.tiles.MapTile;
+import model.map.structure.MapLayer;
+import model.map.structure.RPGMap;
+import model.map.tiles.AssetTile;
 import application.mapEditing.toolInterfaces.IPaintTool;
 
 import java.awt.event.MouseEvent;
