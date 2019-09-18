@@ -1,6 +1,6 @@
-package UI.mapview;
+package model.map.structure;
 
-import UI.mapview.tiles.MapTile;
+import model.map.tiles.MapTile;
 import application.config.Configuration;
 
 import java.awt.*;
@@ -18,11 +18,13 @@ public class MapSet {
     private BufferedImage mapImage;
     private int xoffset = 0;
     private int yoffset = 0;
+    private int gridWidth = 40;
+    private int gridHeight = 40;
 
     private boolean drawGrid = false;
 
     public MapSet(int rows, int columns){
-        gridLayer = new MapGridLayer(rows,columns, Configuration.TILE_WIDTH,Configuration.TILE_HEIGHT);
+        gridLayer = new MapGridLayer(rows,columns);
         mapImage = new BufferedImage(
                 Configuration.TILE_WIDTH * rows,
                 Configuration.TILE_HEIGHT*columns,
@@ -30,6 +32,24 @@ public class MapSet {
         mapImage.createGraphics();
         activeGraphicLayer = new GraphicLayer();
         graphicLayers.add(activeGraphicLayer);
+        gridWidth = columns;
+        gridHeight = rows;
+    }
+
+    public int getGridWidth() {
+        return gridWidth;
+    }
+
+    public void setGridWidth(int gridWidth) {
+        this.gridWidth = gridWidth;
+    }
+
+    public int getGridHeight() {
+        return gridHeight;
+    }
+
+    public void setGridHeight(int gridHeight) {
+        this.gridHeight = gridHeight;
     }
 
     public GraphicLayer getActiveGraphicLayer() {

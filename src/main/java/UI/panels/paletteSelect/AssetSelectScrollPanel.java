@@ -1,20 +1,15 @@
 package UI.panels.paletteSelect;
 
-import UI.app.ApplicationPanel;
+import UI.app.view.ApplicationPanel;
 import application.mapEditing.toolInterfaces.IPaintTool;
-import application.mapEditing.tools.Tools;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 public class AssetSelectScrollPanel extends ApplicationPanel {
 
@@ -61,7 +56,7 @@ public class AssetSelectScrollPanel extends ApplicationPanel {
         GridBagConstraints gbc = new GridBagConstraints();
         JPanel parentPanel = new JPanel(new GridBagLayout());
         JPanel tilePanel = new JPanel(new GridBagLayout());
-        JLabel category = new JLabel(f.getName());
+        JLabel category = new JLabel(f.getName().replaceAll("\\d+",""));
 
         gbc.gridx = 0;
         gbc.gridy = 0;

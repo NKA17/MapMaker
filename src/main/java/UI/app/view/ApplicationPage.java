@@ -1,6 +1,4 @@
-package UI.app;
-
-import com.sun.deploy.panel.JavaPanel;
+package UI.app.view;
 
 import javax.swing.*;
 import java.awt.*;

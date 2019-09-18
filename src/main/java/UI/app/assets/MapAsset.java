@@ -1,7 +1,5 @@
 package UI.app.assets;
 
-import UI.mapview.tiles.MapTile;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;

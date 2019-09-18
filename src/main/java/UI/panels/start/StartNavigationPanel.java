@@ -1,8 +1,6 @@
 package UI.panels.start;
 
-import UI.app.ApplicationPanel;
-import UI.app.ApplicationWindow;
-import UI.app.applicationPanels.GridBagApplicationPanel;
+import UI.app.view.ApplicationPanel;
 import UI.pages.editmap.EditMapPage;
 
 import javax.swing.*;

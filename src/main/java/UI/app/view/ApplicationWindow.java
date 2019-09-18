@@ -1,4 +1,4 @@
-package UI.app;
+package UI.app.view;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,7 +10,7 @@ public abstract class ApplicationWindow extends JFrame {
     private GridBagConstraints gbc = new GridBagConstraints();
 
     public ApplicationWindow() {
-        this.title = "Untitled Page";
+        this.title = "RPG MapMaker";
         setLayout(gridBagLayout);
         defaultInitUI();
         initUI();

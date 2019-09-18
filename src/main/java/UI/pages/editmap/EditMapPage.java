@@ -1,10 +1,8 @@
 package UI.pages.editmap;
 
-import UI.app.ApplicationPage;
-import UI.app.ApplicationWindow;
+import UI.app.view.ApplicationPage;
 import UI.panels.editmap.MapToolPanel;
 import UI.panels.editmap.MapViewPanel;
-import application.mapEditing.editors.MapEditor;
 
 public class EditMapPage extends ApplicationPage{
 

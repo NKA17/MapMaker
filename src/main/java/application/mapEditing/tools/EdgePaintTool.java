@@ -1,9 +1,9 @@
 package application.mapEditing.tools;
 
 import UI.app.assets.MapAsset;
-import UI.mapview.RPGMap;
-import UI.mapview.tiles.EdgeTile;
-import UI.mapview.tiles.MapTile;
+import model.map.structure.RPGMap;
+import model.map.tiles.EdgeTile;
+import model.map.tiles.MapTile;
 import application.config.Configuration;
 import application.mapEditing.toolInterfaces.IPaintTool;
 
@@ -19,7 +19,7 @@ public class EdgePaintTool implements IPaintTool {
     private List<MapAsset> palette = new ArrayList<>();
 
     public EdgePaintTool(){
-        addAssetToPaint("./src/main/resources/assets/map/floor/sand/sand 1.png");
+        addAssetToPaint("./src/main/resources/assets/map/structure/basic/1.png");
     }
 
     public EdgePaintTool(String... assetPath){

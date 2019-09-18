@@ -1,7 +1,6 @@
-package UI.mapview;
+package model.map.structure;
 
-import UI.app.assets.MapAsset;
-import UI.mapview.tiles.MapTile;
+import model.map.tiles.MapTile;
 import application.config.Configuration;
 
 import java.awt.*;
