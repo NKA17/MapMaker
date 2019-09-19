@@ -7,7 +7,7 @@ import application.mapEditing.editors.MapEditor;
 import java.awt.*;
 
 public class MapViewPanel extends ApplicationPanel {
-    private RPGMap map = new RPGMap();
+    private RPGMap map ;
     private MapEditor mapEditor;
 
     public void createEditor(){

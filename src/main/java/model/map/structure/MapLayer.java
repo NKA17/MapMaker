@@ -22,8 +22,8 @@ public class MapLayer {
     }
 
     public MapTile getTile(int xOnScreen, int yOnScreen,int xoffset, int yoffset){
-        int x = xOnScreen - xoffset;
-        int y = yOnScreen - yoffset;
+        int x = xOnScreen + xoffset;
+        int y = yOnScreen + yoffset;
 
         int column = x / Configuration.TILE_WIDTH;
         int row = y / Configuration.TILE_HEIGHT;

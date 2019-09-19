@@ -2,6 +2,8 @@ package UI.panels.start;
 
 import UI.app.view.ApplicationPanel;
 import UI.pages.editmap.EditMapPage;
+import application.io.MapIO;
+import model.map.structure.RPGMap;
 
 import javax.swing.*;
 import java.awt.*;

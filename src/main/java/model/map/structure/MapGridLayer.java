@@ -18,6 +18,7 @@ public class MapGridLayer extends MapLayer {
         g.setColor(color);
         for(int x = 0; x < rows; x++){
             for(int y = 0; y < columns; y++){
+                g.setColor(color);
                 int xmin = Math.abs(mapxoffset / Configuration.TILE_WIDTH);
                 int ymin = Math.abs(mapyoffset / Configuration.TILE_HEIGHT);
                 int xmax = xmin+Math.abs((1200)/ Configuration.TILE_WIDTH);
@@ -32,6 +33,10 @@ public class MapGridLayer extends MapLayer {
                             y * Configuration.TILE_HEIGHT,
                             Configuration.TILE_WIDTH - 1,
                             Configuration.TILE_HEIGHT - 1);
+
+                    g.setColor(new Color(180,250,180,200));
+                    g.drawString(String.format("%d:%d",x ,y),
+                            x * Configuration.TILE_HEIGHT+5,y * Configuration.TILE_HEIGHT+15);
                 }
             }
         }
