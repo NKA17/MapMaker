@@ -20,7 +20,7 @@ public class RPGMap {
     private BufferedImage mapImage =  new BufferedImage(Configuration.TILE_WIDTH * gridWidth, Configuration.TILE_HEIGHT*gridHeight,BufferedImage.TYPE_4BYTE_ABGR);
     private MapSet activeLayer;
 
-    public RPGMap(){
+    public void init(){
         MapSet defaultSet = new MapSet(gridWidth,gridHeight);
         mapImage.createGraphics();
         MapLayer tileLayer = createTileLayer("./src/main/resources/assets/map/floor/grass/grass 3.jpg");
@@ -106,5 +106,29 @@ public class RPGMap {
 
     public void setActiveLayer(MapSet activeLayer) {
         this.activeLayer = activeLayer;
+    }
+
+    public int getGridWidth() {
+        return gridWidth;
+    }
+
+    public void setGridWidth(int gridWidth) {
+        this.gridWidth = gridWidth;
+    }
+
+    public int getGridHeight() {
+        return gridHeight;
+    }
+
+    public void setGridHeight(int gridHeight) {
+        this.gridHeight = gridHeight;
+    }
+
+    public List<MapSet> getLayerSets() {
+        return layerSets;
+    }
+
+    public void setLayerSets(List<MapSet> layerSets) {
+        this.layerSets = layerSets;
     }
 }

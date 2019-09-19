@@ -82,6 +82,7 @@ public class MapSet {
 
     public void setGraphicLayers(List<GraphicLayer> graphicLayers) {
         this.graphicLayers = graphicLayers;
+        setActiveGraphicLayer(getGraphicLayers().get(0));
     }
 
     public MapLayer getEdgeLayer() {

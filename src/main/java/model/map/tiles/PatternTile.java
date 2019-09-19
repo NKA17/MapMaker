@@ -35,5 +35,6 @@ public class PatternTile extends MapTile{
                 Configuration.TILE_WIDTH,
                 Configuration.TILE_HEIGHT,
                 null);
+
     }
 }
