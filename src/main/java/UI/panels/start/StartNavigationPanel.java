@@ -1,7 +1,10 @@
 package UI.panels.start;
 
 import UI.app.view.ApplicationPanel;
+import UI.factory.ButtonFactory;
 import UI.pages.editmap.EditMapPage;
+import UI.panels.loadPanel.LoadPanel;
+import application.io.LoadModel;
 import application.io.MapIO;
 import model.map.structure.RPGMap;
 
@@ -16,16 +19,18 @@ public class StartNavigationPanel extends ApplicationPanel {
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 
-        JButton load_map = new JButton("Load Map");
+        JButton load_map = ButtonFactory.createButton("Load Map");
         load_map.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e) {
-                EditMapPage editMapPage = new EditMapPage();
-                getObserver().openPage(editMapPage);
+
+                        EditMapPage editMapPage = new EditMapPage();
+                        getObserver().openPage(editMapPage);
+
             }
         });
 
-        JButton close = new JButton("Close");
+        JButton close = ButtonFactory.createButton("Close");
         close.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)

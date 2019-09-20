@@ -1,6 +1,7 @@
 package application.mapEditing.tools;
 
 import UI.app.assets.MapAsset;
+import application.io.AssetCache;
 import model.map.structure.MapLayer;
 import model.map.structure.RPGMap;
 import model.map.tiles.AssetTile;
@@ -13,7 +14,7 @@ import java.util.List;
 import java.util.Random;
 
 public class AssetPaintTool implements IPaintTool {
-    private List<MapAsset> palette = new ArrayList<>();
+    private List<String> palette = new ArrayList<>();
 
     public AssetPaintTool(){
         addAssetToPaint("./src/main/resources/assets/map/assets/Tools/bucket 1.png");
@@ -27,16 +28,17 @@ public class AssetPaintTool implements IPaintTool {
 
     public void addAssetToPaint(String filePath){
         try{
-            File f = new File(filePath);
-            palette.add(new MapAsset(f));
+            filePath = (new File(filePath).getAbsolutePath());
+            palette.add(filePath);
         }catch (Exception e){
             e.printStackTrace();
         }
     }
 
     public boolean hasAssetToPaint(String filePath){
-        for(MapAsset asset: palette){
-            if(asset.getName().equals((new File(filePath)).getAbsolutePath()))
+        filePath = (new File(filePath).getAbsolutePath());
+        for(String  asset: palette){
+            if(asset.equals((new File(filePath)).getAbsolutePath()))
                 return true;
         }
         return false;
@@ -48,8 +50,9 @@ public class AssetPaintTool implements IPaintTool {
         if(palette.size() < 2){
             return false;
         }
+        filePath = (new File(filePath).getAbsolutePath());
         for(int i = 0; i < palette.size(); i++){
-            if(palette.get(i).getName().equals(filePath)){
+            if(palette.get(i).equals(filePath)){
                 palette.remove(i);
                 return true;
             }
@@ -62,7 +65,8 @@ public class AssetPaintTool implements IPaintTool {
     public void activateTool(MouseEvent e, RPGMap map) {
         MapLayer mapLayer = map.getActiveLayer().getActiveGraphicLayer();
         try {
-            MapAsset asset = getRandomFromPalette();
+            String assetString = getRandomFromPalette();
+            MapAsset asset = AssetCache.get(assetString);
             AssetTile tile = new AssetTile(asset);
             tile.setGridx(e.getX() - map.getXoffset());
             tile.setGridy(e.getY() - map.getYoffset());
@@ -82,15 +86,15 @@ public class AssetPaintTool implements IPaintTool {
 
     }
 
-    protected List<MapAsset> getPalette() {
+    protected List<String> getPalette() {
         return palette;
     }
 
-    protected void setPalette(List<MapAsset> palette) {
+    protected void setPalette(List<String> palette) {
         this.palette = palette;
     }
 
-    private MapAsset getRandomFromPalette(){
+    private String getRandomFromPalette(){
         Random rand = new Random();
         return palette.get(rand.nextInt(palette.size()));
     }

@@ -2,6 +2,7 @@ package model.map.tiles;
 
 import UI.app.assets.MapAsset;
 import application.config.Configuration;
+import application.io.AssetCache;
 
 import java.awt.*;
 import java.io.File;
@@ -14,7 +15,7 @@ public abstract class MapTile {
     public MapTile(File assetFile, int gridx, int gridy) {
         this.gridx = gridx;
         this.gridy = gridy;
-        this.assetResource = new MapAsset(assetFile);
+        this.assetResource = AssetCache.get(assetFile.getAbsolutePath());
     }
 
     public MapTile(MapAsset mapAsset, int gridx, int gridy) {

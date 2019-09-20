@@ -32,7 +32,8 @@ public abstract class ApplicationWindow extends JFrame {
         contentPane.removeAll();
         appPage.loadPage();
         appPage.setObserver(this);
-        contentPane.add(appPage);
+        gbc.fill = 1;
+        contentPane.add(appPage,gbc);
         reloadWindow();
     }
 
