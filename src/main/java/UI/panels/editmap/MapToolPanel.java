@@ -2,6 +2,8 @@ package UI.panels.editmap;
 
 import UI.app.assets.MapAsset;
 import UI.app.view.ApplicationPanel;
+import UI.factory.ButtonFactory;
+import application.io.AssetCache;
 import application.io.MapIO;
 import model.map.mechanics.FogBody;
 import model.map.mechanics.FogFactory;
@@ -59,7 +61,7 @@ public class MapToolPanel extends ApplicationPanel {
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 
-        JButton gridTool = new JButton("Grid");
+        JButton gridTool = ButtonFactory.createButton("Grid");
         gridTool.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e) {
@@ -68,7 +70,7 @@ public class MapToolPanel extends ApplicationPanel {
             }
         });
 
-        JButton paintTool = new JButton("Tile Paint");
+        JButton paintTool = ButtonFactory.createButton("Tile Paint");
         paintTool.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e) {
@@ -76,7 +78,15 @@ public class MapToolPanel extends ApplicationPanel {
             }
         });
 
-        JButton edgeTool = new JButton("Edge Paint");
+        JButton floodTool = ButtonFactory.createButton("F");
+        floodTool.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e) {
+                getMapViewPanel().getMapEditor().setTool(Tools.FLOOD_FILL_TOOL);
+            }
+        });
+
+        JButton edgeTool = ButtonFactory.createButton("Edge Paint");
         edgeTool.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e) {
@@ -84,7 +94,7 @@ public class MapToolPanel extends ApplicationPanel {
             }
         });
 
-        JButton tileSelect = new JButton("E");
+        JButton tileSelect = ButtonFactory.createButton("E");
         tileSelect.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e) {
@@ -96,7 +106,7 @@ public class MapToolPanel extends ApplicationPanel {
             }
         });
 
-        JButton edgeSelect = new JButton("E");
+        JButton edgeSelect = ButtonFactory.createButton("E");
         edgeSelect.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e) {
@@ -108,7 +118,7 @@ public class MapToolPanel extends ApplicationPanel {
             }
         });
 
-        JButton assetPaint = new JButton("Graphic");
+        JButton assetPaint = ButtonFactory.createButton("Graphic");
         assetPaint.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e) {
@@ -116,7 +126,7 @@ public class MapToolPanel extends ApplicationPanel {
             }
         });
 
-        JButton graphicSelect = new JButton("E");
+        JButton graphicSelect = ButtonFactory.createButton("E");
         graphicSelect.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e) {
@@ -128,7 +138,7 @@ public class MapToolPanel extends ApplicationPanel {
             }
         });
 
-        JButton dragTool = new JButton("Drag");
+        JButton dragTool = ButtonFactory.createButton("Drag");
         dragTool.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e) {
@@ -136,14 +146,14 @@ public class MapToolPanel extends ApplicationPanel {
             }
         });
 
-        JButton fog = new JButton("Show Fog");
+        JButton fog = ButtonFactory.createButton("Show Fog");
         fog.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
             {
-                MapAsset asset = new MapAsset(
-                        new File("C:\\Users\\Nate\\IdeaProjects\\RPGMapMaker\\src\\main\\resources\\" +
-                                "assets\\map\\floor\\0mechanics\\black.png"));
+                MapAsset asset = AssetCache.get(
+                        "C:\\Users\\Nate\\IdeaProjects\\RPGMapMaker\\src\\main\\resources\\" +
+                                "assets\\map\\floor\\0mechanics\\black.png");
                 for(FogBody fb: FogFactory.floodFog(map.getActiveLayer())){
                     for(MapTile tile: fb.getTiles()) {
                         for (MapTile floor : map.getActiveLayer().getTileLayer().getTiles()) {
@@ -157,7 +167,7 @@ public class MapToolPanel extends ApplicationPanel {
             }
         });
 
-        JButton save = new JButton("Save");
+        JButton save = ButtonFactory.createButton("Save");
         save.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
@@ -170,7 +180,7 @@ public class MapToolPanel extends ApplicationPanel {
             }
         });
 
-        JButton close = new JButton("Home");
+        JButton close = ButtonFactory.createButton("Home");
         close.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
@@ -207,51 +217,58 @@ public class MapToolPanel extends ApplicationPanel {
         gbc.gridy = 2;
         gbc.insets = new Insets(4,4,4,10);
         gbc.fill = 1;
+        add(floodTool,gbc);
+
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.insets = new Insets(4,4,4,10);
+        gbc.fill = 1;
         add(edgeTool,gbc);
 
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridx = 1;
-        gbc.gridy = 2;
+        gbc.gridy = 3;
         gbc.insets = new Insets(4,4,4,10);
         gbc.fill = 1;
         add(edgeSelect,gbc);
 
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridx = 0;
-        gbc.gridy = 3;
+        gbc.gridy = 4;
         gbc.insets = new Insets(4,4,4,10);
         gbc.fill = 1;
         add(assetPaint,gbc);
 
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridx = 1;
-        gbc.gridy = 3;
+        gbc.gridy = 4;
         gbc.insets = new Insets(4,4,4,10);
         gbc.fill = 1;
         add(graphicSelect,gbc);
 
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridx = 0;
-        gbc.gridy = 4;
+        gbc.gridy = 5;
         gbc.insets = new Insets(4,4,4,10);
         gbc.fill = 1;
         add(dragTool,gbc);
 
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridx = 0;
-        gbc.gridy = 5;
+        gbc.gridy = 6;
         gbc.insets = new Insets(4,4,4,10);
         add(fog,gbc);
 
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridx = 0;
-        gbc.gridy = 6;
+        gbc.gridy = 7;
         gbc.insets = new Insets(4,4,4,10);
         add(save,gbc);
 
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridx = 0;
-        gbc.gridy = 7;
+        gbc.gridy = 8;
         gbc.insets = new Insets(4,4,4,10);
         add(close,gbc);
     }

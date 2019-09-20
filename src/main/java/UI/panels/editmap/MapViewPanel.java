@@ -40,6 +40,8 @@ public class MapViewPanel extends ApplicationPanel {
 
     @Override
     public void paintComponent(Graphics g){
+        //g.setColor(new Color(0,0,0));
+        //g.fillRect(0,0,1200,700);
         map.draw(g);
     }
 }

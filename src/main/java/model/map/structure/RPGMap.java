@@ -1,6 +1,7 @@
 package model.map.structure;
 
 import UI.app.assets.MapAsset;
+import application.io.AssetCache;
 import model.map.tiles.MapTile;
 import model.map.tiles.PatternTile;
 import application.config.Configuration;
@@ -51,7 +52,7 @@ public class RPGMap {
         MapLayer mapLayer = new MapLayer();
 
         try{
-            MapAsset asset = new MapAsset(new File(defaultAsset));
+            MapAsset asset = AssetCache.get(defaultAsset);
             for(int x = 0; x < gridWidth; x++){
                 for(int y = 0; y < gridHeight; y++){
                         PatternTile patternTile = new PatternTile(

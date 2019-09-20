@@ -19,15 +19,13 @@ import java.util.List;
 
 public class Objectifier {
 
-    private static long assetsToLoad = 0;
-    private static long assetsLoaded = 0;
+    private static LoadModel load;
 
-    public static RPGMap toRPGMap(JSONObject json){
-        RPGMap map = new RPGMap();
+    public static RPGMap toRPGMap(JSONObject json,RPGMap map,LoadModel model){
+        load = model;
+
         json = json.getJSONObject("map");
 
-        assetsLoaded = 0;
-        assetsToLoad = 0;
         map.setGridWidth(json.getInt("gridWidth"));
         map.setGridHeight(json.getInt("gridHeight"));
         map.setLayerSets(toMapSets(json.getJSONObject("mapSets")));
@@ -71,7 +69,7 @@ public class Objectifier {
         JSONArray jsonArray = json.getJSONArray("myArrayList");
         List<MapTile> tiles = new ArrayList<>();
 
-        assetsToLoad += jsonArray.length();
+        load.incrementTotalBytes(jsonArray.length());
         for(int i = 0; i < jsonArray.length(); i++){
             tiles.add(toPatternTile(jsonArray.getJSONObject(i)));
         }
@@ -114,7 +112,7 @@ public class Objectifier {
         JSONArray jsonArray = json.getJSONArray("myArrayList");
         List<AssetTile> tiles = new ArrayList<>();
 
-        assetsToLoad += jsonArray.length();
+        load.incrementTotalBytes(jsonArray.length());
         for(int i = 0; i < jsonArray.length(); i++){
             tiles.add(toGraphicTile(jsonArray.getJSONObject(i)));
         }
@@ -144,7 +142,7 @@ public class Objectifier {
         JSONArray jsonArray = json.getJSONArray("myArrayList");
         List<MapTile> tiles = new ArrayList<>();
 
-        assetsToLoad += jsonArray.length();
+        load.incrementTotalBytes(jsonArray.length());
         for(int i = 0; i < jsonArray.length(); i++){
             tiles.add(toEdgeTile(jsonArray.getJSONObject(i)));
         }
@@ -163,8 +161,7 @@ public class Objectifier {
     private static MapAsset toMapAsset(JSONObject json){
         json = json.getJSONObject("map");
         String name = json.getString("name");
-        assetsLoaded++;
-        System.out.println(((assetsLoaded + 0.0)/(assetsToLoad + 0.0))* 100);
+        load.incrementReadBytes(1);
         return AssetCache.get(name);
     }
 }

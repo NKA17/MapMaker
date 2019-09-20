@@ -23,25 +23,32 @@ public class MapIO {
         }
     }
 
-    public static RPGMap loadMap(String fileName){
+    public static RPGMap loadMap(String fileName,LoadModel load,RPGMap destination){
         try{
             File file = new File(fileName);
-            long totalBytes = file.length();
+            if(!file.exists()){
+                throw new FileNotFoundException();
+            }
+            load.setTotalBytes(file.length());
+            load.incrementTotalBytes(5);
             long read = 0;
             String json = "";
-            Scanner in = new Scanner(file);
-            while(in.hasNextLine()){
-                String str = in.nextLine();
+            byte[] buffer = new byte[50];
+            FileInputStream is = new FileInputStream(file);
+            while ((read = is.read(buffer)) != -1) {
+                String str = new String(buffer);
                 json += str;
-                read += str.getBytes().length + 0.0;
-                System.out.println(((read + 0.0)/(totalBytes + 0.0)) * 100.0);
+                load.incrementReadBytes(str.getBytes().length);
             }
-            in.close();
-            return Objectifier.toRPGMap(new JSONObject(json));
+
+            is.close();
+            destination = Objectifier.toRPGMap(new JSONObject(json),destination,load);
+            load.setTotalBytes(load.getReadBytes());
+            return destination;
         }catch (Exception e){
-            RPGMap map = new RPGMap();
-            map.init();
-            return map;
+            destination.init();
+            load.finish();
+            return destination;
         }
     }
 

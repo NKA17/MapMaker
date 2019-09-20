@@ -15,6 +15,7 @@ public abstract class ApplicationPage extends JPanel {
         gridBagLayout = new GridBagLayout();
         gbc = new GridBagConstraints();
         setLayout(gridBagLayout);
+        setBackground(new Color(80,80,80));
     }
 
     public ApplicationWindow getObserver() {

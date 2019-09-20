@@ -1,6 +1,7 @@
 package application.mapEditing.tools;
 
 import UI.app.assets.MapAsset;
+import application.io.AssetCache;
 import model.map.structure.RPGMap;
 import model.map.tiles.EdgeTile;
 import model.map.tiles.MapTile;
@@ -15,8 +16,8 @@ import java.util.Random;
 
 public class EdgePaintTool implements IPaintTool {
 
-    private List<MapAsset> vertPalette = new ArrayList<>();
-    private List<MapAsset> palette = new ArrayList<>();
+    private List<String> vertPalette = new ArrayList<>();
+    private List<String> palette = new ArrayList<>();
 
     public EdgePaintTool(){
         addAssetToPaint("./src/main/resources/assets/map/structure/basic/1.png");
@@ -30,16 +31,16 @@ public class EdgePaintTool implements IPaintTool {
 
 
     public void addAssetToPaint(String filePath){
-        File f = new File(filePath);
-        palette.add(new MapAsset(f));
-        File vertFile = new File(filePath.replace(".png","_vert.png"));
-        vertPalette.add(new MapAsset(vertFile));
+        filePath = (new File(filePath).getAbsolutePath());
+        palette.add(filePath);
+        String vertFile = filePath.replace(".png","_vert.png");
+        vertPalette.add(vertFile);
     }
 
     @Override
     public boolean hasAssetToPaint(String filePath) {
-        for(MapAsset asset: palette){
-            if(asset.getName().equals((new File(filePath)).getAbsolutePath()))
+        for(String asset: palette){
+            if(asset.equals((new File(filePath)).getAbsolutePath()))
                 return true;
         }
         return false;
@@ -49,8 +50,9 @@ public class EdgePaintTool implements IPaintTool {
         if(palette.size() < 2){
             return false;
         }
+        filePath = (new File(filePath).getAbsolutePath());
         for(int i = 0; i < palette.size(); i++){
-            if(palette.get(i).getName().equals(filePath)){
+            if(palette.get(i).equals(filePath)){
                 palette.remove(i);
                 vertPalette.remove(i);
                 return true;
@@ -77,7 +79,8 @@ public class EdgePaintTool implements IPaintTool {
 
     private void editTile(MouseEvent e, RPGMap map, boolean isDrag){
         int index = getRandomPaletteIndex();
-        MapAsset asset = palette.get(index);
+        String assetString = palette.get(index);
+        MapAsset asset = AssetCache.get(assetString);
         MapTile edgeTile = new EdgeTile(
                 asset,
                 (e.getX() - map.getXoffset()-10) / Configuration.TILE_WIDTH,
@@ -113,7 +116,8 @@ public class EdgePaintTool implements IPaintTool {
                         map.getActiveLayer().getEdgeLayer().getTiles().remove(tile);
                     }
                 }
-                asset = vertPalette.get(index);
+                assetString = vertPalette.get(index);
+                asset = AssetCache.get(assetString);
                 edgeTile.setAssetResource(asset);
                 asset.setImageOffsetY(-(asset.getImage().getHeight()-Configuration.TILE_HEIGHT)/4);
             }else{

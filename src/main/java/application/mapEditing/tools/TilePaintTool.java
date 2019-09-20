@@ -1,6 +1,7 @@
 package application.mapEditing.tools;
 
 import UI.app.assets.MapAsset;
+import application.io.AssetCache;
 import model.map.structure.RPGMap;
 import model.map.tiles.MapTile;
 import model.map.tiles.PatternTile;
@@ -14,7 +15,7 @@ import java.util.List;
 import java.util.Random;
 
 public class TilePaintTool implements IPaintTool {
-    private List<MapAsset> palette = new ArrayList<>();
+    private List<String> palette = new ArrayList<>();
 
     public TilePaintTool(){
         addAssetToPaint("./src/main/resources/assets/map/floor/wood/wood 1.png");
@@ -28,16 +29,15 @@ public class TilePaintTool implements IPaintTool {
 
     public void addAssetToPaint(String filePath){
         try{
-            File f = new File(filePath);
-            palette.add(new MapAsset(f));
+            palette.add((new File(filePath).getAbsolutePath()));
         }catch (Exception e){
             e.printStackTrace();
         }
     }
 
     public boolean hasAssetToPaint(String filePath){
-        for(MapAsset asset: palette){
-            if(asset.getName().equals((new File(filePath)).getAbsolutePath()))
+        for(String asset: palette){
+            if(asset.equals((new File(filePath)).getAbsolutePath()))
                 return true;
         }
         return false;
@@ -49,8 +49,9 @@ public class TilePaintTool implements IPaintTool {
         if(palette.size() < 2){
             return false;
         }
+        filePath = (new File(filePath).getAbsolutePath());
         for(int i = 0; i < palette.size(); i++){
-            if(palette.get(i).getName().equals(filePath)){
+            if(palette.get(i).equals(filePath)){
                 palette.remove(i);
                 return true;
             }
@@ -63,7 +64,7 @@ public class TilePaintTool implements IPaintTool {
     public void activateTool(MouseEvent e, RPGMap map) {
         MapTile mapTile = map.getMapTile(e.getX(),e.getY());
         try {
-            mapTile.setAssetResource(getRandomFromPalette());
+            mapTile.setAssetResource(AssetCache.get(getRandomFromPalette()));
         }catch (Exception e2){
             e2.printStackTrace();
         }
@@ -78,27 +79,27 @@ public class TilePaintTool implements IPaintTool {
     public void drag(MouseEvent e, RPGMap map) {
         MapTile mapTile = map.getMapTile(e.getX(),e.getY());
         if(mapTile != null) {
-            mapTile.setAssetResource(getRandomFromPalette());
+            mapTile.setAssetResource(AssetCache.get(getRandomFromPalette()));
         }else{
-            System.out.println("F");
+            MapAsset asset = AssetCache.get(getRandomFromPalette());
             PatternTile patternTile = new PatternTile(
-                    getRandomFromPalette(),
+                    asset,
                     (-map.getXoffset() + e.getX())/ Configuration.TILE_WIDTH,
                     (-map.getYoffset() + e.getY())/ Configuration.TILE_HEIGHT);
             map.getActiveLayer().getTileLayer().getTiles().add(patternTile);
         }
     }
 
-    protected List<MapAsset> getPalette() {
-        return palette;
-    }
-
-    protected void setPalette(List<MapAsset> palette) {
+    protected void setPalette(List<String> palette) {
         this.palette = palette;
     }
 
-    private MapAsset getRandomFromPalette(){
+    private String getRandomFromPalette(){
         Random rand = new Random();
         return palette.get(rand.nextInt(palette.size()));
+    }
+
+    public List<String> getPalette(){
+        return palette;
     }
 }
