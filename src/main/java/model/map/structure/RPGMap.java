@@ -24,7 +24,7 @@ public class RPGMap {
     public void init(){
         MapSet defaultSet = new MapSet(gridWidth,gridHeight);
         mapImage.createGraphics();
-        MapLayer tileLayer = createTileLayer("./src/main/resources/assets/map/floor/grass/grass 3.jpg");
+        MapLayer tileLayer = createTileLayer("./src/main/resources/assets/map/floor/1grass/grass 3.jpg");
         defaultSet.setTileLayer(tileLayer);
 
         activeLayer = defaultSet;
@@ -85,10 +85,10 @@ public class RPGMap {
             this.yoffset = 0;
         }
         if(this.xoffset < -(gridWidth*Configuration.TILE_WIDTH)+1200){
-            //this.xoffset = -(gridWidth*Configuration.TILE_WIDTH+1201);
+            this.xoffset = -(gridWidth*Configuration.TILE_WIDTH)+1200;
         }
         if(this.yoffset < -(gridHeight*Configuration.TILE_HEIGHT)+700){
-            //this.yoffset = -(gridHeight*Configuration.TILE_HEIGHT)+701;
+            this.yoffset = -(gridHeight*Configuration.TILE_HEIGHT)+700;
         }
     }
 

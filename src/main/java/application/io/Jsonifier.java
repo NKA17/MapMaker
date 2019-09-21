@@ -1,6 +1,7 @@
 package application.io;
 
 import UI.app.assets.MapAsset;
+import UI.pages.LoadPage.LoadPage;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import model.map.structure.GraphicLayer;
@@ -16,8 +17,10 @@ import java.util.List;
 
 public class Jsonifier {
 
-    public static JSONObject toJSON(RPGMap map){
+    private static LoadModel loadModel;
+    public static JSONObject toJSON(RPGMap map,LoadModel model){
         JSONObject jsonObject = new JSONObject();
+        loadModel = model;
 
         jsonObject.put("gridWidth",map.getGridWidth());
         jsonObject.put("gridHeight",map.getGridHeight());
@@ -50,6 +53,7 @@ public class Jsonifier {
     private static JSONObject mapLayerToJSON(MapLayer mapLayer){
         JSONObject json = new JSONObject();
 
+        loadModel.incrementTotalBytes(mapLayer.getTiles().size());
         json.put("tiles",tilesToJSON(mapLayer.getTiles()));
 
         return json;
@@ -87,6 +91,7 @@ public class Jsonifier {
     private static JSONObject assetToJSON(MapAsset asset){
         JSONObject json = new JSONObject();
 
+        loadModel.incrementReadBytes(1);
         json.put("name",asset.getName());
         json.put("xoffset",asset.getImageOffsetX());
         json.put("yoffset",asset.getImageOffsetY());

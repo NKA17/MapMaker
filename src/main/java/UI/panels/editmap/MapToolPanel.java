@@ -3,6 +3,8 @@ package UI.panels.editmap;
 import UI.app.assets.MapAsset;
 import UI.app.view.ApplicationPanel;
 import UI.factory.ButtonFactory;
+import UI.pages.saveMap.SaveMapPage;
+import application.config.Configuration;
 import application.io.AssetCache;
 import application.io.MapIO;
 import model.map.mechanics.FogBody;
@@ -78,7 +80,7 @@ public class MapToolPanel extends ApplicationPanel {
             }
         });
 
-        JButton floodTool = ButtonFactory.createButton("F");
+        JButton floodTool = ButtonFactory.createButton("Flood Fill");
         floodTool.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e) {
@@ -172,11 +174,10 @@ public class MapToolPanel extends ApplicationPanel {
         {
             public void actionPerformed(ActionEvent e)
             {
-                try {
-                    MapIO.saveMap(map,"newMap.json");
-                }catch (Exception v){
-                    v.printStackTrace();
-                }
+                BasicWindow bs = new BasicWindow();
+                SaveMapPage page = new SaveMapPage(map);
+                bs.openPage(page);
+                bs.makeVisible();
             }
         });
 

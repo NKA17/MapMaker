@@ -1,5 +1,7 @@
 package UI.app.view;
 
+import application.config.Configuration;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -11,10 +13,12 @@ public abstract class ApplicationWindow extends JFrame {
 
     public ApplicationWindow() {
         this.title = "RPG MapMaker";
+        setBackground(Configuration.WINDOW_BG_COLOR);
+        getContentPane().setBackground(Configuration.WINDOW_BG_COLOR);
+        getContentPane().setLayout(new GridBagLayout());
         setLayout(gridBagLayout);
         defaultInitUI();
         initUI();
-
     }
 
     private void defaultInitUI() {
@@ -32,6 +36,8 @@ public abstract class ApplicationWindow extends JFrame {
         contentPane.removeAll();
         appPage.loadPage();
         appPage.setObserver(this);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
         gbc.fill = 1;
         contentPane.add(appPage,gbc);
         reloadWindow();

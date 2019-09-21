@@ -18,6 +18,7 @@ public abstract class LoadPage extends ApplicationPage {
     @Override
     public void loadPage() {
         loadPanel.setObserver(this);
+        loadPanel.setBackground(getBackground());
         add(loadPanel);
         loadPanel.setObserver(getObserver());
         loadPanel.setPreferredSize(getPreferredSize());

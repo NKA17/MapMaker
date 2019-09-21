@@ -9,18 +9,32 @@ import java.io.*;
 import java.util.Scanner;
 
 public class MapIO {
-    public static void saveMap(RPGMap map, String fileName){
+    public static void saveMap(RPGMap map, String fileName,LoadModel loadModel){
         Gson gson = new GsonBuilder().create();
 
-        String json = gson.toJson(Jsonifier.toJSON(map));
+
+        String json = gson.toJson(Jsonifier.toJSON(map,loadModel));
         try{
-            PrintWriter pw = new PrintWriter(new File(fileName));
-            pw.print(json);
-            pw.flush();
-            pw.close();
+            File file = new File(fileName);
+            FileOutputStream fos = new FileOutputStream(file);
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+
+            loadModel.setTotalBytes(json.length());
+            for(int i = 0; i < json.length(); i+=50){
+                String buffer = json.substring(i,Math.min(json.length(),i+50));
+                loadModel.incrementReadBytes(buffer.length());
+                fos.write(buffer.getBytes());
+                fos.flush();
+            }
+
+            fos.close();
         }catch (Exception e){
             e.printStackTrace();
         }
+
+        loadModel.finish();
     }
 
     public static RPGMap loadMap(String fileName,LoadModel load,RPGMap destination){
@@ -51,13 +65,4 @@ public class MapIO {
             return destination;
         }
     }
-
-//    public static IHandler serializeDataIn(){
-//        String fileName= "Test.txt";
-//        FileInputStream fin = new FileInputStream(fileName);
-//        ObjectInputStream ois = new ObjectInputStream(fin);
-//        IHandler iHandler= (IHandler) ois.readObject();
-//        ois.close();
-//        return iHandler;
-//    }
 }

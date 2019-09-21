@@ -10,4 +10,8 @@ public interface IPaintTool extends ITool {
     boolean hasAssetToPaint(String filePath);
 
     boolean removeAssetToPaint(String filePath);
+
+    void resetPalette();
+
+    boolean isEmpty();
 }
