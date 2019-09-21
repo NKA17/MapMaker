@@ -1,5 +1,7 @@
 package UI.app.view;
 
+import application.config.Configuration;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -15,7 +17,7 @@ public abstract class ApplicationPage extends JPanel {
         gridBagLayout = new GridBagLayout();
         gbc = new GridBagConstraints();
         setLayout(gridBagLayout);
-        setBackground(new Color(80,80,80));
+        setBackground(Configuration.PANEL_BG_COLOR);
     }
 
     public ApplicationWindow getObserver() {
@@ -41,6 +43,18 @@ public abstract class ApplicationPage extends JPanel {
         gbc.gridx = x;
         gbc.gridy = y;
         add(panel,gbc);
+        panel.setObserver(getObserver());
+        panels.add(panel);
+    }
+
+    public void addPanel(ApplicationPanel panel,int x, int y, int fill){
+        panel.loadPanel();
+        gbc.gridx = x;
+        gbc.gridy = y;
+        int temp = gbc.fill;
+        gbc.fill = fill;
+        add(panel,gbc);
+        gbc.fill = temp;
         panel.setObserver(getObserver());
         panels.add(panel);
     }

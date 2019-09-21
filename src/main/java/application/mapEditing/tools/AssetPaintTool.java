@@ -15,9 +15,10 @@ import java.util.Random;
 
 public class AssetPaintTool implements IPaintTool {
     private List<String> palette = new ArrayList<>();
+    private String defaultAsset = "./src/main/resources/assets/map/structure/basic/1.png";
 
     public AssetPaintTool(){
-        addAssetToPaint("./src/main/resources/assets/map/assets/Tools/bucket 1.png");
+        addAssetToPaint(defaultAsset);
     }
 
     public AssetPaintTool(String... assetPath){
@@ -44,7 +45,15 @@ public class AssetPaintTool implements IPaintTool {
         return false;
     }
 
+    @Override
+    public void resetPalette() {
+        palette.clear();
+    }
 
+    @Override
+    public boolean isEmpty() {
+        return palette.size() == 0;
+    }
 
     public boolean removeAssetToPaint(String filePath){
         if(palette.size() < 2){
@@ -95,6 +104,9 @@ public class AssetPaintTool implements IPaintTool {
     }
 
     private String getRandomFromPalette(){
+        if(palette.size()==0){
+            addAssetToPaint(defaultAsset);
+        }
         Random rand = new Random();
         return palette.get(rand.nextInt(palette.size()));
     }

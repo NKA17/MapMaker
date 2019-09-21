@@ -27,12 +27,14 @@ public class AssetSelectScrollPanel extends ApplicationPanel {
         setLayout(new GridBagLayout());
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setBorder(null);
         scrollPane.setPreferredSize(new Dimension(400,200));
         viewPanel = new JPanel();
         viewPanel.setLayout(new GridBagLayout());
         scrollPane.setViewportView(viewPanel);
         scrollPane.setAlignmentX(JScrollPane.LEFT_ALIGNMENT);
+        scrollPane.getVerticalScrollBar().setUnitIncrement(20);
         add(scrollPane);
         buildAssetSelecPanels(new File(baseDirectory));
         viewPanel.invalidate();
@@ -87,7 +89,7 @@ public class AssetSelectScrollPanel extends ApplicationPanel {
                     image = scale(image);
                 }
 
-                if(gbc.gridx > 5){
+                if(gbc.gridx > 4){
                     gbc.gridx =0;
                     gbc.gridy++;
                 }

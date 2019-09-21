@@ -15,6 +15,12 @@ import java.awt.*;
 
 public class EditMapPage extends ApplicationPage{
 
+    private String mapFileName;
+
+    public EditMapPage(String mapFileName) {
+        this.mapFileName = mapFileName;
+    }
+
     @Override
     public void loadPage() {
         MapViewPanel mapView = new MapViewPanel();
@@ -30,8 +36,11 @@ public class EditMapPage extends ApplicationPage{
                         mapView.repaint();
                     }
                 };
+                page.setBackground(new Color(0,0,0));
                 page.loadPage();
                 mapView.add(page);
+                mapView.invalidate();
+                mapView.revalidate();
             }
         };
         Thread th = new Thread(run);
@@ -42,7 +51,7 @@ public class EditMapPage extends ApplicationPage{
             @Override
             public void run() {
 
-                MapIO.loadMap("newMap.json",loadModel,map);
+                MapIO.loadMap(mapFileName,loadModel,map);
                 loadModel.removeSelf();
                 mapView.repaint();
             }

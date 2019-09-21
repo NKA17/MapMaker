@@ -16,16 +16,12 @@ import java.util.Random;
 
 public class TilePaintTool implements IPaintTool {
     private List<String> palette = new ArrayList<>();
+    private String defaultAsset = "./src/main/resources/assets/map/floor/wood/wood 1.png";
 
     public TilePaintTool(){
-        addAssetToPaint("./src/main/resources/assets/map/floor/wood/wood 1.png");
+        addAssetToPaint(defaultAsset);
     }
 
-    public TilePaintTool(String... assetPath){
-        for(String path: assetPath){
-            addAssetToPaint(path);
-        }
-    }
 
     public void addAssetToPaint(String filePath){
         try{
@@ -58,6 +54,15 @@ public class TilePaintTool implements IPaintTool {
         }
 
         return false;
+    }
+    @Override
+    public void resetPalette() {
+        palette.clear();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return palette.size() == 0;
     }
 
     @Override
@@ -95,6 +100,9 @@ public class TilePaintTool implements IPaintTool {
     }
 
     private String getRandomFromPalette(){
+        if(palette.size()==0){
+            addAssetToPaint(defaultAsset);
+        }
         Random rand = new Random();
         return palette.get(rand.nextInt(palette.size()));
     }

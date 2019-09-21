@@ -8,6 +8,7 @@ import model.map.structure.RPGMap;
 import model.map.tiles.MapTile;
 
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -46,6 +47,17 @@ public class FloodFillTool implements IPaintTool {
     @Override
     public void deactivateTool(MouseEvent e, RPGMap map) {
 
+    }
+
+
+    @Override
+    public boolean isEmpty() {
+        return palette.size() == 0;
+    }
+
+    @Override
+    public void resetPalette() {
+        palette.clear();
     }
 
     @Override

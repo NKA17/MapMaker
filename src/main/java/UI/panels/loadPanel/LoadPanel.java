@@ -45,7 +45,7 @@ public class LoadPanel extends ApplicationPanel {
 
         model.setObserver(this.observer);
 
-        setPreferredSize(new Dimension(1199,699));
+        setPreferredSize(new Dimension(110,16));
 
     }
 
@@ -62,10 +62,10 @@ public class LoadPanel extends ApplicationPanel {
     public void paintComponent(Graphics g){
 
         g.setColor(new Color(0,0,0));
-        g.fillRect(0,0,getWidth()-1,getHeight()-1);
+        //g.fillRect(0,0,getWidth()-1,getHeight()-1);
         g.setColor(Configuration.GRID_COLOR);
-        g.drawRect(550,350,104,14);
-        g.fillRect(552,352,(int)(100 * model.getProgress()),10);
+        g.drawRect(0,0,104,14);
+        g.fillRect(2,2,(int)(100 * model.getProgress()),10);
     }
 
 }

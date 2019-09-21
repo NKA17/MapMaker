@@ -18,9 +18,10 @@ public class EdgePaintTool implements IPaintTool {
 
     private List<String> vertPalette = new ArrayList<>();
     private List<String> palette = new ArrayList<>();
+    private String defaultAsset = "./src/main/resources/assets/map/structure/basic/1.png";
 
     public EdgePaintTool(){
-        addAssetToPaint("./src/main/resources/assets/map/structure/basic/1.png");
+        addAssetToPaint(defaultAsset);
     }
 
     public EdgePaintTool(String... assetPath){
@@ -139,6 +140,17 @@ public class EdgePaintTool implements IPaintTool {
     }
 
 
+    @Override
+    public void resetPalette() {
+        palette.clear();
+        vertPalette.clear();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return palette.size() == 0;
+    }
+
     private int getRandomPaletteIndex(){
         Random rand = new Random();
         return rand.nextInt(palette.size());
@@ -151,7 +163,9 @@ public class EdgePaintTool implements IPaintTool {
     }
 
     public boolean isRightEdge(MouseEvent e, MapTile mapTile, RPGMap map){
-        int grid = (e.getX() - map.getXoffset()) / Configuration.TILE_WIDTH;
+        if(palette.size()==0){
+            addAssetToPaint(defaultAsset);
+        }
         int edge = mapTile.getGridx() * Configuration.TILE_WIDTH + Configuration.TILE_WIDTH;
         return (e.getX()-map.getXoffset() > edge - 10
                 && e.getX()-map.getXoffset() < edge + 10);
