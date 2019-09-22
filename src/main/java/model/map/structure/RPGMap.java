@@ -119,7 +119,7 @@ public class RPGMap {
 
 
     public MapTile getMapTile(int xOnScreen, int yOnScreen){
-        return getActiveLayer().getMapTile(xOnScreen,yOnScreen,xoffset,yoffset);
+        return getActiveLayer().getMapTile(xOnScreen,yOnScreen,-xoffset,-yoffset);
     }
 
     public List<MapTile> getEdgeTiles(int xOnScreen, int yOnScreen){

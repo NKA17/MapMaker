@@ -2,6 +2,7 @@ package UI.panels.saveMap;
 
 import UI.app.view.ApplicationPanel;
 import UI.factory.ButtonFactory;
+import UI.factory.TextFactory;
 import UI.pages.LoadPage.LoadPage;
 import application.config.Configuration;
 import application.io.LoadModel;
@@ -24,7 +25,7 @@ public class SaveMapPanel extends ApplicationPanel{
     public void loadPanel() {
         setLayout(new GridBagLayout());
 
-        JTextField fileNameField = new JTextField(map.getName());
+        JTextField fileNameField = TextFactory.createTextField(map.getName());
         fileNameField.setPreferredSize(new Dimension(350,30));
         fileNameField.setEditable(true);
 
