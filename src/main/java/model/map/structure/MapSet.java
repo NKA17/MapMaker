@@ -118,14 +118,14 @@ public class MapSet implements Draggable{
         tileLayer.draw(g2d,mapXoffset+xoffset,mapYoffset+yoffset);
 
         if(drawGrid){
-            gridLayer.draw(g2d,mapXoffset-xoffset,mapYoffset-yoffset);
+            gridLayer.draw(g2d,mapXoffset+xoffset,mapYoffset+yoffset);
         }
 
         for(MapLayer mapLayer: graphicLayers){
             mapLayer.draw(g2d,mapXoffset+xoffset,mapYoffset+yoffset);
         }
 
-        edgeLayer.draw(g2d,mapXoffset-xoffset,mapYoffset-yoffset);
+        edgeLayer.draw(g2d,mapXoffset+xoffset,mapYoffset+yoffset);
 
         g.drawImage(mapImage,xoffset,yoffset,null);
     }

@@ -64,7 +64,9 @@ public class RPGMap {
 
         for(int j = draggables.size()-1; j >= 0; j--){
             Draggable draggable = draggables.get(j);
-            if( draggable.shouldDrag(x-activeLayer.getXoffset(),y-activeLayer.getYoffset())){
+            if( draggable.shouldDrag(
+                    x-getXoffset()-activeLayer.getXoffset(),
+                    y-getYoffset()-activeLayer.getYoffset())){
                 return draggable;
             }
         }
