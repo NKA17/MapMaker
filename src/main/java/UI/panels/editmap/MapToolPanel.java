@@ -7,6 +7,7 @@ import UI.pages.saveMap.SaveMapPage;
 import application.config.Configuration;
 import application.io.AssetCache;
 import application.io.MapIO;
+import application.mapEditing.tools.PanTool;
 import model.map.mechanics.FogBody;
 import model.map.mechanics.FogFactory;
 import model.map.structure.RPGMap;
@@ -69,6 +70,14 @@ public class MapToolPanel extends ApplicationPanel {
             public void actionPerformed(ActionEvent e) {
                 getMap().getActiveLayer().toggleGrid();
                 getMapViewPanel().repaint();
+            }
+        });
+
+        JButton panTool = ButtonFactory.createButton("Pan");
+        panTool.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e) {
+                getMapViewPanel().getMapEditor().setTool(new PanTool());
             }
         });
 
@@ -190,17 +199,23 @@ public class MapToolPanel extends ApplicationPanel {
             }
         });
 
-
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridx = 0;
         gbc.gridy = 0;
+        gbc.insets = new Insets(4,4,4,10);
+        gbc.fill = 1;
+        add(panTool,gbc);
+
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.gridx = 0;
+        gbc.gridy = 1;
         gbc.insets = new Insets(4,4,4,10);
         gbc.fill = 1;
         add(gridTool,gbc);
 
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridx = 0;
-        gbc.gridy = 1;
+        gbc.gridy = 2;
         gbc.insets = new Insets(4,4,4,10);
         gbc.fill = 1;
         add(paintTool,gbc);
@@ -208,68 +223,68 @@ public class MapToolPanel extends ApplicationPanel {
 
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridx = 1;
-        gbc.gridy = 1;
+        gbc.gridy = 2;
         gbc.insets = new Insets(4,4,4,10);
         gbc.fill = 1;
         add(tileSelect,gbc);
 
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridx = 0;
-        gbc.gridy = 2;
+        gbc.gridy = 3;
         gbc.insets = new Insets(4,4,4,10);
         gbc.fill = 1;
         add(floodTool,gbc);
 
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridx = 0;
-        gbc.gridy = 3;
+        gbc.gridy = 4;
         gbc.insets = new Insets(4,4,4,10);
         gbc.fill = 1;
         add(edgeTool,gbc);
 
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridx = 1;
-        gbc.gridy = 3;
+        gbc.gridy = 4;
         gbc.insets = new Insets(4,4,4,10);
         gbc.fill = 1;
         add(edgeSelect,gbc);
 
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridx = 0;
-        gbc.gridy = 4;
+        gbc.gridy = 5;
         gbc.insets = new Insets(4,4,4,10);
         gbc.fill = 1;
         add(assetPaint,gbc);
 
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridx = 1;
-        gbc.gridy = 4;
+        gbc.gridy = 5;
         gbc.insets = new Insets(4,4,4,10);
         gbc.fill = 1;
         add(graphicSelect,gbc);
 
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridx = 0;
-        gbc.gridy = 5;
+        gbc.gridy = 6;
         gbc.insets = new Insets(4,4,4,10);
         gbc.fill = 1;
         add(dragTool,gbc);
 
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridx = 0;
-        gbc.gridy = 6;
+        gbc.gridy = 7;
         gbc.insets = new Insets(4,4,4,10);
         add(fog,gbc);
 
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridx = 0;
-        gbc.gridy = 7;
+        gbc.gridy = 8;
         gbc.insets = new Insets(4,4,4,10);
         add(save,gbc);
 
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridx = 0;
-        gbc.gridy = 8;
+        gbc.gridy = 9;
         gbc.insets = new Insets(4,4,4,10);
         add(close,gbc);
     }
