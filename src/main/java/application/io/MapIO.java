@@ -1,5 +1,6 @@
 package application.io;
 
+import application.config.Configuration;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import model.map.structure.RPGMap;
@@ -57,6 +58,7 @@ public class MapIO {
 
             is.close();
             destination = Objectifier.toRPGMap(new JSONObject(json),destination,load);
+            destination.setName(file.getName().replaceAll(Configuration.FILE_EXTENSION,""));
             load.setTotalBytes(load.getReadBytes());
             return destination;
         }catch (Exception e){

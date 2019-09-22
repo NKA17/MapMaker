@@ -52,6 +52,8 @@ public class Objectifier {
         mapSet.setTileLayer(toTileLayer(json.getJSONObject("mapLayer")));
         mapSet.setEdgeLayer(toEdgeLayer(json.getJSONObject("edgeLayer")));
         mapSet.setGraphicLayers(toGraphicLayers(json.getJSONObject("graphicLayers")));
+        mapSet.setXoffset(json.getInt("xoffset"));
+        mapSet.setYoffset(json.getInt("yoffset"));
 
         return mapSet;
     }

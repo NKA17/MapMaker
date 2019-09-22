@@ -84,8 +84,8 @@ public class EdgePaintTool implements IPaintTool {
         MapAsset asset = AssetCache.get(assetString);
         MapTile edgeTile = new EdgeTile(
                 asset,
-                (e.getX() - map.getXoffset()-10) / Configuration.TILE_WIDTH,
-                (e.getY() - map.getYoffset()-10) / Configuration.TILE_HEIGHT);
+                (e.getX() - map.getXoffset()-10 - map.getActiveLayer().getXoffset()) / Configuration.TILE_WIDTH,
+                (e.getY() - map.getYoffset()-10 - map.getActiveLayer().getYoffset()) / Configuration.TILE_HEIGHT);
 
 
         List<MapTile> mapTiles = map.getActiveLayer().getEdgeLayer().getTilesOverlapping(edgeTile);
@@ -158,8 +158,8 @@ public class EdgePaintTool implements IPaintTool {
 
     public boolean isBottomEdge(MouseEvent e, MapTile mapTile,RPGMap map){
         int edge = mapTile.getGridy() * Configuration.TILE_HEIGHT + Configuration.TILE_HEIGHT;
-        return (e.getY()-map.getYoffset() > edge - 10
-                && e.getY()-map.getYoffset() < edge + 10);
+        return (e.getY()-map.getYoffset() - map.getActiveLayer().getYoffset() > edge - 10
+                && e.getY()-map.getYoffset() - map.getActiveLayer().getYoffset() < edge + 10);
     }
 
     public boolean isRightEdge(MouseEvent e, MapTile mapTile, RPGMap map){
@@ -167,7 +167,7 @@ public class EdgePaintTool implements IPaintTool {
             addAssetToPaint(defaultAsset);
         }
         int edge = mapTile.getGridx() * Configuration.TILE_WIDTH + Configuration.TILE_WIDTH;
-        return (e.getX()-map.getXoffset() > edge - 10
-                && e.getX()-map.getXoffset() < edge + 10);
+        return (e.getX()-map.getXoffset()  - map.getActiveLayer().getXoffset()> edge - 10
+                && e.getX()-map.getXoffset() - map.getActiveLayer().getXoffset() < edge + 10);
     }
 }
