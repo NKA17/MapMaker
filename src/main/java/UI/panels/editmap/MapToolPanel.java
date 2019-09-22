@@ -64,7 +64,7 @@ public class MapToolPanel extends ApplicationPanel {
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 
-        JButton gridTool = ButtonFactory.createButton("Grid");
+        JButton gridTool = ButtonFactory.createButtonWithIcon("grid");
         gridTool.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e) {
@@ -73,7 +73,7 @@ public class MapToolPanel extends ApplicationPanel {
             }
         });
 
-        JButton panTool = ButtonFactory.createButton("Pan");
+        JButton panTool = ButtonFactory.createButtonWithIcon("pan");
         panTool.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e) {
@@ -81,7 +81,7 @@ public class MapToolPanel extends ApplicationPanel {
             }
         });
 
-        JButton paintTool = ButtonFactory.createButton("Tile Paint");
+        JButton paintTool = ButtonFactory.createButtonWithIcon("brush");
         paintTool.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e) {
@@ -89,7 +89,7 @@ public class MapToolPanel extends ApplicationPanel {
             }
         });
 
-        JButton floodTool = ButtonFactory.createButton("Flood Fill");
+        JButton floodTool = ButtonFactory.createButtonWithIcon("flood");
         floodTool.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e) {
@@ -97,7 +97,7 @@ public class MapToolPanel extends ApplicationPanel {
             }
         });
 
-        JButton edgeTool = ButtonFactory.createButton("Edge Paint");
+        JButton edgeTool = ButtonFactory.createButtonWithIcon("door");
         edgeTool.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e) {
@@ -105,7 +105,7 @@ public class MapToolPanel extends ApplicationPanel {
             }
         });
 
-        JButton tileSelect = ButtonFactory.createButton("E");
+        JButton tileSelect = ButtonFactory.createButtonWithIcon("palette");
         tileSelect.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e) {
@@ -117,7 +117,7 @@ public class MapToolPanel extends ApplicationPanel {
             }
         });
 
-        JButton edgeSelect = ButtonFactory.createButton("E");
+        JButton edgeSelect = ButtonFactory.createButtonWithIcon("palette");
         edgeSelect.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e) {
@@ -129,7 +129,7 @@ public class MapToolPanel extends ApplicationPanel {
             }
         });
 
-        JButton assetPaint = ButtonFactory.createButton("Graphic");
+        JButton assetPaint = ButtonFactory.createButtonWithIcon("graphic");
         assetPaint.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e) {
@@ -137,7 +137,7 @@ public class MapToolPanel extends ApplicationPanel {
             }
         });
 
-        JButton graphicSelect = ButtonFactory.createButton("E");
+        JButton graphicSelect = ButtonFactory.createButtonWithIcon("palette");
         graphicSelect.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e) {
@@ -149,7 +149,7 @@ public class MapToolPanel extends ApplicationPanel {
             }
         });
 
-        JButton dragTool = ButtonFactory.createButton("Drag");
+        JButton dragTool = ButtonFactory.createButtonWithIcon("drag");
         dragTool.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e) {
@@ -157,7 +157,7 @@ public class MapToolPanel extends ApplicationPanel {
             }
         });
 
-        JButton fog = ButtonFactory.createButton("Show Fog");
+        JButton fog = ButtonFactory.createButtonWithIcon("fog");
         fog.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
@@ -178,7 +178,7 @@ public class MapToolPanel extends ApplicationPanel {
             }
         });
 
-        JButton save = ButtonFactory.createButton("Save");
+        JButton save = ButtonFactory.createButtonWithIcon("save");
         save.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
@@ -190,7 +190,7 @@ public class MapToolPanel extends ApplicationPanel {
             }
         });
 
-        JButton close = ButtonFactory.createButton("Home");
+        JButton close = ButtonFactory.createButtonWithIcon("home");
         close.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
@@ -264,15 +264,15 @@ public class MapToolPanel extends ApplicationPanel {
         add(graphicSelect,gbc);
 
         gbc.anchor = GridBagConstraints.WEST;
-        gbc.gridx = 0;
-        gbc.gridy = 6;
+        gbc.gridx = 1;
+        gbc.gridy = 0;
         gbc.insets = new Insets(4,4,4,10);
         gbc.fill = 1;
         add(dragTool,gbc);
 
         gbc.anchor = GridBagConstraints.WEST;
-        gbc.gridx = 0;
-        gbc.gridy = 7;
+        gbc.gridx = 1;
+        gbc.gridy = 1;
         gbc.insets = new Insets(4,4,4,10);
         add(fog,gbc);
 
@@ -283,8 +283,8 @@ public class MapToolPanel extends ApplicationPanel {
         add(save,gbc);
 
         gbc.anchor = GridBagConstraints.WEST;
-        gbc.gridx = 0;
-        gbc.gridy = 9;
+        gbc.gridx = 1;
+        gbc.gridy = 8;
         gbc.insets = new Insets(4,4,4,10);
         add(close,gbc);
     }

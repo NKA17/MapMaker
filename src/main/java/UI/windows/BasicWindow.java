@@ -4,6 +4,7 @@ import UI.app.view.ApplicationWindow;
 import UI.pages.start.StartPage;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class BasicWindow extends ApplicationWindow {
 
@@ -18,5 +19,11 @@ public class BasicWindow extends ApplicationWindow {
         sp.openPage(new StartPage());
         sp.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         sp.makeVisible();
+        String fonts[] = GraphicsEnvironment
+                .getLocalGraphicsEnvironment()
+                .getAvailableFontFamilyNames();
+        for(String s : fonts){
+            System.out.println(s);
+        }
     }
 }

@@ -91,7 +91,7 @@ public class TilePaintTool implements IPaintTool {
                     asset,
                     (-map.getXoffset() + e.getX())/ Configuration.TILE_WIDTH,
                     (-map.getYoffset() + e.getY())/ Configuration.TILE_HEIGHT);
-            map.getActiveLayer().getTileLayer().getTiles().add(patternTile);
+            //map.getActiveLayer().getTileLayer().getTiles().add(patternTile);
         }
     }
 

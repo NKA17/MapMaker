@@ -2,8 +2,10 @@ package UI.app.view;
 
 import application.config.Configuration;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 
 public abstract class ApplicationWindow extends JFrame {
 
@@ -13,18 +15,24 @@ public abstract class ApplicationWindow extends JFrame {
 
     public ApplicationWindow() {
         this.title = "RPG MapMaker";
+        try{
+            setIconImage(ImageIO.read(new File("./src/main/resources/icons/mapIcon.png")));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         setBackground(Configuration.WINDOW_BG_COLOR);
         getContentPane().setBackground(Configuration.WINDOW_BG_COLOR);
         getContentPane().setLayout(new GridBagLayout());
         setLayout(gridBagLayout);
         defaultInitUI();
         initUI();
+
     }
 
     private void defaultInitUI() {
 
         setTitle(this.title);
-        setSize(500, 300);
+        setSize(500, 400);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
@@ -41,6 +49,7 @@ public abstract class ApplicationWindow extends JFrame {
         gbc.fill = 1;
         contentPane.add(appPage,gbc);
         reloadWindow();
+
     }
 
     public void reloadWindow(){
