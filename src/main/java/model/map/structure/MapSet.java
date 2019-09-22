@@ -1,5 +1,6 @@
 package model.map.structure;
 
+import application.mapEditing.toolInterfaces.Draggable;
 import model.map.tiles.MapTile;
 import application.config.Configuration;
 
@@ -8,7 +9,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MapSet {
+public class MapSet implements Draggable{
 
     private MapLayer tileLayer = new MapLayer();
     private MapGridLayer gridLayer;
@@ -103,7 +104,7 @@ public class MapSet {
     }
 
     public MapTile getMapTile(int xOnScreen, int yOnScreen,int parentXoffset,int parentYoffset){
-        return tileLayer.getTile(xOnScreen,yOnScreen,xoffset-parentXoffset,yoffset-parentYoffset);
+        return tileLayer.getTile(xOnScreen,yOnScreen,parentXoffset-xoffset,parentYoffset-yoffset);
     }
 
     public List<MapTile> getEdgeTiles(int xOnScreen, int yOnScreen,int parentXoffset,int parentYoffset){
@@ -114,18 +115,57 @@ public class MapSet {
     public void draw(Graphics g,int mapXoffset, int mapYoffset){
         Graphics g2d = mapImage.getGraphics();
 
-        tileLayer.draw(g2d,mapXoffset,mapYoffset);
+        tileLayer.draw(g2d,mapXoffset+xoffset,mapYoffset+yoffset);
 
         if(drawGrid){
-            gridLayer.draw(g2d,mapXoffset,mapYoffset);
+            gridLayer.draw(g2d,mapXoffset-xoffset,mapYoffset-yoffset);
         }
 
         for(MapLayer mapLayer: graphicLayers){
-            mapLayer.draw(g2d,mapXoffset,mapYoffset);
+            mapLayer.draw(g2d,mapXoffset+xoffset,mapYoffset+yoffset);
         }
 
-        edgeLayer.draw(g2d,mapXoffset,mapYoffset);
+        edgeLayer.draw(g2d,mapXoffset-xoffset,mapYoffset-yoffset);
 
         g.drawImage(mapImage,xoffset,yoffset,null);
+    }
+
+    @Override
+    public void translate(int delta_x, int delta_y) {
+        xoffset += delta_x;
+        yoffset += delta_y;
+        if(this.xoffset > 0){
+            this.xoffset = 0;
+        }
+        if(this.yoffset > 0){
+            this.yoffset = 0;
+        }
+        if(this.xoffset < -(gridWidth*Configuration.TILE_WIDTH)+1200){
+            this.xoffset = -(gridWidth*Configuration.TILE_WIDTH)+1200;
+        }
+        if(this.yoffset < -(gridHeight*Configuration.TILE_HEIGHT)+700){
+            this.yoffset = -(gridHeight*Configuration.TILE_HEIGHT)+700;
+        }
+    }
+
+    public int getXoffset() {
+        return xoffset;
+    }
+
+    public void setXoffset(int xoffset) {
+        this.xoffset = xoffset;
+    }
+
+    public int getYoffset() {
+        return yoffset;
+    }
+
+    public void setYoffset(int yoffset) {
+        this.yoffset = yoffset;
+    }
+
+    @Override
+    public boolean shouldDrag(int x, int y){
+        return true;
     }
 }

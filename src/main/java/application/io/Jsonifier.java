@@ -46,6 +46,8 @@ public class Jsonifier {
         json.put("graphicLayers",graphicLayersToJSON(mapset.getGraphicLayers()));
         json.put("gridWidth",mapset.getGridWidth());
         json.put("gridHeight",mapset.getGridHeight());
+        json.put("xoffset",mapset.getXoffset());
+        json.put("yoffset",mapset.getYoffset());
 
         return json;
     }

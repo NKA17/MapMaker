@@ -2,6 +2,8 @@ package model.map.structure;
 
 import UI.app.assets.MapAsset;
 import application.io.AssetCache;
+import application.mapEditing.toolInterfaces.Draggable;
+import model.map.tiles.AssetTile;
 import model.map.tiles.MapTile;
 import model.map.tiles.PatternTile;
 import application.config.Configuration;
@@ -20,6 +22,7 @@ public class RPGMap {
     private List<MapSet> layerSets = new ArrayList<>();
     private BufferedImage mapImage =  new BufferedImage(Configuration.TILE_WIDTH * gridWidth, Configuration.TILE_HEIGHT*gridHeight,BufferedImage.TYPE_4BYTE_ABGR);
     private MapSet activeLayer;
+    private String name = "New_Map";
 
     public void init(){
         MapSet defaultSet = new MapSet(gridWidth,gridHeight);
@@ -46,7 +49,27 @@ public class RPGMap {
         this.yoffset = yoffset;
     }
 
+    public Draggable getFirstTile(int x, int y){
+        List<MapLayer> layers = new ArrayList<>();
+        layers.add(activeLayer.getTileLayer());
+        layers.addAll(activeLayer.getGraphicLayers());
 
+        List<Draggable> draggables = new ArrayList<>();
+        draggables.add(activeLayer);
+        for(GraphicLayer gl : activeLayer.getGraphicLayers()){
+            for(MapTile at: gl.getTiles()){
+                draggables.add((Draggable)at);
+            }
+        }
+
+        for(int j = draggables.size()-1; j >= 0; j--){
+            Draggable draggable = draggables.get(j);
+            if( draggable.shouldDrag(x-activeLayer.getXoffset(),y-activeLayer.getYoffset())){
+                return draggable;
+            }
+        }
+        return null;
+    }
 
     public MapLayer createTileLayer(String defaultAsset){
         MapLayer mapLayer = new MapLayer();
@@ -131,5 +154,13 @@ public class RPGMap {
 
     public void setLayerSets(List<MapSet> layerSets) {
         this.layerSets = layerSets;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

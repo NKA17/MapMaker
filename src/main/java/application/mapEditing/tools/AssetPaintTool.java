@@ -15,7 +15,7 @@ import java.util.Random;
 
 public class AssetPaintTool implements IPaintTool {
     private List<String> palette = new ArrayList<>();
-    private String defaultAsset = "./src/main/resources/assets/map/structure/basic/1.png";
+    private String defaultAsset = "./src/main/resources/assets/map/assets/tools/bucket 1.png";
 
     public AssetPaintTool(){
         addAssetToPaint(defaultAsset);
@@ -77,8 +77,8 @@ public class AssetPaintTool implements IPaintTool {
             String assetString = getRandomFromPalette();
             MapAsset asset = AssetCache.get(assetString);
             AssetTile tile = new AssetTile(asset);
-            tile.setGridx(e.getX() - map.getXoffset());
-            tile.setGridy(e.getY() - map.getYoffset());
+            tile.setGridx(e.getX() - map.getXoffset() - map.getActiveLayer().getXoffset());
+            tile.setGridy(e.getY() - map.getYoffset() - map.getActiveLayer().getYoffset());
             mapLayer.getTiles().add(tile);
         }catch (Exception e2){
             e2.printStackTrace();

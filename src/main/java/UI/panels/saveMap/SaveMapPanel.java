@@ -24,7 +24,7 @@ public class SaveMapPanel extends ApplicationPanel{
     public void loadPanel() {
         setLayout(new GridBagLayout());
 
-        JTextField fileNameField = new JTextField("Map_Name");
+        JTextField fileNameField = new JTextField(map.getName());
         fileNameField.setPreferredSize(new Dimension(350,30));
         fileNameField.setEditable(true);
 

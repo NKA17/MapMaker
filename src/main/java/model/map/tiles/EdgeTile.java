@@ -23,4 +23,5 @@ public class EdgeTile extends MapTile {
                 getGridy()*Configuration.TILE_HEIGHT+getAssetResource().getImageOffsetY(),
                 null);
     }
+
 }

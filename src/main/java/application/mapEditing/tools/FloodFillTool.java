@@ -33,7 +33,9 @@ public class FloodFillTool implements IPaintTool {
 
     @Override
     public void activateTool(MouseEvent e, RPGMap map) {
-        MapTile tile = map.getMapTile(e.getX(),e.getY());
+        MapTile tile = map.getMapTile(
+                e.getX(),
+                e.getY());
         FogBody fogBody = FloodFill.fill(map.getActiveLayer(),tile.getGridx(),tile.getGridy(),tile.getAssetResource());
         for(MapTile ft: fogBody.getTiles()){
             for(MapTile mt: map.getActiveLayer().getTileLayer().getTiles()){
