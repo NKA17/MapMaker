@@ -79,4 +79,8 @@ public class LoadModel {
     public void setPrompt(String prompt) {
         this.prompt = prompt;
     }
+
+    public String toString(){
+        return getReadBytes()+"/"+getTotalBytes()+" ("+getProgressString(2)+")";
+    }
 }

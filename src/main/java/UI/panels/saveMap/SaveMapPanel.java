@@ -123,5 +123,6 @@ public class SaveMapPanel extends ApplicationPanel{
 
         progressThread.start();
         saveThread.start();
+        map.setName(fileName);
     }
 }

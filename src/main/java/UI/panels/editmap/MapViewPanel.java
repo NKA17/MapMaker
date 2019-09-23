@@ -5,8 +5,10 @@ import model.map.structure.RPGMap;
 import application.mapEditing.editors.MapEditor;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-public class MapViewPanel extends ApplicationPanel {
+public class MapViewPanel extends ApplicationPanel  {
     private RPGMap map ;
     private MapEditor mapEditor;
 
@@ -14,6 +16,9 @@ public class MapViewPanel extends ApplicationPanel {
         mapEditor = new MapEditor(getMap(),this);
         addMouseListener(mapEditor);
         addMouseMotionListener(mapEditor);
+        getObserver().setFocusable(true);
+        getObserver().requestFocus();
+        getObserver().addKeyListener(mapEditor);
     }
 
     public RPGMap getMap() {

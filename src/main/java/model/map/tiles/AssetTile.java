@@ -8,16 +8,25 @@ import java.io.File;
 
 public class AssetTile extends MapTile implements Draggable{
 
+    private int xoffset = 0;
+    private int yoffset = 0;
+
     public AssetTile(File assetFile, int gridx, int gridy) {
         super(assetFile, gridx, gridy);
+        xoffset = - (getAssetResource().getImage().getWidth() / 2);
+        yoffset = - (getAssetResource().getImage().getHeight());
     }
 
     public AssetTile(File assetFile) {
         super(assetFile, 0, 0);
+        xoffset = - (getAssetResource().getImage().getWidth() / 2);
+        yoffset = - (getAssetResource().getImage().getHeight());
     }
 
     public AssetTile(MapAsset mapAsset, int gridx, int gridy) {
         super(mapAsset, gridx, gridy);
+        xoffset = - (getAssetResource().getImage().getWidth() / 2);
+        yoffset = - (getAssetResource().getImage().getHeight());
     }
 
     public AssetTile(MapAsset mapAsset) {
@@ -27,8 +36,8 @@ public class AssetTile extends MapTile implements Draggable{
     @Override
     public void draw(Graphics g) {
         g.drawImage(getAssetResource().getImage(),
-                getGridx() - (getAssetResource().getImage().getWidth() / 2),
-                getGridy() - (getAssetResource().getImage().getHeight()),
+                getGridx() + xoffset,
+                getGridy() + yoffset ,
                 null);
     }
 
@@ -61,5 +70,21 @@ public class AssetTile extends MapTile implements Draggable{
     public void translate(int delta_x, int delta_y) {
         setGridx(getGridx()+delta_x);
         setGridy(getGridy()+delta_y);
+    }
+
+    public int getXoffset() {
+        return xoffset;
+    }
+
+    public void setXoffset(int xoffset) {
+        this.xoffset = xoffset;
+    }
+
+    public int getYoffset() {
+        return yoffset;
+    }
+
+    public void setYoffset(int yoffset) {
+        this.yoffset = yoffset;
     }
 }

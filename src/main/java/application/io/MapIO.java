@@ -40,6 +40,9 @@ public class MapIO {
 
     public static RPGMap loadMap(String fileName,LoadModel load,RPGMap destination){
         try{
+            if(!fileName.endsWith(Configuration.FILE_EXTENSION)){
+                fileName += Configuration.FILE_EXTENSION;
+            }
             File file = new File(fileName);
             if(!file.exists()){
                 throw new FileNotFoundException();
@@ -62,6 +65,7 @@ public class MapIO {
             load.setTotalBytes(load.getReadBytes());
             return destination;
         }catch (Exception e){
+            e.printStackTrace();
             destination.init();
             load.finish();
             return destination;

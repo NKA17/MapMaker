@@ -65,6 +65,7 @@ public class EditMapPage extends ApplicationPage{
         addPanel(mapToolPanel,0,0);
 
         addPanel(mapView,1,0);
+        mapView.setObserver(getObserver());
         mapView.createEditor();
     }
 
