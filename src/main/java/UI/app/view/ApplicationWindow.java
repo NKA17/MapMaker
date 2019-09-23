@@ -42,8 +42,8 @@ public abstract class ApplicationWindow extends JFrame {
     public void openPage(ApplicationPage appPage){
         Container contentPane = getContentPane();
         contentPane.removeAll();
-        appPage.loadPage();
         appPage.setObserver(this);
+        appPage.loadPage();
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.fill = 1;

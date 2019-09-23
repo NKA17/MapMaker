@@ -9,6 +9,8 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.geom.Area;
 import java.awt.geom.RoundRectangle2D;
 import java.io.File;
@@ -21,6 +23,8 @@ public class ButtonFactory {
         button.setRolloverEnabled(false);
         button.setFocusPainted(false);
         button.setFont(TextFactory.LABEL_FONT);
+        button.setFocusable(false);
+        button.addMouseListener(new EnterListener(button));
         return button;
     }
 
@@ -36,8 +40,43 @@ public class ButtonFactory {
         jButton.setRolloverEnabled(false);
         jButton.setFocusPainted(false);
         jButton.setBorder(new BubbleBorder(Color.BLACK,2,6));
+        jButton.setFocusable(false);
+        jButton.addMouseListener(new EnterListener(jButton));
         return jButton;
     }
 
+    private static class EnterListener implements MouseListener{
+        private JButton button;
+
+        public EnterListener(JButton button) {
+            this.button = button;
+        }
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            button.setBackground(Configuration.COMP_HOVER_BG_COLOR);
+
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            button.setBackground(Configuration.COMP_BG_COLOR);
+        }
+    }
 
 }

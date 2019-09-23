@@ -41,6 +41,8 @@ public class FogFactory {
         MapTile[][][] edges = new EdgeTile[mapSet.getGridWidth()][mapSet.getGridHeight()][2];
         int[][] flags = new int[mapSet.getGridWidth()][mapSet.getGridHeight()];
         for(MapTile mapTile: mapSet.getEdgeLayer().getTiles()){
+            if(mapTile.getAssetResource().getName().toLowerCase().contains("fringe"))
+                continue;
             edges[mapTile.getGridx()]
                     [mapTile.getGridy()]
                     [mapTile.getAssetResource().getName().contains("_vert")?vert:hor] = mapTile;
