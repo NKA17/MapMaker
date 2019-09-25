@@ -1,7 +1,14 @@
 package model.map.tiles;
 
 import UI.app.assets.MapAsset;
+import UI.app.view.ApplicationPage;
+import UI.pages.editmap.EditMapPage;
+import UI.pages.playMap.PlayMapPage;
+import application.config.AppState;
+import application.config.Configuration;
 import application.mapEditing.toolInterfaces.Draggable;
+import application.mapEditing.toolInterfaces.ITool;
+import application.mapEditing.tools.DragTool;
 
 import java.awt.*;
 import java.io.File;
@@ -31,6 +38,8 @@ public class AssetTile extends MapTile implements Draggable{
 
     public AssetTile(MapAsset mapAsset) {
         super(mapAsset, 0, 0);
+        xoffset = - (getAssetResource().getImage().getWidth() / 2);
+        yoffset = - (getAssetResource().getImage().getHeight());
     }
 
     @Override
@@ -39,6 +48,19 @@ public class AssetTile extends MapTile implements Draggable{
                 getGridx() + xoffset,
                 getGridy() + yoffset ,
                 null);
+
+        Draggable d = AppState.ACTIVE_DRAGGABLE;
+        ApplicationPage a = AppState.ACTIVE_PAGE;
+        ITool i = AppState.ACTIVE_TOOL;
+        if(AppState.ACTIVE_DRAGGABLE==this
+                && AppState.ACTIVE_TOOL instanceof DragTool
+                && (AppState.ACTIVE_PAGE instanceof EditMapPage || AppState.ACTIVE_PAGE instanceof PlayMapPage)) {
+            g.setColor(Configuration.HIGHLIGHT_COLOR);
+            g.drawRect(getGridx() + getXoffset() - 5,
+                    getGridy() + getYoffset() - 5,
+                    getAssetResource().getImage().getWidth() + 5,
+                    getAssetResource().getImage().getHeight() + 5);
+        }
     }
 
     public  boolean isOnScreen(int mapxoffset, int mapyoffset){

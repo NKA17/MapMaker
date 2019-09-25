@@ -59,5 +59,11 @@ public abstract class ApplicationPage extends JPanel {
         panels.add(panel);
     }
 
+    public void dispose(){
+        for(ApplicationPanel panel: panels){
+            panel.dispose();
+        }
+    }
+
     public abstract void loadPage();
 }

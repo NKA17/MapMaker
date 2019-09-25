@@ -106,7 +106,7 @@ public class SaveMapPanel extends ApplicationPanel{
                         //do nothin
                     }
                 };
-                getObserver().openPage(loadPage);
+                getObserver().openPage(loadPage,false);
             }
         };
 

@@ -1,5 +1,6 @@
 package UI.app.view;
 
+import application.config.AppState;
 import application.config.Configuration;
 
 import javax.imageio.ImageIO;
@@ -12,6 +13,7 @@ public abstract class ApplicationWindow extends JFrame {
     private String title;
     private GridBagLayout gridBagLayout = new GridBagLayout();
     private GridBagConstraints gbc = new GridBagConstraints();
+    private ApplicationPage currentPage = null;
 
     public ApplicationWindow() {
         this.title = "RPG MapMaker";
@@ -40,6 +42,14 @@ public abstract class ApplicationWindow extends JFrame {
     public abstract void initUI();
 
     public void openPage(ApplicationPage appPage){
+        openPage(appPage,true);
+    }
+    public void openPage(ApplicationPage appPage, boolean makeActivePage){
+        if(currentPage != null)
+            currentPage.dispose();
+
+        if(makeActivePage)
+            AppState.ACTIVE_PAGE = appPage;
         Container contentPane = getContentPane();
         contentPane.removeAll();
         appPage.setObserver(this);
@@ -50,6 +60,7 @@ public abstract class ApplicationWindow extends JFrame {
         contentPane.add(appPage,gbc);
         reloadWindow();
 
+        currentPage = appPage;
     }
 
     public void reloadWindow(){

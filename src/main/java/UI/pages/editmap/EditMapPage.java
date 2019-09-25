@@ -1,12 +1,9 @@
 package UI.pages.editmap;
 
 import UI.app.view.ApplicationPage;
-import UI.app.view.ApplicationWindow;
 import UI.pages.LoadPage.LoadPage;
 import UI.panels.editmap.MapToolPanel;
-import UI.panels.editmap.MapViewPanel;
-import UI.panels.loadPanel.LoadPanel;
-import UI.windows.BasicWindow;
+import UI.panels.mapView.MapViewPanel;
 import application.io.LoadModel;
 import application.io.MapIO;
 import model.map.structure.RPGMap;
@@ -52,7 +49,8 @@ public class EditMapPage extends ApplicationPage{
             public void run() {
 
                 MapIO.loadMap(mapFileName,loadModel,map);
-                loadModel.removeSelf();
+                //loadModel.removeSelf();
+                mapView.removeAll();
                 mapView.repaint();
             }
         };
