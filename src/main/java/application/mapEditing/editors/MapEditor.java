@@ -1,10 +1,12 @@
 package application.mapEditing.editors;
 
+import application.config.AppState;
 import application.mapEditing.tools.DragTool;
 import application.mapEditing.tools.PanTool;
 import application.mapEditing.tools.Tools;
+import model.map.structure.MapLayer;
 import model.map.structure.RPGMap;
-import UI.panels.editmap.MapViewPanel;
+import UI.panels.mapView.MapViewPanel;
 import application.mapEditing.toolInterfaces.ITool;
 import application.mapEditing.tools.NoneTool;
 
@@ -33,7 +35,14 @@ public class MapEditor implements MouseListener, MouseMotionListener, KeyListene
     }
     public void mouseReleased(MouseEvent e) {
         tool.deactivateTool(e,map);
-        mapViewPanel.repaint();
+    }
+
+    public RPGMap getMap() {
+        return map;
+    }
+
+    public void setMap(RPGMap map) {
+        this.map = map;
     }
 
     public ITool getTool() {
@@ -41,13 +50,16 @@ public class MapEditor implements MouseListener, MouseMotionListener, KeyListene
     }
 
     public void setTool(ITool tool) {
+        AppState.ACTIVE_TOOL = tool;
+        if(!(tool instanceof DragTool))
+            AppState.ACTIVE_DRAGGABLE = null;
+        mapViewPanel.repaint();
         this.tool = tool;
     }
 
     @Override
     public void mouseDragged(MouseEvent e) {
         tool.drag(e,map);
-        System.out.println("Repainted");
         mapViewPanel.repaint();
     }
 
@@ -64,26 +76,42 @@ public class MapEditor implements MouseListener, MouseMotionListener, KeyListene
         if(e.getKeyCode()==81)//q
             setTool(new PanTool());
 
-        if(e.getKeyCode()==68)//d
+        else if(e.getKeyCode()==68)//d
             setTool(new DragTool());
 
-        if(e.getKeyCode()==71)//g
+        else if(e.getKeyCode()==71)//g
             map.getActiveLayer().toggleGrid();
 
-        if(e.getKeyCode()==70)//f
+        else if(e.getKeyCode()==70)//f
             System.out.println("Not really implemented yet");
 
-        if(e.getKeyCode()==66)//b
+        else if(e.getKeyCode()==66)//b
             setTool(Tools.PAINT_TOOL);
 
-        if(e.getKeyCode()==83)//s
+        else if(e.getKeyCode()==83)//s
             setTool(Tools.FLOOD_FILL_TOOL);
 
-        if(e.getKeyCode()==69)//e
+        else if(e.getKeyCode()==69)//e
             setTool(Tools.EDGE_PAINT_TOOL);
 
-        if(e.getKeyCode()==65)//a
+        else if(e.getKeyCode()==65)//a
             setTool(Tools.GRAPHIC_PAINT_TOOL);
+
+        else if(e.getKeyCode()==127)//delete
+            deleteActiveDraggable();
+
+        else
+            System.out.println(e.getKeyCode());
+    }
+
+    private void deleteActiveDraggable(){
+        for(MapLayer layer: map.getActiveLayer().getGraphicLayers()){
+            if(layer.getTiles().remove(AppState.ACTIVE_DRAGGABLE)) {
+                AppState.ACTIVE_DRAGGABLE = null;
+                mapViewPanel.repaint();
+                break;
+            }
+        }
     }
 
     @Override

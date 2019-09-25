@@ -107,10 +107,7 @@ public class RPGMapRenderer {
         return render;
     }
 
-    public static void main(String[] args){
-        RPGMap map = new RPGMap();
-
-        MapIO.loadMap(Configuration.SAVE_FOLDER+"Jungle Village",new LoadModel(),map);
+    public static void saveAsImage(RPGMap map){
         RPGMapRenderer mapRenderer = new RPGMapRenderer(map);
 
         mapRenderer.render(new LoadModel());

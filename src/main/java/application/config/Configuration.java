@@ -17,4 +17,6 @@ public class Configuration {
     public static final Color COMP_BG_COLOR = new Color(52,177,199);
     public static final Color COMP_HOVER_BG_COLOR = new Color(166,233,245);
     public static final Color COMP_BORDER_COLOR = new Color(0,0,0);
+
+    public static final Color HIGHLIGHT_COLOR = new Color(166,233,245);
 }

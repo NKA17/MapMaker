@@ -1,6 +1,8 @@
 package application.mapEditing.tools;
 
+import application.config.AppState;
 import application.mapEditing.toolInterfaces.Draggable;
+import model.map.structure.MapSet;
 import model.map.structure.RPGMap;
 import application.mapEditing.toolInterfaces.ITool;
 
@@ -16,6 +18,11 @@ public class DragTool implements ITool {
         startx = e.getXOnScreen();
         starty = e.getYOnScreen();
         toDrag = map.getFirstTile(e.getX(),e.getY());
+        if(!(toDrag instanceof MapSet)){
+            AppState.ACTIVE_DRAGGABLE = toDrag;
+        }else{
+            AppState.ACTIVE_DRAGGABLE = null;
+        }
     }
 
     @Override

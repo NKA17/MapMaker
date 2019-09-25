@@ -1,6 +1,7 @@
-package UI.panels.editmap;
+package UI.panels.mapView;
 
 import UI.app.view.ApplicationPanel;
+import application.mapEditing.editors.MapPlayer;
 import model.map.structure.RPGMap;
 import application.mapEditing.editors.MapEditor;
 
@@ -14,6 +15,15 @@ public class MapViewPanel extends ApplicationPanel  {
 
     public void createEditor(){
         mapEditor = new MapEditor(getMap(),this);
+        addMouseListener(mapEditor);
+        addMouseMotionListener(mapEditor);
+        getObserver().setFocusable(true);
+        getObserver().requestFocus();
+        getObserver().addKeyListener(mapEditor);
+    }
+
+    public void createPlayEditor(){
+        mapEditor = new MapPlayer(getMap(),this);
         addMouseListener(mapEditor);
         addMouseMotionListener(mapEditor);
         getObserver().setFocusable(true);
@@ -48,5 +58,12 @@ public class MapViewPanel extends ApplicationPanel  {
         //g.setColor(new Color(0,0,0));
         //g.fillRect(0,0,1200,700);
         map.draw(g);
+    }
+
+    @Override
+    public void dispose(){
+        getObserver().removeKeyListener(mapEditor);
+        removeMouseListener(mapEditor);
+        removeMouseMotionListener(mapEditor);
     }
 }
