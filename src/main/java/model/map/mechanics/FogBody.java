@@ -1,5 +1,6 @@
 package model.map.mechanics;
 
+import application.io.AssetCache;
 import model.map.tiles.MapTile;
 import model.map.tiles.PatternTile;
 
@@ -24,5 +25,18 @@ public class FogBody {
 
     public void setTiles(List<MapTile> tiles) {
         this.tiles = tiles;
+    }
+
+    public void toggleVisibility(){
+        show = !show;
+        if(show){
+            for(MapTile tile: getTiles()){
+                tile.setAssetResource(AssetCache.get("./src/main/resources/assets/map/floor/0mechanics/black.png"));
+            }
+        }else{
+            for(MapTile tile: getTiles()){
+                tile.setAssetResource(AssetCache.get("./src/main/resources/assets/map/misc/BlankTile.png"));
+            }
+        }
     }
 }

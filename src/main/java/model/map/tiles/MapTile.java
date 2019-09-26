@@ -63,4 +63,9 @@ public abstract class MapTile {
         return validx && validy;
     }
 
+    public String toString(){
+        String name = getAssetResource().getName();
+        name = name.substring(name.lastIndexOf("\\"));
+        return String.format("%s:%d,%d",name,getGridx(),getGridy());
+    }
 }

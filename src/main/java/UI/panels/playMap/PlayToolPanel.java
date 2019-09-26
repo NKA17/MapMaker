@@ -6,6 +6,8 @@ import UI.pages.editmap.EditMapPage;
 import UI.panels.mapView.MapViewPanel;
 import application.config.Configuration;
 import application.mapEditing.tools.DragTool;
+import application.mapEditing.tools.FogOfWarTool;
+import model.map.structure.MapSet;
 
 import javax.swing.*;
 import java.awt.*;
@@ -34,6 +36,9 @@ public class PlayToolPanel extends ApplicationPanel {
         edit.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e) {
+                for(MapSet set: viewPanel.getMap().getLayerSets()){
+                    set.destroyFog();
+                }
                 getObserver().openPage(new EditMapPage(
                         Configuration.SAVE_FOLDER+viewPanel.getMap().getName()));
             }
@@ -52,7 +57,7 @@ public class PlayToolPanel extends ApplicationPanel {
         eye.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e) {
-
+                viewPanel.getMapEditor().setTool(new FogOfWarTool());
             }
         });
 

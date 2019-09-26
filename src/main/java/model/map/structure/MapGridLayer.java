@@ -35,8 +35,8 @@ public class MapGridLayer extends MapLayer {
                             Configuration.TILE_HEIGHT - 1);
 
                     g.setColor(new Color(180,250,180,200));
-//                    g.drawString(String.format("%d:%d",x ,y),
-//                            x * Configuration.TILE_HEIGHT+5,y * Configuration.TILE_HEIGHT+15);
+                    g.drawString(String.format("%d:%d",x ,y),
+                            x * Configuration.TILE_HEIGHT+5,y * Configuration.TILE_HEIGHT+15);
                 }
             }
         }
