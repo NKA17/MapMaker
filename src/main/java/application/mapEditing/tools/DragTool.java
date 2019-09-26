@@ -17,9 +17,16 @@ public class DragTool implements ITool {
     public void activateTool(MouseEvent e, RPGMap map) {
         startx = e.getXOnScreen();
         starty = e.getYOnScreen();
+        boolean hidden = map.getActiveLayer().isHidden(e.getX(),e.getY());
+
         toDrag = map.getFirstTile(e.getX(),e.getY());
         if(!(toDrag instanceof MapSet)){
-            AppState.ACTIVE_DRAGGABLE = toDrag;
+            if(hidden){
+                toDrag = map.getActiveLayer();
+                AppState.ACTIVE_DRAGGABLE = null;
+            }else {
+                AppState.ACTIVE_DRAGGABLE = toDrag;
+            }
         }else{
             AppState.ACTIVE_DRAGGABLE = null;
         }

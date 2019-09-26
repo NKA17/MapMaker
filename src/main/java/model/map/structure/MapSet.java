@@ -1,8 +1,12 @@
 package model.map.structure;
 
+import application.io.AssetCache;
 import application.mapEditing.toolInterfaces.Draggable;
+import model.map.mechanics.FogBody;
+import model.map.mechanics.FogFactory;
 import model.map.tiles.MapTile;
 import application.config.Configuration;
+import model.map.tiles.PatternTile;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -16,6 +20,8 @@ public class MapSet implements Draggable{
     private List<GraphicLayer> graphicLayers = new ArrayList<>();
     private GraphicLayer activeGraphicLayer;
     private MapLayer edgeLayer = new MapLayer();
+    private MapLayer fogLayer = new MapLayer();
+    private List<FogBody> fogClouds = new ArrayList<>();
     private BufferedImage mapImage;
     private int xoffset = 0;
     private int yoffset = 0;
@@ -111,6 +117,64 @@ public class MapSet implements Draggable{
         return edgeLayer.getTiles(xOnScreen,yOnScreen,xoffset-parentXoffset,yoffset-parentYoffset);
     }
 
+    public void buildFogLayer(){
+        fogLayer = new MapLayer();
+        fogClouds = FogFactory.floodFog(this);
+        for(FogBody cloud: fogClouds){
+            fogLayer.getTiles().addAll(cloud.getTiles());
+        }
+    }
+
+    public boolean isHidden(int xOnScreen, int yOnScreen){
+        int x = xOnScreen - xoffset;
+        int y = yOnScreen - yoffset;
+        int gridx = x / Configuration.TILE_WIDTH;
+        int gridy = y / Configuration.TILE_HEIGHT;
+
+        for(FogBody cloud: fogClouds){
+            boolean isBody = false;
+            for(MapTile tile: cloud.getTiles()){
+                isBody = tile.getGridx() == gridx && tile.getGridy() == gridy;
+                if(isBody)
+                    break;
+            }
+            if(isBody){
+                return cloud.isShow();
+            }
+        }
+        return false;
+    }
+
+//    Fog Of War
+//    Fog of war is built on Battle Button press
+//    Fog of war is toggle-able
+//    Fog of war that is showing disallows the ability to move asset beneath it
+
+    public void destroyFog(){
+        fogLayer = new MapLayer();
+        fogClouds = new ArrayList<>();
+    }
+
+    public void toggleFog(int xOnScreen, int yOnScreen){
+        int x = xOnScreen - xoffset;
+        int y = yOnScreen - yoffset;
+        int gridx = x / Configuration.TILE_WIDTH;
+        int gridy = y / Configuration.TILE_HEIGHT;
+
+        for(FogBody cloud: fogClouds){
+            boolean isBody = false;
+            for(MapTile tile: cloud.getTiles()){
+                isBody = tile.getGridx() == gridx && tile.getGridy() == gridy;
+                if(isBody)
+                    break;
+            }
+            if(isBody){
+                cloud.toggleVisibility();
+                break;
+            }
+        }
+    }
+
 
     public void draw(Graphics g,int mapXoffset, int mapYoffset){
         Graphics g2d = mapImage.getGraphics();
@@ -126,6 +190,8 @@ public class MapSet implements Draggable{
         }
 
         edgeLayer.draw(g2d,mapXoffset+xoffset,mapYoffset+yoffset);
+
+        fogLayer.draw(g2d, mapXoffset+xoffset,mapYoffset+yoffset);
 
         g.drawImage(mapImage,xoffset,yoffset,null);
     }

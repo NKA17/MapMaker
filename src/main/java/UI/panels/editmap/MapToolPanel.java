@@ -15,6 +15,7 @@ import application.mapEditing.toolInterfaces.ITool;
 import application.mapEditing.tools.PanTool;
 import model.map.mechanics.FogBody;
 import model.map.mechanics.FogFactory;
+import model.map.structure.MapSet;
 import model.map.structure.RPGMap;
 import UI.pages.paletteSelect.PaletteSelectPage;
 import UI.pages.start.StartPage;
@@ -208,6 +209,9 @@ public class MapToolPanel extends ApplicationPanel {
         {
             public void actionPerformed(ActionEvent e)
             {
+                for(MapSet set: map.getLayerSets()){
+                    set.buildFogLayer();
+                }
                 getObserver().openPage(new PlayMapPage(map));
             }
         });
