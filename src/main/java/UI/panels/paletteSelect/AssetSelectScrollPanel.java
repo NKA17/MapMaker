@@ -2,6 +2,7 @@ package UI.panels.paletteSelect;
 
 import UI.app.view.ApplicationPanel;
 import application.mapEditing.toolInterfaces.IPaintTool;
+import application.utils.ImageUtils;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -110,14 +111,7 @@ public class AssetSelectScrollPanel extends ApplicationPanel {
     }
 
     private BufferedImage scale(BufferedImage before){
-        BufferedImage resized = new BufferedImage(50, 50, before.getType());
-        Graphics2D g = resized.createGraphics();
-        g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-                RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-        g.drawImage(before, 0, 0, 50, 50, 0, 0, before.getWidth(),
-                before.getHeight(), null);
-        g.dispose();
-        return resized;
+        return ImageUtils.resize(before,50,50);
     }
 
     class PaletteSelectButton implements MouseListener{

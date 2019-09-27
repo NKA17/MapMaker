@@ -13,6 +13,7 @@ public class TextFactory {
     public static JLabel createLabel(String text){
         JLabel label = new JLabel(text);
         label.setFont(LABEL_FONT);
+        label.setForeground(new Color(180,180,180));
         return label;
     }
 

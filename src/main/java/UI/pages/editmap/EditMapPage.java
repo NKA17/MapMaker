@@ -13,49 +13,61 @@ import java.awt.*;
 public class EditMapPage extends ApplicationPage{
 
     private String mapFileName;
+    private RPGMap privateMap = null;
 
     public EditMapPage(String mapFileName) {
         this.mapFileName = mapFileName;
+    }
+
+    public EditMapPage(RPGMap map){
+        privateMap = map;
     }
 
     @Override
     public void loadPage() {
         MapViewPanel mapView = new MapViewPanel();
         LoadModel loadModel = new LoadModel();
-
-        Runnable run = new Runnable() {
-            @Override
-            public void run() {
-                LoadPage page =new LoadPage(loadModel) {
-                    @Override
-                    public void onLoad() {
-                        mapView.remove(this);
-                        mapView.repaint();
-                    }
-                };
-                page.setBackground(new Color(0,0,0));
-                page.loadPage();
-                mapView.add(page);
-                mapView.invalidate();
-                mapView.revalidate();
-            }
-        };
-        Thread th = new Thread(run);
-        th.start();
-
         RPGMap map = new RPGMap();
-        Runnable run2 = new Runnable() {
-            @Override
-            public void run() {
 
-                MapIO.loadMap(mapFileName,loadModel,map);
-                //loadModel.removeSelf();
-                mapView.removeAll();
-                mapView.repaint();
-            }
-        };
-        Thread th2 = new Thread(run2);
-        th2.start();
+        if(privateMap == null) {
+
+            Runnable run = new Runnable() {
+                @Override
+                public void run() {
+                    LoadPage page = new LoadPage(loadModel) {
+                        @Override
+                        public void onLoad() {
+                            mapView.remove(this);
+                            mapView.repaint();
+                        }
+                    };
+                    page.setBackground(new Color(0, 0, 0));
+                    page.loadPage();
+                    mapView.add(page);
+                    mapView.invalidate();
+                    mapView.revalidate();
+                }
+            };
+            Thread th = new Thread(run);
+            th.start();
+
+            Runnable run2 = new Runnable() {
+                @Override
+                public void run() {
+
+                    MapIO.loadMap(mapFileName, loadModel, map);
+                    //loadModel.removeSelf();
+                    mapView.removeAll();
+                    mapView.repaint();
+                }
+            };
+            Thread th2 = new Thread(run2);
+            th2.start();
+        }else {
+            map.setGridDimensions(privateMap.getGridWidth(),privateMap.getGridHeight());
+            map.setName(privateMap.getName());
+            map.init();
+        }
 
         mapView.setMap(map);
         MapToolPanel mapToolPanel = new MapToolPanel(mapView);

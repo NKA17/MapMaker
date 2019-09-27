@@ -28,6 +28,17 @@ public class ButtonFactory {
         return button;
     }
 
+    public static JButton createStaticButton(String text){
+        JButton button = new JButton(text);
+        button.setBackground(Configuration.COMP_BG_COLOR);
+        button.setBorder(new BubbleBorder(Color.BLACK,2,6));
+        button.setRolloverEnabled(false);
+        button.setFocusPainted(false);
+        button.setFont(TextFactory.LABEL_FONT);
+        button.setFocusable(false);
+        return button;
+    }
+
     public static JButton createButtonWithIcon(String text){
         JButton jButton;
         try{

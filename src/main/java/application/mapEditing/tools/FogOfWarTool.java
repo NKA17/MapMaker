@@ -8,7 +8,7 @@ import java.awt.event.MouseEvent;
 public class FogOfWarTool implements ITool {
     @Override
     public void activateTool(MouseEvent e, RPGMap map) {
-        map.getActiveLayer().toggleFog(e.getX(),e.getY());
+        map.getActiveLayer().toggleFog(e.getX()-map.getXoffset(),e.getY()-map.getYoffset());
     }
 
     @Override

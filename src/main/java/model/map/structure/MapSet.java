@@ -30,11 +30,11 @@ public class MapSet implements Draggable{
 
     private boolean drawGrid = false;
 
-    public MapSet(int rows, int columns){
+    public MapSet(int columns, int rows){
         gridLayer = new MapGridLayer(rows,columns);
         mapImage = new BufferedImage(
-                Configuration.TILE_WIDTH * rows,
-                Configuration.TILE_HEIGHT*columns,
+                Configuration.TILE_WIDTH * columns,
+                Configuration.TILE_HEIGHT*rows,
                 BufferedImage.TYPE_4BYTE_ABGR);
         mapImage.createGraphics();
         activeGraphicLayer = new GraphicLayer();

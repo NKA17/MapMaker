@@ -19,11 +19,11 @@ public class BasicWindow extends ApplicationWindow {
         sp.openPage(new StartPage());
         sp.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         sp.makeVisible();
-        String fonts[] = GraphicsEnvironment
-                .getLocalGraphicsEnvironment()
-                .getAvailableFontFamilyNames();
-        for(String s : fonts){
-            System.out.println(s);
-        }
+//        String fonts[] = GraphicsEnvironment
+//                .getLocalGraphicsEnvironment()
+//                .getAvailableFontFamilyNames();
+//        for(String s : fonts){
+//            System.out.println(s);
+//        }
     }
 }

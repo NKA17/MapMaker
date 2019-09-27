@@ -9,7 +9,7 @@ public class MapGridLayer extends MapLayer {
     private int columns;
     private Color color = Configuration.GRID_COLOR;
 
-    public MapGridLayer(int rows, int columns) {
+    public MapGridLayer(int columns, int rows) {
         this.rows = rows;
         this.columns = columns;
     }

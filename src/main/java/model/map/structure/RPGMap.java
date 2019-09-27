@@ -165,4 +165,9 @@ public class RPGMap {
     public void setName(String name) {
         this.name = name;
     }
+
+    public void setGridDimensions(int width, int height){
+        setGridWidth(width);
+        setGridHeight(height);
+    }
 }
