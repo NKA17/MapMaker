@@ -64,10 +64,10 @@ public class AssetTile extends MapTile implements Draggable{
     }
 
     public  boolean isOnScreen(int mapxoffset, int mapyoffset){
-        int xmin = -mapxoffset - getAssetResource().getImage().getWidth();
-        int ymin = -mapyoffset - getAssetResource().getImage().getHeight();
-        int xmax = -mapxoffset + (getAssetResource().getImage().getWidth() + 1200);
-        int ymax = -mapyoffset + (getAssetResource().getImage().getHeight() + 700);
+        int xmin = (int)((-mapxoffset - getAssetResource().getImage().getWidth())*AppState.ZOOM);
+        int ymin = (int)((-mapyoffset - getAssetResource().getImage().getHeight())*AppState.ZOOM);
+        int xmax = (int)((-mapxoffset + (getAssetResource().getImage().getWidth())*AppState.ZOOM) + 1200/AppState.ZOOM);
+        int ymax = (int)((-mapyoffset + (getAssetResource().getImage().getHeight())*AppState.ZOOM) + 700/AppState.ZOOM);
 
         boolean validx = getGridx() >= xmin && getGridx() <= xmax;
         boolean validy = getGridy() >= ymin && getGridy() <= ymax;
@@ -77,10 +77,10 @@ public class AssetTile extends MapTile implements Draggable{
 
     @Override
     public boolean shouldDrag(int x, int y) {
-        int xmin = getGridx() - (getAssetResource().getImage().getWidth() / 2);
-        int xmax = getGridx() + (getAssetResource().getImage().getWidth() / 2);
-        int ymin = getGridy() - getAssetResource().getImage().getHeight();
-        int ymax = getGridy();
+        int xmin = (int)((getGridx() - (-xoffset))*AppState.ZOOM);
+        int xmax = (int)((getGridx() + (-xoffset))*AppState.ZOOM);
+        int ymin = (int)((getGridy() - (-yoffset))*AppState.ZOOM);
+        int ymax = (int)((getGridy())*AppState.ZOOM);
 
         return x >= xmin
                 && x <= xmax
@@ -90,8 +90,8 @@ public class AssetTile extends MapTile implements Draggable{
 
     @Override
     public void translate(int delta_x, int delta_y) {
-        setGridx(getGridx()+delta_x);
-        setGridy(getGridy()+delta_y);
+        setGridx(getGridx()+(int)(delta_x/AppState.ZOOM));
+        setGridy(getGridy()+(int)(delta_y/AppState.ZOOM));
     }
 
     public int getXoffset() {

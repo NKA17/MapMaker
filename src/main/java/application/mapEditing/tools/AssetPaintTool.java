@@ -1,6 +1,7 @@
 package application.mapEditing.tools;
 
 import UI.app.assets.MapAsset;
+import application.config.AppState;
 import application.io.AssetCache;
 import model.map.structure.MapLayer;
 import model.map.structure.RPGMap;
@@ -77,8 +78,8 @@ public class AssetPaintTool implements IPaintTool {
             String assetString = getRandomFromPalette();
             MapAsset asset = AssetCache.get(assetString);
             AssetTile tile = new AssetTile(asset);
-            tile.setGridx(e.getX() - map.getXoffset());
-            tile.setGridy(e.getY() - map.getYoffset());
+            tile.setGridx((int)((e.getX() - map.getXoffset())/ AppState.ZOOM));
+            tile.setGridy((int)((e.getY() - map.getYoffset())/ AppState.ZOOM));
             mapLayer.getTiles().add(tile);
         }catch (Exception e2){
             e2.printStackTrace();

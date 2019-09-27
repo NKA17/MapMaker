@@ -12,7 +12,7 @@ import application.mapEditing.tools.NoneTool;
 
 import java.awt.event.*;
 
-public class MapEditor implements MouseListener, MouseMotionListener, KeyListener {
+public class MapEditor implements MouseListener, MouseMotionListener, KeyListener,MouseWheelListener {
     private RPGMap map;
     private MapViewPanel mapViewPanel;
     private ITool tool = new NoneTool();
@@ -116,5 +116,16 @@ public class MapEditor implements MouseListener, MouseMotionListener, KeyListene
 
     @Override
     public void keyReleased(KeyEvent e) {
+    }
+
+    @Override
+    public void mouseWheelMoved(MouseWheelEvent e) {
+        if(e.getUnitsToScroll() > 0){
+            AppState.ZOOM = 0.5;
+        }else {
+            AppState.ZOOM = 1.0;
+        }
+        mapViewPanel.getMap().resize();
+        mapViewPanel.repaint();
     }
 }

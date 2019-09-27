@@ -1,5 +1,6 @@
 package model.map.structure;
 
+import application.config.AppState;
 import model.map.tiles.MapTile;
 import application.config.Configuration;
 
@@ -22,11 +23,11 @@ public class MapLayer {
     }
 
     public MapTile getTile(int xOnScreen, int yOnScreen,int xoffset, int yoffset){
-        int x = xOnScreen + xoffset;
-        int y = yOnScreen + yoffset;
+        int x = (int)(xOnScreen/AppState.ZOOM/AppState.ZOOM) + xoffset;
+        int y =(int)( yOnScreen/AppState.ZOOM/AppState.ZOOM) + yoffset;
 
-        int column = x / Configuration.TILE_WIDTH;
-        int row = y / Configuration.TILE_HEIGHT;
+        int column = (int)((x / Configuration.TILE_WIDTH)* AppState.ZOOM);
+        int row = (int)((y / Configuration.TILE_HEIGHT)* AppState.ZOOM);
         for(MapTile mapTile: getTiles()){
             if(mapTile.getGridx() == column && mapTile.getGridy() == row){
                 return mapTile;
@@ -37,11 +38,11 @@ public class MapLayer {
 
     public List<MapTile> getTiles(int xOnScreen, int yOnScreen,int xoffset, int yoffset){
         List<MapTile> tiles = new ArrayList<>();
-        int x = xOnScreen - xoffset;
-        int y = yOnScreen - yoffset;
+        int x = (int)((xOnScreen + xoffset)* AppState.ZOOM);
+        int y = (int)((yOnScreen + yoffset)* AppState.ZOOM);
 
-        int column = x / Configuration.TILE_WIDTH;
-        int row = y / Configuration.TILE_HEIGHT;
+        int column = (int)((x / Configuration.TILE_WIDTH)* AppState.ZOOM);
+        int row = (int)((y / Configuration.TILE_HEIGHT)* AppState.ZOOM);
         for(MapTile mapTile: getTiles()){
             if(mapTile.getGridx() == column && mapTile.getGridy() == row){
                 tiles.add(mapTile);

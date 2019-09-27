@@ -1,5 +1,6 @@
 package model.map.structure;
 
+import application.config.AppState;
 import application.config.Configuration;
 
 import java.awt.*;
@@ -19,10 +20,10 @@ public class MapGridLayer extends MapLayer {
         for(int x = 0; x < rows; x++){
             for(int y = 0; y < columns; y++){
                 g.setColor(color);
-                int xmin = Math.abs(mapxoffset / Configuration.TILE_WIDTH);
-                int ymin = Math.abs(mapyoffset / Configuration.TILE_HEIGHT);
-                int xmax = xmin+Math.abs((1200)/ Configuration.TILE_WIDTH);
-                int ymax = ymin+Math.abs((700)/ Configuration.TILE_HEIGHT);
+                int xmin = (int)(Math.abs(mapxoffset / Configuration.TILE_WIDTH)/ AppState.ZOOM);
+                int ymin = (int)(Math.abs(mapyoffset / Configuration.TILE_HEIGHT)/ AppState.ZOOM);
+                int xmax = xmin+(int)(Math.abs((1200)/ Configuration.TILE_WIDTH)/ AppState.ZOOM);
+                int ymax = ymin+(int)(Math.abs((700)/ Configuration.TILE_HEIGHT)/ AppState.ZOOM);
 
 
                 boolean validx = x >= xmin && x <= xmax;

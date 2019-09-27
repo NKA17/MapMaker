@@ -17,6 +17,7 @@ public class MapViewPanel extends ApplicationPanel  {
         mapEditor = new MapEditor(getMap(),this);
         addMouseListener(mapEditor);
         addMouseMotionListener(mapEditor);
+        addMouseWheelListener(mapEditor);
         getObserver().setFocusable(true);
         getObserver().requestFocus();
         getObserver().addKeyListener(mapEditor);

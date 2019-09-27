@@ -6,6 +6,10 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 
 public class ImageUtils {
+
+    public static BufferedImage resize(BufferedImage before, double scale){
+        return resize(before,(int)(before.getWidth()*scale),(int)(before.getHeight()*scale));
+    }
     public static BufferedImage resize(BufferedImage before, int newWidth, int newHieght){
         BufferedImage resized = new BufferedImage(newWidth, newHieght, before.getType());
         BufferedImage repositioned = new BufferedImage(newWidth, newHieght, before.getType());

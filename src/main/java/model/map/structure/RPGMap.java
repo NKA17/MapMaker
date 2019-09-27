@@ -1,8 +1,10 @@
 package model.map.structure;
 
 import UI.app.assets.MapAsset;
+import application.config.AppState;
 import application.io.AssetCache;
 import application.mapEditing.toolInterfaces.Draggable;
+import application.utils.ImageUtils;
 import model.map.tiles.AssetTile;
 import model.map.tiles.MapTile;
 import model.map.tiles.PatternTile;
@@ -25,6 +27,10 @@ public class RPGMap {
     private String name = "New_Map";
 
     public void init(){
+        mapImage = new BufferedImage(
+                (int)(Configuration.TILE_WIDTH/AppState.ZOOM) * gridWidth,
+                (int)(Configuration.TILE_HEIGHT/AppState.ZOOM)*gridHeight,
+                BufferedImage.TYPE_4BYTE_ABGR);
         MapSet defaultSet = new MapSet(gridWidth,gridHeight);
         mapImage.createGraphics();
         MapLayer tileLayer = createTileLayer("./src/main/resources/assets/map/floor/1grass/grass 3.jpg");
@@ -92,12 +98,23 @@ public class RPGMap {
         return mapLayer;
     }
 
+    public void resize(){
+        mapImage = new BufferedImage(
+                (int)(Configuration.TILE_WIDTH/AppState.ZOOM) * gridWidth,
+                (int)(Configuration.TILE_HEIGHT/AppState.ZOOM)*gridHeight,
+                BufferedImage.TYPE_4BYTE_ABGR);
+    }
+
     public void draw(Graphics g){
         Graphics g2d = mapImage.getGraphics();
         for(MapSet mapLayer: layerSets){
             mapLayer.draw(g2d,xoffset,yoffset);
         }
-        g.drawImage(mapImage,xoffset,yoffset,null);
+        BufferedImage drawImage = mapImage;
+        if(AppState.ZOOM != 1){
+            drawImage = ImageUtils.resize(mapImage, AppState.ZOOM);
+        }
+        g.drawImage(drawImage,xoffset,yoffset,null);
     }
 
     public void translate(int delta_x, int delta_y){

@@ -1,5 +1,6 @@
 package model.map.structure;
 
+import application.config.AppState;
 import application.io.AssetCache;
 import application.mapEditing.toolInterfaces.Draggable;
 import model.map.mechanics.FogBody;
@@ -33,8 +34,8 @@ public class MapSet implements Draggable{
     public MapSet(int columns, int rows){
         gridLayer = new MapGridLayer(rows,columns);
         mapImage = new BufferedImage(
-                Configuration.TILE_WIDTH * columns,
-                Configuration.TILE_HEIGHT*rows,
+                (int)(Configuration.TILE_WIDTH/AppState.ZOOM) * gridWidth,
+                (int)(Configuration.TILE_HEIGHT/AppState.ZOOM)*gridHeight,
                 BufferedImage.TYPE_4BYTE_ABGR);
         mapImage.createGraphics();
         activeGraphicLayer = new GraphicLayer();
@@ -126,10 +127,10 @@ public class MapSet implements Draggable{
     }
 
     public boolean isHidden(int xOnScreen, int yOnScreen){
-        int x = xOnScreen - xoffset;
-        int y = yOnScreen - yoffset;
-        int gridx = x / Configuration.TILE_WIDTH;
-        int gridy = y / Configuration.TILE_HEIGHT;
+        int x = (int)((xOnScreen - xoffset)* AppState.ZOOM);
+        int y = (int)((yOnScreen - yoffset)* AppState.ZOOM);
+        int gridx =(int)(( x / Configuration.TILE_WIDTH)* AppState.ZOOM);
+        int gridy = (int)((y / Configuration.TILE_HEIGHT)* AppState.ZOOM);
 
         for(FogBody cloud: fogClouds){
             boolean isBody = false;
@@ -156,10 +157,10 @@ public class MapSet implements Draggable{
     }
 
     public void toggleFog(int xOnScreen, int yOnScreen){
-        int x = xOnScreen - xoffset;
-        int y = yOnScreen - yoffset;
-        int gridx = x / Configuration.TILE_WIDTH;
-        int gridy = y / Configuration.TILE_HEIGHT;
+        int x = (int)((xOnScreen - xoffset)* AppState.ZOOM);
+        int y = (int)((yOnScreen - yoffset)* AppState.ZOOM);
+        int gridx =(int)(( x / Configuration.TILE_WIDTH)* AppState.ZOOM);
+        int gridy = (int)((y / Configuration.TILE_HEIGHT)* AppState.ZOOM);
 
         for(FogBody cloud: fogClouds){
             boolean isBody = false;
@@ -175,9 +176,15 @@ public class MapSet implements Draggable{
         }
     }
 
+    public void resize(){
+        mapImage = new BufferedImage(
+                (int)(Configuration.TILE_WIDTH/AppState.ZOOM) * gridWidth,
+                (int)(Configuration.TILE_HEIGHT/AppState.ZOOM)*gridHeight,
+                BufferedImage.TYPE_4BYTE_ABGR);
+    }
 
     public void draw(Graphics g,int mapXoffset, int mapYoffset){
-        Graphics g2d = mapImage.getGraphics();
+        Graphics g2d = g;//mapImage.getGraphics();
 
         tileLayer.draw(g2d,mapXoffset+xoffset,mapYoffset+yoffset);
 
@@ -193,7 +200,7 @@ public class MapSet implements Draggable{
 
         fogLayer.draw(g2d, mapXoffset+xoffset,mapYoffset+yoffset);
 
-        g.drawImage(mapImage,xoffset,yoffset,null);
+        //g.drawImage(mapImage,xoffset,yoffset,null);
     }
 
     @Override

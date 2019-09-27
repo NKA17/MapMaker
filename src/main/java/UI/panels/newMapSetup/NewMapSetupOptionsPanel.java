@@ -18,8 +18,9 @@ public class NewMapSetupOptionsPanel extends ApplicationPanel {
     @Override
     public void loadPanel() {
         Dimension small_d = new Dimension(24,14);
-        Dimension med_d = new Dimension(50,50);
+        Dimension med_d = new Dimension(50,28);
         Dimension large_d = new Dimension(80,80);
+        Dimension huge_d = new Dimension(120,120);
 
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -34,6 +35,7 @@ public class NewMapSetupOptionsPanel extends ApplicationPanel {
         JButton small = ButtonFactory.createStaticButton(String.format("Small (%d x %d)",(int)small_d.getWidth(),(int)small_d.getHeight()));
         JButton medium = ButtonFactory.createStaticButton(String.format("Medium (%d x %d)",(int)med_d.getWidth(),(int)med_d.getHeight()));
         JButton large = ButtonFactory.createStaticButton(String.format("Large (%d x %d)",(int)large_d.getWidth(),(int)large_d.getHeight()));
+        JButton huge = ButtonFactory.createStaticButton(String.format("Huge (%d x %d)",(int)huge_d.getWidth(),(int)huge_d.getHeight()));
         JButton contButton = ButtonFactory.createStaticButton("Make Map");
         JButton cancel = ButtonFactory.createStaticButton("Cancel");
 
@@ -45,6 +47,7 @@ public class NewMapSetupOptionsPanel extends ApplicationPanel {
                 large.setBackground(Configuration.COMP_BG_COLOR);
                 medium.setBackground(Configuration.COMP_BG_COLOR);
                 small.setBackground(Configuration.COMP_HOVER_BG_COLOR);
+                huge.setBackground(Configuration.COMP_BG_COLOR);
                 map.setGridDimensions((int)small_d.getWidth(),(int)small_d.getHeight());
             }
         });
@@ -56,6 +59,7 @@ public class NewMapSetupOptionsPanel extends ApplicationPanel {
                 small.setBackground(Configuration.COMP_BG_COLOR);
                 large.setBackground(Configuration.COMP_BG_COLOR);
                 medium.setBackground(Configuration.COMP_HOVER_BG_COLOR);
+                huge.setBackground(Configuration.COMP_BG_COLOR);
                 map.setGridDimensions((int)med_d.getWidth(),(int)med_d.getHeight());
             }
         });
@@ -67,7 +71,20 @@ public class NewMapSetupOptionsPanel extends ApplicationPanel {
                 small.setBackground(Configuration.COMP_BG_COLOR);
                 medium.setBackground(Configuration.COMP_BG_COLOR);
                 large.setBackground(Configuration.COMP_HOVER_BG_COLOR);
+                huge.setBackground(Configuration.COMP_BG_COLOR);
                 map.setGridDimensions((int)large_d.getWidth(),(int)large_d.getHeight());
+            }
+        });
+
+        huge.setPreferredSize(new Dimension(400,30));
+        huge.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e) {
+                small.setBackground(Configuration.COMP_BG_COLOR);
+                medium.setBackground(Configuration.COMP_BG_COLOR);
+                large.setBackground(Configuration.COMP_BG_COLOR);
+                huge.setBackground(Configuration.COMP_HOVER_BG_COLOR);
+                map.setGridDimensions((int)huge_d.getWidth(),(int)huge_d.getHeight());
             }
         });
 
@@ -108,6 +125,11 @@ public class NewMapSetupOptionsPanel extends ApplicationPanel {
         add(large,gbc);
 
         gbc.gridx = 0;
+        gbc.gridy = 6;
+        add(huge,gbc);
+
+
+        gbc.gridx = 0;
         gbc.gridy = 0;
         add(TextFactory.createLabel("Map Name:"),gbc);
 
@@ -116,13 +138,13 @@ public class NewMapSetupOptionsPanel extends ApplicationPanel {
         add(mapNameField,gbc);
 
         gbc.gridx = 0;
-        gbc.gridy = 6;
+        gbc.gridy = 7;
         add(new Panel(),gbc);
 
         Panel navPanel = new Panel(new GridBagLayout());
 
         gbc.gridx = 0;
-        gbc.gridy = 7;
+        gbc.gridy = 8;
         gbc.fill = 0;
         gbc.anchor = GridBagConstraints.EAST;
         add(navPanel,gbc);
