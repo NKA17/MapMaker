@@ -5,6 +5,7 @@ import UI.panels.mapView.MapViewPanel;
 import UI.panels.playMap.PlayToolPanel;
 import application.config.AppState;
 import application.mapEditing.tools.DragTool;
+import model.map.structure.MapSet;
 import model.map.structure.RPGMap;
 
 public class PlayMapPage extends ApplicationPage {
@@ -12,6 +13,9 @@ public class PlayMapPage extends ApplicationPage {
 
     public PlayMapPage(RPGMap map) {
         this.map = map;
+        for(MapSet set: map.getLayerSets()){
+            set.buildFogLayer();
+        }
     }
 
     @Override

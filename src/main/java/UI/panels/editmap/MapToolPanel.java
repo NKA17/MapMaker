@@ -10,6 +10,7 @@ import UI.panels.mapView.MapViewPanel;
 import UI.rendering.RPGMapRenderer;
 import application.config.AppState;
 import application.io.AssetCache;
+import application.mapEditing.MapTranslator;
 import application.mapEditing.toolInterfaces.Draggable;
 import application.mapEditing.toolInterfaces.ITool;
 import application.mapEditing.tools.PanTool;
@@ -209,10 +210,7 @@ public class MapToolPanel extends ApplicationPanel {
         {
             public void actionPerformed(ActionEvent e)
             {
-                for(MapSet set: map.getLayerSets()){
-                    set.buildFogLayer();
-                }
-                getObserver().openPage(new PlayMapPage(map));
+                getObserver().openPage(new PlayMapPage(MapTranslator.toFlattenedMap(map)));
             }
         });
 
@@ -309,7 +307,7 @@ public class MapToolPanel extends ApplicationPanel {
         gbc.gridx = 1;
         gbc.gridy = 2;
         gbc.insets = new Insets(4,4,4,10);
-        add(fog,gbc);
+        //add(fog,gbc);
 
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridx = 0;

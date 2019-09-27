@@ -4,6 +4,7 @@ import UI.app.view.ApplicationPanel;
 import UI.factory.ButtonFactory;
 import UI.pages.editmap.EditMapPage;
 import UI.pages.mapSelect.MapSelectPage;
+import UI.pages.newMapSetup.NewMapSetupPage;
 import UI.panels.loadPanel.LoadPanel;
 import application.io.LoadModel;
 import application.io.MapIO;
@@ -25,8 +26,8 @@ public class StartNavigationPanel extends ApplicationPanel {
         {
             public void actionPerformed(ActionEvent e) {
 
-                EditMapPage editMapPage = new EditMapPage(null);
-                getObserver().openPage(editMapPage);
+                NewMapSetupPage newMapPage = new NewMapSetupPage();
+                getObserver().openPage(newMapPage);
 
             }
         });

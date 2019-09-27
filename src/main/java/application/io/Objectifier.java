@@ -47,7 +47,7 @@ public class Objectifier {
 
     private static MapSet toMapSet(JSONObject json){
         json = json.getJSONObject("map");
-        MapSet mapSet = new MapSet(json.getInt("gridHeight"),json.getInt("gridWidth"));
+        MapSet mapSet = new MapSet(json.getInt("gridWidth"),json.getInt("gridHeight"));
 
         mapSet.setTileLayer(toTileLayer(json.getJSONObject("mapLayer")));
         mapSet.setEdgeLayer(toEdgeLayer(json.getJSONObject("edgeLayer")));

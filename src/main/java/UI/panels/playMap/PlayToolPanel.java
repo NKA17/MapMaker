@@ -7,6 +7,7 @@ import UI.panels.mapView.MapViewPanel;
 import application.config.Configuration;
 import application.mapEditing.tools.DragTool;
 import application.mapEditing.tools.FogOfWarTool;
+import application.mapEditing.tools.PanTool;
 import model.map.structure.MapSet;
 
 import javax.swing.*;
@@ -29,6 +30,14 @@ public class PlayToolPanel extends ApplicationPanel {
         {
             public void actionPerformed(ActionEvent e) {
                 viewPanel.getMapEditor().setTool(new DragTool());
+            }
+        });
+
+        JButton pan = ButtonFactory.createButtonWithIcon("pan");
+        pan.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e) {
+                viewPanel.getMapEditor().setTool(new PanTool());
             }
         });
 
@@ -74,7 +83,7 @@ public class PlayToolPanel extends ApplicationPanel {
         gbc.gridwidth = 1;
         gbc.gridx = 0;
         gbc.gridy = 1;
-        add(dragTool,gbc);
+        add(pan,gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 1;
@@ -83,5 +92,9 @@ public class PlayToolPanel extends ApplicationPanel {
         gbc.gridx = 0;
         gbc.gridy = 2;
         add(eye, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        add(dragTool, gbc);
     }
 }
