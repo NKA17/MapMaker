@@ -33,7 +33,7 @@ public class PaletteSelectPage extends ApplicationPage {
         JPanel buttonPanel = new JPanel(new GridBagLayout());
         buttonPanel.setBackground(Configuration.PANEL_BG_COLOR);
 
-        ApplicationPanel assetSelectPanel = new AssetSelectScrollPanel(baseDirectory,paintTool);
+        AssetSelectScrollPanel assetSelectPanel = new AssetSelectScrollPanel(baseDirectory,paintTool);
         assetSelectPanel.loadPanel();
 
         JButton closeBtn = ButtonFactory.createButton("Close");
@@ -53,11 +53,13 @@ public class PaletteSelectPage extends ApplicationPage {
         clear.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e) {
+                int val = assetSelectPanel.getScrollPane().getVerticalScrollBar().getValue();
                 paintTool.resetPalette();
                 removeAll();
                 loadPage();
                 getObserver().invalidate();
                 getObserver().revalidate();
+                assetSelectPanel.getScrollPane().getVerticalScrollBar().setValue(val);
             }
         });
 

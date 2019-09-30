@@ -32,7 +32,7 @@ public class MapSet implements Draggable{
     private boolean drawGrid = false;
 
     public MapSet(int columns, int rows){
-        gridLayer = new MapGridLayer(rows,columns);
+        gridLayer = new MapGridLayer(columns,rows);
         mapImage = new BufferedImage(
                 (int)(Configuration.TILE_WIDTH/AppState.ZOOM) * gridWidth,
                 (int)(Configuration.TILE_HEIGHT/AppState.ZOOM)*gridHeight,

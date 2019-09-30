@@ -17,16 +17,25 @@ public class AssetSelectScrollPanel extends ApplicationPanel {
     private JPanel viewPanel;
     private String baseDirectory;
     private IPaintTool paintTool;
+    private JScrollPane scrollPane;
 
     public AssetSelectScrollPanel(String baseDirectory,IPaintTool paintTool) {
         this.paintTool = paintTool;
         this.baseDirectory = baseDirectory;
     }
 
+    public JScrollPane getScrollPane() {
+        return scrollPane;
+    }
+
+    public void setScrollPane(JScrollPane scrollPane) {
+        this.scrollPane = scrollPane;
+    }
+
     @Override
     public void loadPanel() {
         setLayout(new GridBagLayout());
-        JScrollPane scrollPane = new JScrollPane();
+        scrollPane = new JScrollPane();
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setBorder(null);

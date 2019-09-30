@@ -17,6 +17,7 @@ public class AssetTile extends MapTile implements Draggable{
 
     private int xoffset = 0;
     private int yoffset = 0;
+    private boolean draggable = true;
 
     public AssetTile(File assetFile, int gridx, int gridy) {
         super(assetFile, gridx, gridy);
@@ -61,6 +62,11 @@ public class AssetTile extends MapTile implements Draggable{
                     getAssetResource().getImage().getWidth() + 5,
                     getAssetResource().getImage().getHeight() + 5);
         }
+
+        g.setColor(new Color(255,0,0));
+        g.drawRect(getGridx(),getGridy(),2,2);
+        g.setColor(new Color(0,0,255));
+        g.drawRect(getGridx()+getGridx(),getGridy()+getGridy(),2,2);
     }
 
     public  boolean isOnScreen(int mapxoffset, int mapyoffset){
@@ -85,7 +91,8 @@ public class AssetTile extends MapTile implements Draggable{
         return x >= xmin
                 && x <= xmax
                 && y >= ymin
-                && y <= ymax;
+                && y <= ymax
+                && draggable;
     }
 
     @Override
@@ -108,5 +115,13 @@ public class AssetTile extends MapTile implements Draggable{
 
     public void setYoffset(int yoffset) {
         this.yoffset = yoffset;
+    }
+
+    public boolean isDraggable() {
+        return draggable;
+    }
+
+    public void setDraggable(boolean draggable) {
+        this.draggable = draggable;
     }
 }

@@ -114,7 +114,7 @@ public class RPGMap {
         if(AppState.ZOOM != 1){
             drawImage = ImageUtils.resize(mapImage, AppState.ZOOM);
         }
-        g.drawImage(drawImage,xoffset,yoffset,null);
+        g.drawImage(drawImage.getSubimage(-getXoffset(),-getYoffset(),1200,700),0,0,null);
     }
 
     public void translate(int delta_x, int delta_y){

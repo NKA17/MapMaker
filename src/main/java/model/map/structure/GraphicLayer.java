@@ -1,5 +1,6 @@
 package model.map.structure;
 
+import model.map.tiles.AssetTile;
 import model.map.tiles.MapTile;
 
 import java.awt.*;
@@ -12,7 +13,7 @@ public class GraphicLayer extends MapLayer {
         Collections.sort(getTiles(), new Comparator<MapTile>() {
             @Override
             public int compare(MapTile o1, MapTile o2) {
-                return o1.getGridy() - o2.getGridy();
+                return (o1.getGridy() ) - (o2.getGridy());
             }
         });
 

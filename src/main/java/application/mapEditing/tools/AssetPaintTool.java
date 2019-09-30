@@ -16,7 +16,7 @@ import java.util.Random;
 
 public class AssetPaintTool implements IPaintTool {
     private List<String> palette = new ArrayList<>();
-    private String defaultAsset = "./src/main/resources/assets/map/assets/tools/bucket 1.png";
+    private String defaultAsset = ".\\src\\main\\resources\\assets\\map\\assets\\Tools\\bucket 1.png";
 
     public AssetPaintTool(){
         addAssetToPaint(defaultAsset);

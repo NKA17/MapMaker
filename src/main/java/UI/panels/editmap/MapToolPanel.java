@@ -1,22 +1,17 @@
 package UI.panels.editmap;
 
 import UI.app.assets.MapAsset;
-import UI.app.view.ApplicationPage;
 import UI.app.view.ApplicationPanel;
 import UI.factory.ButtonFactory;
 import UI.pages.playMap.PlayMapPage;
 import UI.pages.saveMap.SaveMapPage;
 import UI.panels.mapView.MapViewPanel;
 import UI.rendering.RPGMapRenderer;
-import application.config.AppState;
 import application.io.AssetCache;
-import application.mapEditing.MapTranslator;
-import application.mapEditing.toolInterfaces.Draggable;
-import application.mapEditing.toolInterfaces.ITool;
+import application.mapEditing.transpose.MapTranslator;
 import application.mapEditing.tools.PanTool;
 import model.map.mechanics.FogBody;
 import model.map.mechanics.FogFactory;
-import model.map.structure.MapSet;
 import model.map.structure.RPGMap;
 import UI.pages.paletteSelect.PaletteSelectPage;
 import UI.pages.start.StartPage;
