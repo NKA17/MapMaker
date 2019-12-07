@@ -1,12 +1,21 @@
 package application.config;
 
+import UI.app.assets.MapAsset;
+import application.io.AssetCache;
+
 import java.awt.*;
+
+import static application.io.AssetCache.*;
 
 public class Configuration {
     public static final int TILE_WIDTH = 50;
     public static final int TILE_HEIGHT = 50;
 
-    public static Color GRID_COLOR = new Color(140,200,140,200);
+    public static MapAsset DEFAULT_FLOOR_TILE =
+            get("C:\\Users\\Nate\\IdeaProjects\\RPGMapMaker\\src\\main\\resources\\assets\\map\\floor\\0mechanics\\black.png");
+
+    public static Color PLAY_GRID_COLOR = new Color(0,0,0,255);
+    public static Color EDIT_GRID_COLOR = new Color(130,200,130,255);
     public static Color PANEL_BG_COLOR = new Color(80,80,80);
     public static Color WINDOW_BG_COLOR = new Color(30,30,30);
 
@@ -19,4 +28,6 @@ public class Configuration {
     public static final Color COMP_BORDER_COLOR = new Color(0,0,0);
 
     public static final Color HIGHLIGHT_COLOR = new Color(166,233,245);
+
+    public static final Font GAME_FONT = new Font("Yu Gothic UI",Font.BOLD,20);
 }

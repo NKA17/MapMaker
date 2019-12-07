@@ -10,13 +10,16 @@ import application.mapEditing.toolInterfaces.Draggable;
 import application.mapEditing.toolInterfaces.ITool;
 import application.mapEditing.tools.DragTool;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.io.File;
 
 public class AssetTile extends MapTile implements Draggable{
 
     private int xoffset = 0;
     private int yoffset = 0;
+    private boolean draggable = true;
 
     public AssetTile(File assetFile, int gridx, int gridy) {
         super(assetFile, gridx, gridy);
@@ -44,14 +47,42 @@ public class AssetTile extends MapTile implements Draggable{
 
     @Override
     public void draw(Graphics g) {
-        g.drawImage(getAssetResource().getImage(),
-                getGridx() + xoffset,
-                getGridy() + yoffset ,
-                null);
+        System.out.println(getRadians());
+        AffineTransform at = new AffineTransform();
 
-        Draggable d = AppState.ACTIVE_DRAGGABLE;
-        ApplicationPage a = AppState.ACTIVE_PAGE;
-        ITool i = AppState.ACTIVE_TOOL;
+        // 4. translate it to the center of the component
+        at.translate(getGridx(), getGridy() + getYoffset() / 2);
+
+        // 3. do the actual rotation
+        at.rotate(getRadians());
+
+        double val = 1.57;
+        if (getRadians() >= 0 && getRadians() < val  ) {
+            at.scale(1, 1);
+            System.out.println("q3");//3
+        } else if ( getRadians() >= val) {
+            at.scale(1, 1);
+            System.out.println("q4");//4
+        } else if (getRadians() < 0 && getRadians() >= -val){
+            at.scale(1, 1);
+            System.out.println("q1");//1
+        }else {
+            at.scale(1, 1);
+            System.out.println("q2");//2
+        }
+
+        // 2. just a scale because this image is big
+        //at.scale(0.5, 0.5);
+
+        // 1. translate the object so that you rotate it around the
+        //    center (easier :))
+        at.translate(getXoffset(), getYoffset()/2);
+
+        // draw the image
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.drawImage(getAssetResource().getImage(), at, null);
+
+
         if(AppState.ACTIVE_DRAGGABLE==this
                 && AppState.ACTIVE_TOOL instanceof DragTool
                 && (AppState.ACTIVE_PAGE instanceof EditMapPage || AppState.ACTIVE_PAGE instanceof PlayMapPage)) {
@@ -60,6 +91,13 @@ public class AssetTile extends MapTile implements Draggable{
                     getGridy() + getYoffset() - 5,
                     getAssetResource().getImage().getWidth() + 5,
                     getAssetResource().getImage().getHeight() + 5);
+
+            try{
+                g.drawImage(DragTool.rotateImage,
+                        getGridx(),getGridy(),null);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }
     }
 
@@ -82,10 +120,17 @@ public class AssetTile extends MapTile implements Draggable{
         int ymin = getGridy() - getAssetResource().getImage().getHeight();
         int ymax = getGridy();
 
-        return x >= xmin
+        return shouldRotate(x,y) || x >= xmin
                 && x <= xmax
                 && y >= ymin
-                && y <= ymax;
+                && y <= ymax
+                && draggable ;
+    }
+
+    @Override
+    public boolean shouldRotate(int x, int y) {
+        return x >= getGridx() && x <= getGridx() + 30
+                && y >= getGridy() && y <= getGridy() + 30;
     }
 
     @Override
@@ -108,5 +153,13 @@ public class AssetTile extends MapTile implements Draggable{
 
     public void setYoffset(int yoffset) {
         this.yoffset = yoffset;
+    }
+
+    public boolean isDraggable() {
+        return draggable;
+    }
+
+    public void setDraggable(boolean draggable) {
+        this.draggable = draggable;
     }
 }

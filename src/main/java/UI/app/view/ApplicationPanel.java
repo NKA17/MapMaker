@@ -21,5 +21,6 @@ public abstract class ApplicationPanel extends JPanel {
 
     public abstract void loadPanel();
 
-    public void dispose(){}
+    public void dispose(){
+    }
 }

@@ -1,11 +1,13 @@
 package UI.panels.start;
 
+import UI.app.assets.MapAsset;
 import UI.app.view.ApplicationPanel;
 import UI.factory.ButtonFactory;
 import UI.pages.editmap.EditMapPage;
 import UI.pages.mapSelect.MapSelectPage;
 import UI.pages.newMapSetup.NewMapSetupPage;
 import UI.panels.loadPanel.LoadPanel;
+import application.io.AssetCache;
 import application.io.LoadModel;
 import application.io.MapIO;
 import model.map.structure.RPGMap;
@@ -14,6 +16,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 public class StartNavigationPanel extends ApplicationPanel {
     @Override

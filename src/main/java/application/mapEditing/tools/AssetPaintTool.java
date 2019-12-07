@@ -15,10 +15,16 @@ import java.util.Random;
 
 public class AssetPaintTool implements IPaintTool {
     private List<String> palette = new ArrayList<>();
-    private String defaultAsset = "./src/main/resources/assets/map/assets/tools/bucket 1.png";
+    private String defaultAsset = ".\\src\\main\\resources\\assets\\map\\assets\\Tool\\bucket 1.png";
+    private MapLayer activeLayer = null;
 
     public AssetPaintTool(){
         addAssetToPaint(defaultAsset);
+    }
+
+    public AssetPaintTool(String defaultAssetPath){
+        defaultAsset = defaultAssetPath;
+        addAssetToPaint(defaultAssetPath);
     }
 
     public AssetPaintTool(String... assetPath){
@@ -72,14 +78,16 @@ public class AssetPaintTool implements IPaintTool {
 
     @Override
     public void activateTool(MouseEvent e, RPGMap map) {
-        MapLayer mapLayer = map.getActiveLayer().getActiveGraphicLayer();
         try {
+            if(activeLayer==null)
+                activeLayer = map.getActiveLayer().getActiveGraphicLayer();
+
             String assetString = getRandomFromPalette();
             MapAsset asset = AssetCache.get(assetString);
             AssetTile tile = new AssetTile(asset);
             tile.setGridx(e.getX() - map.getXoffset());
             tile.setGridy(e.getY() - map.getYoffset());
-            mapLayer.getTiles().add(tile);
+            activeLayer.getTiles().add(tile);
         }catch (Exception e2){
             e2.printStackTrace();
         }
@@ -109,5 +117,13 @@ public class AssetPaintTool implements IPaintTool {
         }
         Random rand = new Random();
         return palette.get(rand.nextInt(palette.size()));
+    }
+
+    public MapLayer getActiveLayer() {
+        return activeLayer;
+    }
+
+    public void setActiveLayer(MapLayer activeLayer) {
+        this.activeLayer = activeLayer;
     }
 }

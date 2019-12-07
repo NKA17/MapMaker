@@ -2,10 +2,7 @@ package application.io;
 
 import UI.app.assets.MapAsset;
 import com.sun.corba.se.impl.orbutil.graph.Graph;
-import model.map.structure.GraphicLayer;
-import model.map.structure.MapLayer;
-import model.map.structure.MapSet;
-import model.map.structure.RPGMap;
+import model.map.structure.*;
 import model.map.tiles.AssetTile;
 import model.map.tiles.EdgeTile;
 import model.map.tiles.MapTile;
@@ -30,6 +27,7 @@ public class Objectifier {
         map.setGridHeight(json.getInt("gridHeight"));
         map.setLayerSets(toMapSets(json.getJSONObject("mapSets")));
         map.setActiveLayer(map.getLayerSets().get(0));
+        map.setMechanicsLayer(toMechanicalLayer(json.getJSONObject("mechanicalLayer")));
 
         return map;
     }
@@ -110,6 +108,17 @@ public class Objectifier {
         return layer;
     }
 
+    private static MechanicalLayer toMechanicalLayer(JSONObject json){
+        json = json.getJSONObject("map");
+        MechanicalLayer layer = new MechanicalLayer();
+
+        for(AssetTile tile: (toGraphicTiles(json.getJSONObject("tiles")))){
+            layer.getTiles().add(tile);
+        }
+
+        return layer;
+    }
+
     private static List<AssetTile> toGraphicTiles(JSONObject json){
         JSONArray jsonArray = json.getJSONArray("myArrayList");
         List<AssetTile> tiles = new ArrayList<>();
@@ -127,6 +136,9 @@ public class Objectifier {
         MapAsset mapAsset = toMapAsset(json.getJSONObject("resource"));
 
         AssetTile pTile = new AssetTile(mapAsset,json.getInt("x"),json.getInt("y"));
+        if(json.has("rads")){
+            pTile.setRadians(json.getDouble("rads"));
+        }
 
         return pTile;
     }

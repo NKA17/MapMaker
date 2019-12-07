@@ -4,6 +4,7 @@ import application.io.AssetCache;
 import application.mapEditing.toolInterfaces.Draggable;
 import model.map.mechanics.FogBody;
 import model.map.mechanics.FogFactory;
+import model.map.mechanics.FogFilter;
 import model.map.tiles.MapTile;
 import application.config.Configuration;
 import model.map.tiles.PatternTile;
@@ -31,7 +32,7 @@ public class MapSet implements Draggable{
     private boolean drawGrid = false;
 
     public MapSet(int columns, int rows){
-        gridLayer = new MapGridLayer(rows,columns);
+        gridLayer = new MapGridLayer(columns,rows);
         mapImage = new BufferedImage(
                 Configuration.TILE_WIDTH * columns,
                 Configuration.TILE_HEIGHT*rows,
@@ -117,9 +118,15 @@ public class MapSet implements Draggable{
         return edgeLayer.getTiles(xOnScreen,yOnScreen,xoffset-parentXoffset,yoffset-parentYoffset);
     }
 
-    public void buildFogLayer(){
+    public void buildFogLayer(FogFilter... filters){
         fogLayer = new MapLayer();
         fogClouds = FogFactory.floodFog(this);
+
+        //Don't fog where spawn is
+//        for(FogBody fogCloud: fogClouds){
+//            if(fogCloud.)
+//        }
+
         for(FogBody cloud: fogClouds){
             fogLayer.getTiles().addAll(cloud.getTiles());
         }
@@ -235,4 +242,16 @@ public class MapSet implements Draggable{
         return true;
     }
 
+    @Override
+    public boolean shouldRotate(int x, int y) {
+        return false;
+    }
+
+    public MapLayer getFogLayer() {
+        return fogLayer;
+    }
+
+    public void setFogLayer(MapLayer fogLayer) {
+        this.fogLayer = fogLayer;
+    }
 }

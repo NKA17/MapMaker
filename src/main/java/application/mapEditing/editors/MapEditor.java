@@ -112,6 +112,19 @@ public class MapEditor implements MouseListener, MouseMotionListener, KeyListene
                 break;
             }
         }
+        if(AppState.ACTIVE_DRAGGABLE!=null){
+            map.getMechanicsLayer().getTiles().remove(AppState.ACTIVE_DRAGGABLE);
+            AppState.ACTIVE_DRAGGABLE = null;
+            mapViewPanel.repaint();
+        }
+    }
+
+    public MapViewPanel getMapViewPanel() {
+        return mapViewPanel;
+    }
+
+    public void setMapViewPanel(MapViewPanel mapViewPanel) {
+        this.mapViewPanel = mapViewPanel;
     }
 
     @Override

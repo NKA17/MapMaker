@@ -1,5 +1,6 @@
 package UI.pages.editmap;
 
+import UI.app.assets.MapAsset;
 import UI.app.view.ApplicationPage;
 import UI.pages.LoadPage.LoadPage;
 import UI.panels.editmap.MapToolPanel;
@@ -7,8 +8,10 @@ import UI.panels.mapView.MapViewPanel;
 import application.io.LoadModel;
 import application.io.MapIO;
 import model.map.structure.RPGMap;
+import model.map.tiles.AssetTile;
 
 import java.awt.*;
+import java.io.File;
 
 public class EditMapPage extends ApplicationPage{
 

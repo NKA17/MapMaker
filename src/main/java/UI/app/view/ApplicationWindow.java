@@ -58,6 +58,7 @@ public abstract class ApplicationWindow extends JFrame {
         gbc.gridy = 0;
         gbc.fill = 1;
         contentPane.add(appPage,gbc);
+
         reloadWindow();
 
         currentPage = appPage;

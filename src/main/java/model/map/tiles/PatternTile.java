@@ -1,7 +1,10 @@
 package model.map.tiles;
 
 import UI.app.assets.MapAsset;
+import UI.pages.editmap.EditMapPage;
+import application.config.AppState;
 import application.config.Configuration;
+import application.io.AssetCache;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -21,7 +24,12 @@ public class PatternTile extends MapTile{
         int segsh = getAssetResource().getImage().getHeight() / Configuration.TILE_HEIGHT;
         int gridx = getGridx()==0?0:getGridx() % segsw;
         int gridy = getGridy()==0?0:getGridy() % segsh;
-        return getAssetResource().getImage().getSubimage(gridx*Configuration.TILE_WIDTH,gridy*Configuration.TILE_HEIGHT,Configuration.TILE_WIDTH,Configuration.TILE_HEIGHT);
+
+        MapAsset asset = getAssetResource();
+
+        if(asset.getName().endsWith("0mechanics\\black.png") && AppState.ACTIVE_PAGE instanceof EditMapPage)
+            asset =  AssetCache.get("./src/main/resources/assets/map/reserve/grey.png");
+        return asset.getImage().getSubimage(gridx*Configuration.TILE_WIDTH,gridy*Configuration.TILE_HEIGHT,Configuration.TILE_WIDTH,Configuration.TILE_HEIGHT);
     }
 
 

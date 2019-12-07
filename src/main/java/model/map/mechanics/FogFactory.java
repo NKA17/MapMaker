@@ -55,10 +55,14 @@ public class FogFactory {
 
         for(MapTile mapTile: origins){
             FogBody fog = new FogBody();
-            if(flags[mapTile.getGridx()][mapTile.getGridy()]==0) {
-                floodFog(edges, flags, mapTile.getGridx(), mapTile.getGridy(), fog);
-                if(fog.isShow())
-                    tiles.add(fog);
+            try {
+                if(flags[mapTile.getGridx()][mapTile.getGridy()]==0) {
+                    floodFog(edges, flags, mapTile.getGridx(), mapTile.getGridy(), fog);
+                    if (fog.isShow())
+                        tiles.add(fog);
+                }
+            }catch (Exception e){
+                System.out.println("Stack Overflow on Flood Fill");
             }
         }
         return tiles;
@@ -90,7 +94,7 @@ public class FogFactory {
             flags[orix][oriy]++;
             return ;
         }
-        if(mapTiles[orix][oriy--][hor] != null){
+        if(mapTiles[orix][oriy-1][hor] != null){
             return ;
         }
 

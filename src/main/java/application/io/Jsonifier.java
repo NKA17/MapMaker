@@ -25,6 +25,7 @@ public class Jsonifier {
         jsonObject.put("gridWidth",map.getGridWidth());
         jsonObject.put("gridHeight",map.getGridHeight());
         jsonObject.put("mapSets",mapSetsToJSON(map.getLayerSets()));
+        jsonObject.put("mechanicalLayer",mapLayerToJSON(map.getMechanicsLayer()));
 
         return jsonObject;
     }
@@ -55,6 +56,7 @@ public class Jsonifier {
     private static JSONObject mapLayerToJSON(MapLayer mapLayer){
         JSONObject json = new JSONObject();
 
+        if(loadModel!=null)
         loadModel.incrementTotalBytes(mapLayer.getTiles().size());
         json.put("tiles",tilesToJSON(mapLayer.getTiles()));
 
@@ -85,6 +87,7 @@ public class Jsonifier {
 
         json.put("x",tile.getGridx());
         json.put("y",tile.getGridy());
+        json.put("rads",tile.getRadians());
         json.put("resource",assetToJSON(tile.getAssetResource()));
 
         return json;
@@ -93,6 +96,7 @@ public class Jsonifier {
     private static JSONObject assetToJSON(MapAsset asset){
         JSONObject json = new JSONObject();
 
+        if(loadModel != null)
         loadModel.incrementReadBytes(1);
         json.put("name",asset.getName());
         json.put("xoffset",asset.getImageOffsetX());

@@ -63,7 +63,7 @@ public class LoadPanel extends ApplicationPanel {
 
         g.setColor(new Color(0,0,0));
         //g.fillRect(0,0,getWidth()-1,getHeight()-1);
-        g.setColor(Configuration.GRID_COLOR);
+        g.setColor(Configuration.EDIT_GRID_COLOR);
         g.drawRect(0,0,104,14);
         g.fillRect(2,2,(int)(100 * model.getProgress()),10);
     }
