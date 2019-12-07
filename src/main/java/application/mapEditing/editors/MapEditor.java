@@ -32,6 +32,7 @@ public class MapEditor implements MouseListener, MouseMotionListener, KeyListene
         tool.activateTool(e,map);
         mapViewPanel.getObserver().requestFocus();
         mapViewPanel.repaint();
+        System.out.println("MapEditor "+map);
     }
     public void mouseReleased(MouseEvent e) {
         tool.deactivateTool(e,map);

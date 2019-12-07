@@ -47,7 +47,6 @@ public class AssetTile extends MapTile implements Draggable{
 
     @Override
     public void draw(Graphics g) {
-        System.out.println(getRadians());
         AffineTransform at = new AffineTransform();
 
         // 4. translate it to the center of the component
@@ -59,16 +58,12 @@ public class AssetTile extends MapTile implements Draggable{
         double val = 1.57;
         if (getRadians() >= 0 && getRadians() < val  ) {
             at.scale(1, 1);
-            System.out.println("q3");//3
         } else if ( getRadians() >= val) {
             at.scale(1, 1);
-            System.out.println("q4");//4
         } else if (getRadians() < 0 && getRadians() >= -val){
             at.scale(1, 1);
-            System.out.println("q1");//1
         }else {
             at.scale(1, 1);
-            System.out.println("q2");//2
         }
 
         // 2. just a scale because this image is big

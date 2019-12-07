@@ -42,15 +42,28 @@ public class MapTranslator {
         set.setEdgeLayer(edgeLayer);
 
         tagMap = TileUtils.sortByTags( map.getActiveLayer().getEdgeLayer().getTiles());
-        if(tagMap.containsKey("floor"))
-        for(MapTile tile: tagMap.get("floor")){
-            AssetTile assetTile = new AssetTile(AssetCache.get(tile.getAssetResource().getName()),
-                    (1+tile.getGridx())*Configuration.TILE_WIDTH,
-                    (1+tile.getGridy())*Configuration.TILE_HEIGHT);
-            assetTile.setXoffset(-Configuration.TILE_WIDTH);
-            assetTile.setYoffset(-Configuration.TILE_HEIGHT);
-            assetTile.setDraggable(false);
-            fringeLayer.getTiles().add(assetTile);
+        if(tagMap.containsKey("floor")) {
+            for (MapTile tile : tagMap.get("floor")) {
+                AssetTile assetTile = new AssetTile(AssetCache.get(tile.getAssetResource().getName()),
+                        (1 + tile.getGridx()) * Configuration.TILE_WIDTH,
+                        (1 + tile.getGridy()) * Configuration.TILE_HEIGHT);
+                assetTile.setXoffset(-Configuration.TILE_WIDTH);
+                assetTile.setYoffset(-Configuration.TILE_HEIGHT);
+                assetTile.setDraggable(false);
+                fringeLayer.getTiles().add(assetTile);
+            }
+        }
+
+        if(tagMap.containsKey("top")){
+            for (MapTile tile : tagMap.get("top")) {
+                AssetTile assetTile = new AssetTile(AssetCache.get(tile.getAssetResource().getName()),
+                        (1 + tile.getGridx()) * Configuration.TILE_WIDTH,
+                        (1 + tile.getGridy()) * Configuration.TILE_HEIGHT);
+                assetTile.setXoffset(-Configuration.TILE_WIDTH);
+                assetTile.setYoffset(-Configuration.TILE_HEIGHT);
+                assetTile.setDraggable(false);
+                topLayer.getTiles().add(assetTile);
+            }
         }
 
         if(tagMap.containsKey("fence"))

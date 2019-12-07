@@ -88,6 +88,7 @@ public class AssetPaintTool implements IPaintTool {
             tile.setGridx(e.getX() - map.getXoffset());
             tile.setGridy(e.getY() - map.getYoffset());
             activeLayer.getTiles().add(tile);
+            System.out.println("Paint "+map);
         }catch (Exception e2){
             e2.printStackTrace();
         }
