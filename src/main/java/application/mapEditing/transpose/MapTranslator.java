@@ -26,7 +26,7 @@ public class MapTranslator {
         GraphicLayer fringeLayer = new GraphicLayer();
         GraphicLayer graphicsLayer = new GraphicLayer();
         GraphicLayer topLayer = new GraphicLayer();
-        set.getGraphicLayers().add(fringeLayer);
+        set.setSubGridGraphics(fringeLayer);
         set.getGraphicLayers().add(graphicsLayer);
         set.getGraphicLayers().add(topLayer);
 

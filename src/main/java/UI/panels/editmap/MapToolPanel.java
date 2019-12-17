@@ -159,6 +159,7 @@ public class MapToolPanel extends ApplicationPanel {
         assetPaint.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e) {
+                ((AssetPaintTool)Tools.GRAPHIC_PAINT_TOOL).setActiveLayer(map.getActiveLayer().getActiveGraphicLayer());
                 getMapViewPanel().getMapEditor().setTool(Tools.GRAPHIC_PAINT_TOOL);
             }
         });

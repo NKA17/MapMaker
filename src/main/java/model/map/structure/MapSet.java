@@ -17,6 +17,7 @@ import java.util.List;
 public class MapSet implements Draggable{
 
     private MapLayer tileLayer = new MapLayer();
+    private GraphicLayer subGridGraphics = new GraphicLayer();
     private MapGridLayer gridLayer;
     private List<GraphicLayer> graphicLayers = new ArrayList<>();
     private GraphicLayer activeGraphicLayer;
@@ -122,11 +123,6 @@ public class MapSet implements Draggable{
         fogLayer = new MapLayer();
         fogClouds = FogFactory.floodFog(this);
 
-        //Don't fog where spawn is
-//        for(FogBody fogCloud: fogClouds){
-//            if(fogCloud.)
-//        }
-
         for(FogBody cloud: fogClouds){
             fogLayer.getTiles().addAll(cloud.getTiles());
         }
@@ -187,6 +183,8 @@ public class MapSet implements Draggable{
         Graphics g2d = mapImage.getGraphics();
 
         tileLayer.draw(g2d,mapXoffset+xoffset,mapYoffset+yoffset);
+
+        subGridGraphics.draw(g2d,mapXoffset+xoffset,mapYoffset+yoffset);
 
         if(drawGrid){
             gridLayer.draw(g2d,mapXoffset+xoffset,mapYoffset+yoffset);
@@ -253,5 +251,13 @@ public class MapSet implements Draggable{
 
     public void setFogLayer(MapLayer fogLayer) {
         this.fogLayer = fogLayer;
+    }
+
+    public GraphicLayer getSubGridGraphics() {
+        return subGridGraphics;
+    }
+
+    public void setSubGridGraphics(GraphicLayer subGridGraphics) {
+        this.subGridGraphics = subGridGraphics;
     }
 }

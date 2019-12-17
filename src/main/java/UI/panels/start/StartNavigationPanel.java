@@ -1,22 +1,15 @@
 package UI.panels.start;
 
-import UI.app.assets.MapAsset;
 import UI.app.view.ApplicationPanel;
 import UI.factory.ButtonFactory;
-import UI.pages.editmap.EditMapPage;
+import UI.pages.loot.lootNavigation.LootNavigationPage;
 import UI.pages.mapSelect.MapSelectPage;
 import UI.pages.newMapSetup.NewMapSetupPage;
-import UI.panels.loadPanel.LoadPanel;
-import application.io.AssetCache;
-import application.io.LoadModel;
-import application.io.MapIO;
-import model.map.structure.RPGMap;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 
 public class StartNavigationPanel extends ApplicationPanel {
     @Override
@@ -40,6 +33,15 @@ public class StartNavigationPanel extends ApplicationPanel {
         {
             public void actionPerformed(ActionEvent e) {
                 MapSelectPage page = new MapSelectPage();
+                getObserver().openPage(page);
+            }
+        });
+
+        JButton loot = ButtonFactory.createButton("Loot");
+        loot.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e) {
+                LootNavigationPage page = new LootNavigationPage();
                 getObserver().openPage(page);
             }
         });
@@ -68,6 +70,11 @@ public class StartNavigationPanel extends ApplicationPanel {
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridx = 0;
         gbc.gridy = 2;
+        add(loot,gbc);
+
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.gridx = 0;
+        gbc.gridy = 3;
         gbc.insets = new Insets(4,4,4,10);
         add(close,gbc);
     }
