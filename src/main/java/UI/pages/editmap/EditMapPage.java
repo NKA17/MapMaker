@@ -24,7 +24,6 @@ public class EditMapPage extends ApplicationPage{
 
     public EditMapPage(RPGMap map){
         privateMap = map;
-        System.out.println("Edit page "+map);
     }
 
     @Override

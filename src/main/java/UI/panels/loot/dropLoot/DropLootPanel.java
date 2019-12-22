@@ -1,26 +1,35 @@
-package UI.panels.mapSelect;
+package UI.panels.loot.dropLoot;
 
 import UI.app.view.ApplicationPanel;
 import UI.factory.ButtonFactory;
-import UI.pages.editmap.EditMapPage;
-import UI.pages.mapSelect.MapSelectPage;
+import UI.pages.loot.dropLoot.SetupLootPage;
 import application.config.Configuration;
+import application.loot.structure.DropBag;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
-public class MapSelectPanel extends ApplicationPanel{
-    @Override
-    public void loadPanel() {
+public class DropLootPanel extends ApplicationPanel {
+    private List<DropBag> dropBagList = new ArrayList<>();
+
+    public DropLootPanel(List<DropBag> dropBagList) {
+        this.dropBagList = dropBagList;
+    }
+
+    public void loadPanel(){
+
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.insets = new Insets(4,4,4,10);
         gbc.fill = 1;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+
 
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -37,22 +46,18 @@ public class MapSelectPanel extends ApplicationPanel{
         scrollPane.setAlignmentX(JScrollPane.LEFT_ALIGNMENT);
         add(scrollPane);
 
+        for(DropBag bag: dropBagList){
+            gbc.gridx = 0;
+            JButton button = createButton(bag);
+            button.setPreferredSize(new Dimension(300,30));
+            viewPanel.add(button,gbc);
 
-        File dir = new File(Configuration.SAVE_MAP_FOLDER);
-        for(File mapFile: dir.listFiles()){
-            if(mapFile.getName().endsWith(Configuration.FILE_EXTENSION)){
-                gbc.gridx = 0;
-                JButton button = createButton(mapFile);
-                button.setPreferredSize(new Dimension(300,30));
-                viewPanel.add(button,gbc);
+            gbc.gridx = 1;
+            JButton deleteButton = createRemoveButton(bag);
+            deleteButton.setPreferredSize(new Dimension(50,30));
+            viewPanel.add(deleteButton,gbc);
 
-                gbc.gridx = 1;
-                JButton deleteButton = createDeleteButton(mapFile,viewPanel,button);
-                deleteButton.setPreferredSize(new Dimension(50,30));
-                viewPanel.add(deleteButton,gbc);
-
-                gbc.gridy++;
-            }
+            gbc.gridy++;
         }
 
         viewPanel.invalidate();
@@ -61,32 +66,33 @@ public class MapSelectPanel extends ApplicationPanel{
         scrollPane.revalidate();
     }
 
-    private JButton createButton(File file){
-        String buttonText = file.getName().replace(Configuration.FILE_EXTENSION,"");
-        JButton button = ButtonFactory.createButton(buttonText);
+    private JButton createRemoveButton(DropBag bag){
+        JButton button = ButtonFactory.createButton("Delete");
         button.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
             {
-                EditMapPage editMapPage = new EditMapPage(file.getAbsolutePath());
-                getObserver().openPage(editMapPage);
+                dropBagList.remove(bag);
+                SetupLootPage page = new SetupLootPage(dropBagList);
+                getObserver().openPage(page);
             }
         });
 
         return button;
     }
 
-    private JButton createDeleteButton(File file,JPanel associateObserver,JButton associate){
-        JButton button = ButtonFactory.createButton("Delete");
+    private JButton createButton(DropBag bag){
+        String buttonText = bag.getName();
+        JButton button = ButtonFactory.createButton(buttonText);
         button.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
             {
-                file.delete();
-                getObserver().openPage(new MapSelectPage());
+                dropBagList.remove(bag);
+                SetupLootPage page = new SetupLootPage(dropBagList);
+                getObserver().openPage(page);
             }
         });
-
         return button;
     }
 }

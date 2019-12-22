@@ -77,7 +77,7 @@ public class DropRateGraphPanel extends ApplicationPanel {
             double xfory2 = solveForY((i),min,max);
             int y2 = hor  - 10 - (int)Math.round(((hor - 10)*xfory2));
 
-            g.drawLine(x1,y1,x2,y2);
+            g.drawLine(x1,y1+10,x2,y2+10);
         }
 
 

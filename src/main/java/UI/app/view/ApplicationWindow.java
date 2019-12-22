@@ -75,4 +75,11 @@ public abstract class ApplicationWindow extends JFrame {
             setVisible(true);
         });
     }
+
+    public void dispose(){
+        if(currentPage!=null){
+            currentPage.dispose();
+        }
+        super.dispose();
+    }
 }

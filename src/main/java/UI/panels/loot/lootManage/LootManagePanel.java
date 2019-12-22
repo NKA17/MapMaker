@@ -1,10 +1,15 @@
-package UI.panels.mapSelect;
+package UI.panels.loot.lootManage;
 
 import UI.app.view.ApplicationPanel;
 import UI.factory.ButtonFactory;
 import UI.pages.editmap.EditMapPage;
+import UI.pages.loot.LootManage.LootManagePage;
+import UI.pages.loot.editLootBag.EditLootBagPage;
 import UI.pages.mapSelect.MapSelectPage;
+import application.config.AppState;
 import application.config.Configuration;
+import application.io.LootIO;
+import application.loot.structure.DropBag;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,7 +17,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
-public class MapSelectPanel extends ApplicationPanel{
+public class LootManagePanel extends ApplicationPanel {
     @Override
     public void loadPanel() {
         GridBagConstraints gbc = new GridBagConstraints();
@@ -38,18 +43,18 @@ public class MapSelectPanel extends ApplicationPanel{
         add(scrollPane);
 
 
-        File dir = new File(Configuration.SAVE_MAP_FOLDER);
-        for(File mapFile: dir.listFiles()){
-            if(mapFile.getName().endsWith(Configuration.FILE_EXTENSION)){
+        File dir = new File(Configuration.SAVE_LOOT_FOLDER);
+        for(File lootFile: dir.listFiles()){
+            if(lootFile.getName().endsWith(Configuration.FILE_EXTENSION)){
                 gbc.gridx = 0;
-                JButton button = createButton(mapFile);
+                JButton button = createButton(lootFile);
                 button.setPreferredSize(new Dimension(300,30));
                 viewPanel.add(button,gbc);
 
                 gbc.gridx = 1;
-                JButton deleteButton = createDeleteButton(mapFile,viewPanel,button);
-                deleteButton.setPreferredSize(new Dimension(50,30));
-                viewPanel.add(deleteButton,gbc);
+                JButton editButton = createDeleteButton(lootFile);
+                editButton.setPreferredSize(new Dimension(50,30));
+                viewPanel.add(editButton,gbc);
 
                 gbc.gridy++;
             }
@@ -68,22 +73,23 @@ public class MapSelectPanel extends ApplicationPanel{
         {
             public void actionPerformed(ActionEvent e)
             {
-                EditMapPage editMapPage = new EditMapPage(file.getAbsolutePath());
-                getObserver().openPage(editMapPage);
+                DropBag bag = LootIO.load(file.getName());
+                EditLootBagPage page = new EditLootBagPage(bag);
+                getObserver().openPage(page);
             }
         });
 
         return button;
     }
 
-    private JButton createDeleteButton(File file,JPanel associateObserver,JButton associate){
+    private JButton createDeleteButton(File file){
         JButton button = ButtonFactory.createButton("Delete");
         button.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
             {
                 file.delete();
-                getObserver().openPage(new MapSelectPage());
+                getObserver().openPage(new LootManagePage());
             }
         });
 

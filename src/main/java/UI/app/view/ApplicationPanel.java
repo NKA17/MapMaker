@@ -5,6 +5,7 @@ import java.awt.*;
 
 public abstract class ApplicationPanel extends JPanel {
     private ApplicationWindow observer;
+    private ApplicationAction onDisposeAction;
 
     public ApplicationPanel(){
 
@@ -22,5 +23,8 @@ public abstract class ApplicationPanel extends JPanel {
     public abstract void loadPanel();
 
     public void dispose(){
+        if(onDisposeAction!=null){
+            //onDisposeAction.action();
+        }
     }
 }

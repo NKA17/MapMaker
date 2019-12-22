@@ -9,11 +9,19 @@ import java.awt.*;
 
 public class TextFactory {
     public static final Font LABEL_FONT = new Font("Yu Gothic UI",Font.BOLD,12);
+    public static final Font TITLE_FONT = new Font("Yu Gothic UI",Font.BOLD,16);
 
     public static JLabel createLabel(String text){
         JLabel label = new JLabel(text);
         label.setFont(LABEL_FONT);
         label.setForeground(new Color(180,180,180));
+        return label;
+    }
+
+    public static JLabel createTitle(String text){
+        JLabel label = new JLabel(text);
+        label.setFont(TITLE_FONT);
+        label.setForeground(new Color(210,210,210));
         return label;
     }
 

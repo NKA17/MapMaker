@@ -57,7 +57,6 @@ public class NewMapSetupOptionsPanel extends ApplicationPanel {
         imagePanel.setLayout(new GridBagLayout());
         imagePanel.setPreferredSize(new Dimension(58,58));
         imagePanel.setBackground(null);
-        System.out.println(Configuration.DEFAULT_FLOOR_TILE.getName());
         BufferedImage bimg = Configuration.DEFAULT_FLOOR_TILE.getImage().getSubimage(0,0,50,50);
         JLabel imageLabel = new JLabel(new ImageIcon(bimg));
         gbc.anchor = GridBagConstraints.WEST;

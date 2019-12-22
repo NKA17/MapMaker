@@ -113,7 +113,7 @@ public class SaveMapPanel extends ApplicationPanel{
         Runnable doSave = new Runnable() {
             @Override
             public void run() {
-                MapIO.saveMap(map,Configuration.SAVE_FOLDER+fileName+Configuration.FILE_EXTENSION,loadModel);
+                MapIO.saveMap(map,Configuration.SAVE_MAP_FOLDER +fileName+Configuration.FILE_EXTENSION,loadModel);
                 getObserver().dispose();
             }
         };

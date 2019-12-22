@@ -1,12 +1,10 @@
 package UI.panels.playMap;
 
-import UI.app.assets.MapAsset;
 import UI.app.view.ApplicationPanel;
 import UI.factory.ButtonFactory;
 import UI.pages.editmap.EditMapPage;
 import UI.panels.mapView.MapViewPanel;
 import application.config.Configuration;
-import application.io.AssetCache;
 import application.mapEditing.tools.DragTool;
 import application.mapEditing.tools.FogOfWarTool;
 import application.mapEditing.tools.PanTool;
@@ -21,7 +19,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 
 public class PlayToolPanel extends ApplicationPanel {
 
@@ -57,7 +54,7 @@ public class PlayToolPanel extends ApplicationPanel {
                     set.destroyFog();
                 }
                 getObserver().openPage(new EditMapPage(
-                        Configuration.SAVE_FOLDER+viewPanel.getMap().getName()));
+                        Configuration.SAVE_MAP_FOLDER +viewPanel.getMap().getName()));
             }
         });
 
