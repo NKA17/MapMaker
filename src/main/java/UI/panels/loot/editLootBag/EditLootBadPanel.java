@@ -24,6 +24,7 @@ public class EditLootBadPanel extends ApplicationPanel {
 
     private DropBag bag;
     private DropRateBagGraphPanel graphPanel;
+    private JScrollPane scrollPane = new JScrollPane();
 
     public EditLootBadPanel(DropBag bag,DropRateBagGraphPanel graphPanel){
         this.bag = bag;
@@ -44,7 +45,6 @@ public class EditLootBadPanel extends ApplicationPanel {
         gbc.gridx = 0;
         gbc.gridy = 1;
 
-        JScrollPane scrollPane = new JScrollPane();
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setBorder(null);
@@ -129,7 +129,11 @@ public class EditLootBadPanel extends ApplicationPanel {
             {
                 bag.setName(((EditLootBagPage) AppState.ACTIVE_PAGE).getBagName());
                 bag.getItems().remove(item);
-                getObserver().openPage(new EditLootBagPage(bag));
+                EditLootBagPage page = new EditLootBagPage(bag);
+                getObserver().openPage(page);
+                page.getLootBagPanel().setScrollPaneValue(scrollPane.getVerticalScrollBar().getValue());
+                getObserver().revalidate();
+
             }
         });
 
@@ -150,7 +154,10 @@ public class EditLootBadPanel extends ApplicationPanel {
                 dupe.setDropRateMin(item.getDropRateMin());
                 dupe.setDropRateMax(item.getDropRateMax());
                 bag.getItems().add(dupe);
-                getObserver().openPage(new EditLootBagPage(bag));
+                EditLootBagPage page = new EditLootBagPage(bag);
+                getObserver().openPage(page);
+                page.getLootBagPanel().setScrollPaneValue(scrollPane.getVerticalScrollBar().getValue());
+                getObserver().revalidate();
             }
         });
 
@@ -179,5 +186,9 @@ public class EditLootBadPanel extends ApplicationPanel {
         });
 
         return button;
+    }
+
+    private void setScrollPaneValue(int value){
+        scrollPane.getVerticalScrollBar().setValue(value);
     }
 }

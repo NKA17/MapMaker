@@ -11,6 +11,9 @@ public class Configuration {
     public static final int TILE_WIDTH = 50;
     public static final int TILE_HEIGHT = 50;
 
+    public static int WIDTH_CONSTRAINT = -1;
+    public static int HEIGHT_CONSTRAINT = -1;
+
     public static MapAsset DEFAULT_FLOOR_TILE =
             get("C:\\Users\\Nate\\IdeaProjects\\RPGMapMaker\\src\\main\\resources\\assets\\map\\floor\\0mechanics\\black.png");
 

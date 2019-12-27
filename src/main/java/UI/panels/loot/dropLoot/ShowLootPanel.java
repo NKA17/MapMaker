@@ -5,6 +5,7 @@ import UI.factory.ButtonFactory;
 import UI.pages.loot.dropLoot.ShowLootPage;
 import UI.pages.loot.editLootBag.EditLootBagPage;
 import application.config.AppState;
+import application.config.Configuration;
 import application.loot.structure.DropBag;
 import application.loot.structure.ItemRow;
 
@@ -12,9 +13,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.*;
 import java.util.List;
 
 public class ShowLootPanel extends ApplicationPanel {
@@ -44,13 +43,24 @@ public class ShowLootPanel extends ApplicationPanel {
         //scrollPane.setPreferredSize(new Dimension(400,200));
         scrollPane.getVerticalScrollBar().setUnitIncrement(20);
         scrollPane.setBackground(null);
-        scrollPane.setPreferredSize(new Dimension(400,600));
+        if(Configuration.WIDTH_CONSTRAINT!=-1){
+            scrollPane.setPreferredSize(new Dimension(
+                    Configuration.WIDTH_CONSTRAINT-75,
+                    Configuration.HEIGHT_CONSTRAINT-60
+            ));
+        }else {
+            scrollPane.setPreferredSize(new Dimension(400, 550));
+        }
         JPanel viewPanel = new JPanel();
         viewPanel.setBackground(null);
         viewPanel.setLayout(new GridBagLayout());
         scrollPane.setViewportView(viewPanel);
         scrollPane.setAlignmentX(JScrollPane.LEFT_ALIGNMENT);
-        add(scrollPane);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        add(scrollPane,gbc);
+
+
 
         HashMap<String,DropBag> groupedBagsMap = new HashMap<>();
         for(DropBag bag: dropBagList){
@@ -81,6 +91,12 @@ public class ShowLootPanel extends ApplicationPanel {
         finalBag.pack();
 
         for(DropBag bag: dropBagList) {
+            Collections.sort(bag.getItems(), new Comparator<ItemRow>() {
+                @Override
+                public int compare(ItemRow o1, ItemRow o2) {
+                    return o1.getName().compareToIgnoreCase(o2.getName());
+                }
+            });
             JLabel label = new JLabel(bag.getName());
             gbc.gridx = 0;
             viewPanel.add(label, gbc);
@@ -89,7 +105,11 @@ public class ShowLootPanel extends ApplicationPanel {
             for (ItemRow item : bag.getItems()) {
                 gbc.gridx = 0;
                 JButton button = createButton(item);
-                button.setPreferredSize(new Dimension(300, 30));
+                if(Configuration.WIDTH_CONSTRAINT!=-1){
+                    button.setPreferredSize(new Dimension(Configuration.WIDTH_CONSTRAINT-200,30));
+                }else {
+                    button.setPreferredSize(new Dimension(300, 30));
+                }
                 viewPanel.add(button, gbc);
 
                 gbc.gridx = 1;
@@ -100,6 +120,7 @@ public class ShowLootPanel extends ApplicationPanel {
                 gbc.gridy++;
             }
         }
+
 
         viewPanel.invalidate();
         viewPanel.revalidate();
@@ -130,5 +151,9 @@ public class ShowLootPanel extends ApplicationPanel {
         button.setRolloverEnabled(false);
 
         return button;
+    }
+
+    public List<DropBag> getBags(){
+        return dropBagList;
     }
 }

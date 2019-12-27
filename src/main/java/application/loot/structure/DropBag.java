@@ -3,6 +3,7 @@ package application.loot.structure;
 import java.util.*;
 
 public class DropBag {
+    private long id = 0;
     private String name = "NPC Loot";
     private List<ItemRow> items = new ArrayList<>();
     private ItemRow highlighted = null;
@@ -111,5 +112,13 @@ public class DropBag {
 
     public void setHighlighted(ItemRow highlighted) {
         this.highlighted = highlighted;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }

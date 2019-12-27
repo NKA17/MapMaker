@@ -26,14 +26,24 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class EditLootBagPage extends ApplicationPage {
 
     private DropBag bag;
 
     JTextField nameField;
+    private EditLootBadPanel lootBagPanel;
+
     public EditLootBagPage(DropBag bag){
         this.bag = bag;
+        Collections.sort(bag.getItems(), new Comparator<ItemRow>() {
+            @Override
+            public int compare(ItemRow o1, ItemRow o2) {
+                return o1.getName().compareToIgnoreCase(o2.getName());
+            }
+        });
     }
 
     @Override
@@ -53,8 +63,8 @@ public class EditLootBagPage extends ApplicationPage {
         add(namePanel,gbc);
 
         GraphContainerPanel graphPanel = new GraphContainerPanel(bag);
-        EditLootBadPanel panel = new EditLootBadPanel(bag,graphPanel.getGraphPanel());
-        addPanel(panel,0,1,1);
+        lootBagPanel = new EditLootBadPanel(bag,graphPanel.getGraphPanel());
+        addPanel(lootBagPanel,0,1,1);
         addPanel(graphPanel,1,1,1);
 
         gbc.gridx = 0;
@@ -92,7 +102,7 @@ public class EditLootBagPage extends ApplicationPage {
             public void actionPerformed(ActionEvent e)
             {
                 ItemRow item = new ItemRow();
-                bag.getItems().add(item);
+                //bag.getItems().add(item);
                 EditItemPage page = new EditItemPage(item,bag);
                 getObserver().openPage(page);
             }
@@ -142,5 +152,9 @@ public class EditLootBagPage extends ApplicationPage {
 
     public String getBagName(){
         return nameField.getText();
+    }
+
+    public EditLootBadPanel getLootBagPanel() {
+        return lootBagPanel;
     }
 }

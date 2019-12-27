@@ -7,10 +7,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ItemRow {
+    private long id;
+    private long dropBagId;
     private String name = "Item";
     private String description = "item";
     private String quantity = "1";
-    private double dropRateMin = 0;
+    private double dropRateMin = .35;
     private double dropRateMax = 1;
 
     public ItemRow(){}
@@ -106,6 +108,34 @@ public class ItemRow {
         return total;
     }
 
+    public ItemRow copy(){
+        ItemRow item = new ItemRow();
+        item.setName(getName());
+        item.setDescription(getDescription());
+        item.setQuantity(getQuantity());
+        item.setDropRateMin(getDropRateMin());
+        item.setDropRateMax(getDropRateMax());
+        return item;
+    }
+
+
+    public double solveForY(int x){
+        double a = (x+0.0)/17.0;
+        double pow = Math.pow(a,2);
+        double powMinus5 = (pow-.5);
+        double range = dropRateMax - dropRateMin;
+        double rangeTimesPow = range*powMinus5;
+        double z = rangeTimesPow+dropRateMin;
+        return z;
+    }
+    public double solveForX(double z){
+        try {
+            return 17.0 * (Math.sqrt(((z - dropRateMin) / (dropRateMax - dropRateMin)) + .5));
+        }catch (Exception e){
+            return 1;
+        }
+    }
+
     public String getName() {
         return name;
     }
@@ -155,5 +185,21 @@ public class ItemRow {
         System.out.println(ir.drop());
         ir.setDropRateMin(.25);
         System.out.println(ir.drop());
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public long getDropBagId() {
+        return dropBagId;
+    }
+
+    public void setDropBagId(long dropBagId) {
+        this.dropBagId = dropBagId;
     }
 }

@@ -47,7 +47,6 @@ public class DropRateBagGraphPanel extends ApplicationPanel {
 
     @Override
     public void paintComponent(Graphics g){
-        //setPreferredSize(new Dimension(200,200));
         g.setColor(Configuration.WINDOW_BG_COLOR);
         g.fillRect(0,0,width,height);
 
@@ -83,23 +82,7 @@ public class DropRateBagGraphPanel extends ApplicationPanel {
             ix2 = right;
         }
 
-//        if(Math.round(x2)!=20) {
-//            g.setColor(new Color(100,250,100,20));
-//            if(calcForMin(dropBag.getHighlighted())) {
-//                g.fillRect((int) Math.round(ix1), 0, (int) (Math.round(ix2) - Math.round(ix1)), height);
-//            }else{
-//                g.fillRect(0, 0, (int) (Math.round(ix2)), height);
-//            }
-//            g.setColor(new Color(150,250,150,200));
-//            g.drawLine((int)Math.round(ix1), 0, (int)Math.round(ix1), height);
-//            g.drawLine((int)Math.round(ix2), 0, (int)Math.round(ix2), height);
-//
-//            g.setColor(new Color(90,90,90));
-//        }else{
-//            g.setColor(new Color(90,90,90));
-//            g.drawLine((int)Math.round(ix1), 0, (int)Math.round(ix1), height);
-//            g.drawLine((int)Math.round(ix2), 0, (int)Math.round(ix2), height);
-//        }
+
         int xbound1 = (int)((calcForMin(dropBag.getHighlighted()))?ix1:0);
         int xbound2 = (int)((calcForMax(dropBag.getHighlighted()))?ix2:width);
         Color lineColor1 = calcForMin(dropBag.getHighlighted())?
@@ -134,9 +117,6 @@ public class DropRateBagGraphPanel extends ApplicationPanel {
         for(ItemRow item: dropBag.getItems()){
             drawOnGraph(g,item,new Color(200,200,0,66));
         }
-        if(dropBag.getHighlighted()!=null) {
-            drawOnGraph(g, dropBag.getHighlighted(), Configuration.HIGHLIGHT_COLOR);
-        }
 
         g.setColor(new Color(255, 255, 255));
         g.setFont(new Font("Arial Black", 0, 10));
@@ -150,12 +130,27 @@ public class DropRateBagGraphPanel extends ApplicationPanel {
             }
         }
 
-        g.drawString("1",0,10);
-        g.drawString(".5",0,(int)((hor-10.0)/2.0)+10);
-        g.drawString("0",0,hor);
+        g.drawString("1.0",0,10);
+        if(dropBag.getHighlighted()==null ||
+                (dropBag.getHighlighted()!=null && dropBag.getHighlighted().solveForY(0) <= 0)) {
+            g.drawString(".5", 0, (int) ((hor - 10.0) / 2.0) + 10);
+        }else {
+            double y = dropBag.getHighlighted().solveForY(0);
+            int iy = hor - 10 - (int)Math.round((hor - 10.0) * y);
+
+            g.drawString(String.format("%.2f",y), 20,  iy + 20);
+            g.setColor(new Color(90,90,90));
+            g.drawLine(0,iy+10,width,iy+10);
+        }
+        g.setColor(new Color(255, 255, 255));
+        g.drawString("0.0",0,hor);
 
         g.drawLine(0,hor,height,hor);
         g.drawLine(vert,0,vert,height);
+
+        if(dropBag.getHighlighted()!=null) {
+            drawOnGraph(g, dropBag.getHighlighted(), Configuration.HIGHLIGHT_COLOR);
+        }
     }
 
 
@@ -190,7 +185,6 @@ public class DropRateBagGraphPanel extends ApplicationPanel {
     }
 
     private double solveForY(int x,double min, double max){
-        if(max-min<.01)return 1;
         double a = (x+0.0)/17.0;
         double pow = Math.pow(a,2);
         double powMinus5 = (pow-.5);
@@ -200,7 +194,6 @@ public class DropRateBagGraphPanel extends ApplicationPanel {
         return z;
     }
     private double solveForX(double z,double min, double max){
-        if(max==min)return z;
         try {
             return 17.0 * (Math.sqrt(((z - min) / (max - min)) + .5));
         }catch (Exception e){

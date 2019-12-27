@@ -86,6 +86,17 @@ public class ButtonFactory {
         return jButton;
     }
 
+    public static JSlider createSlider(int min, int max){
+        JSlider slider = new JSlider();
+        slider.setMaximum(min);
+        slider.setMaximum(max);
+        slider.setFocusable(false);
+        slider.setUI(new SleekSlideUI(slider));
+        slider.setBackground(null);
+
+        return slider;
+    }
+
     private static class EnterListener implements MouseListener{
         private JButton button;
 

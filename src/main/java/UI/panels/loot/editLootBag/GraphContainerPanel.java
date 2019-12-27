@@ -21,7 +21,7 @@ public class GraphContainerPanel extends ApplicationPanel {
 
     public GraphContainerPanel(DropBag dropBag) {
         this.dropBag = dropBag;
-        graphPanel = new DropRateBagGraphPanel(dropBag);
+        graphPanel = new DropGraphPanel(dropBag);
         graphPanel.loadPanel();
     }
 

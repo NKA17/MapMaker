@@ -6,6 +6,7 @@ import UI.pages.loot.lootNavigation.LootNavigationPage;
 import UI.panels.loot.dropLoot.AddLootPanel;
 import UI.panels.loot.dropLoot.DropLootPanel;
 import UI.windows.BasicWindow;
+import application.config.Configuration;
 import application.io.LootIO;
 import application.loot.structure.DropBag;
 
@@ -13,11 +14,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SetupLootPage extends ApplicationPage {
 
     private List<DropBag> dropList;
+    private AddLootPanel lootPanel;
+    private DropLootPanel lootPanel2;
 
     public SetupLootPage(List<DropBag> dropList) {
         this.dropList = dropList;
@@ -25,14 +29,14 @@ public class SetupLootPage extends ApplicationPage {
 
     @Override
     public void loadPage() {
-        AddLootPanel lootPanel = new AddLootPanel(dropList);
+        lootPanel = new AddLootPanel(dropList);
         addPanel(lootPanel,0,0,1);
-        DropLootPanel lootPanel2 = new DropLootPanel(dropList);
+        lootPanel2 = new DropLootPanel(dropList);
         addPanel(lootPanel2,1,0,1);
         lootPanel.setObserver(getObserver());
 
         JPanel panel = new JPanel(new GridBagLayout());
-        panel.setBackground(null);
+        panel.setBackground(Configuration.PANEL_BG_COLOR);
         JButton backButton = ButtonFactory.createButton("Back");
         JButton investButton = ButtonFactory.createButton("Investigate");
         JButton dropButton = ButtonFactory.createButton("Drop");
@@ -53,8 +57,9 @@ public class SetupLootPage extends ApplicationPage {
         gbc.gridy = 0;
         panel.add(backButton,gbc);
 
-        gbc.gridx = 1;
+        gbc.gridx = 0;
         gbc.gridy = 1;
+        gbc.gridwidth = 2;
         add(panel,gbc);
 
 
@@ -85,10 +90,32 @@ public class SetupLootPage extends ApplicationPage {
             {
                 BasicWindow bw = new BasicWindow();
                 bw.setTitle("Loot");
-                ShowLootPage page = new ShowLootPage(dropList,0);
+                ShowLootPage page = new ShowLootPage(dropList,12);
                 bw.openPage(page);
                 bw.makeVisible();
             }
         });
+    }
+
+    public AddLootPanel getAddLootPanel() {
+        return lootPanel;
+    }
+
+    public void setAddLootPanel(AddLootPanel lootPanel) {
+        this.lootPanel = lootPanel;
+    }
+
+    public DropLootPanel getDropLootPanel() {
+        return lootPanel2;
+    }
+
+    public void setDropLootPanel(DropLootPanel lootPanel2) {
+        this.lootPanel2 = lootPanel2;
+    }
+
+    public static void main(String[] args){
+        BasicWindow bw = new BasicWindow();
+        bw.openPage(new SetupLootPage(new ArrayList<>()));
+        bw.makeVisible();
     }
 }

@@ -6,6 +6,7 @@ import UI.pages.loot.LootManage.LootManagePage;
 import UI.pages.loot.dropLoot.SetupLootPage;
 import UI.pages.mapSelect.MapSelectPage;
 import UI.pages.newMapSetup.NewMapSetupPage;
+import UI.pages.start.StartPage;
 
 import javax.swing.*;
 import java.awt.*;
@@ -43,7 +44,7 @@ public class LootNavigationPanel extends ApplicationPanel {
         back.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e) {
-                MapSelectPage page = new MapSelectPage();
+                StartPage page = new StartPage();
                 getObserver().openPage(page);
             }
         });

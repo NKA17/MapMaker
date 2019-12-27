@@ -8,6 +8,8 @@ import UI.pages.loot.dropLoot.ShowLootPage;
 import application.loot.structure.DropBag;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,7 +30,7 @@ public class EnterInvestigationRollPanel extends ApplicationPanel {
 
         JLabel rollLabel = TextFactory.createLabel("Investigation Roll");
 
-        JTextField rollField = TextFactory.createTextField("0");
+        JTextField rollField = TextFactory.createTextField("12");
         rollField.setPreferredSize(new Dimension(300,30));
 
         JButton next = ButtonFactory.createButton("Drop Loot");
@@ -38,6 +40,15 @@ public class EnterInvestigationRollPanel extends ApplicationPanel {
 
                 ShowLootPage sp = new ShowLootPage(dropBagList,Integer.parseInt(rollField.getText()));
                 getObserver().openPage(sp);
+            }
+        });
+
+        JSlider slider = ButtonFactory.createSlider(0,40);
+        slider.setValue(12);
+        slider.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                rollField.setText(slider.getValue()+"");
             }
         });
 
@@ -54,8 +65,17 @@ public class EnterInvestigationRollPanel extends ApplicationPanel {
         add(rollField,gbc);
 
         gbc.anchor = GridBagConstraints.WEST;
-        gbc.gridx = 1;
+        gbc.gridx = 0;
         gbc.gridy = 1;
+        gbc.weightx = 2;
+        gbc.gridwidth = 2;
+        add(slider,gbc);
+
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        gbc.weightx = 1;
+        gbc.gridwidth = 1;
         add(next,gbc);
     }
 }
