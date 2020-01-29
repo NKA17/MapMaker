@@ -39,7 +39,7 @@ public class MechanicalLayer extends MapLayer {
                 int x = mapTile.getGridx() ;
                 int y = mapTile.getGridy() ;
 
-                if (name.equals("spawn.png") && !mapTile.isOnScreen(mapxoffset, mapyoffset)) {
+                if (name.contains("#offscreen") && !mapTile.isOnScreen(mapxoffset, mapyoffset)) {
                     if(x + mapxoffset < 0){
                         x = 0 - mapxoffset;
                     }
@@ -54,7 +54,22 @@ public class MechanicalLayer extends MapLayer {
                     }
                     g.drawImage(bimg,x,y,null);
                 }else
-                if (name.equals("compass.png")) {
+                if (name.contains("#onscreen") && mapTile.isOnScreen(mapxoffset, mapyoffset)) {
+                    if(x + mapxoffset < 0){
+                        x = 0 - mapxoffset;
+                    }
+                    if(x + mapxoffset > 1150){//
+                        x = 1150 - mapxoffset;
+                    }
+                    if(y + mapyoffset < 0){
+                        y = 0 - mapyoffset;
+                    }
+                    if(y + mapyoffset > 650){
+                        y = 650 - mapyoffset;
+                    }
+                    g.drawImage(bimg,x,y,null);
+                }else
+                if (name.contains("#static")) {
                     x = 15 - mapxoffset;
                     y = 15 - mapyoffset;
                     g.drawImage(bimg,x,y,null);

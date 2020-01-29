@@ -80,6 +80,10 @@ public class EditMapPage extends ApplicationPage{
         addPanel(mapView,1,0);
         mapView.setObserver(getObserver());
         mapView.createEditor();
+        privateMap = map;
     }
 
+    public RPGMap getMap() {
+        return privateMap;
+    }
 }

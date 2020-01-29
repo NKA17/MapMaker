@@ -219,17 +219,4 @@ public class DropRateBagGraphPanel extends ApplicationPanel {
         return Double.NaN != one && one > 0 && one < 30;
     }
 
-    public static void main(String[] args){
-        BasicWindow bw = new BasicWindow();
-        ApplicationPage page = new ApplicationPage() {
-            @Override
-            public void loadPage() {
-                DropBag bag = LootIO.load("Bumble.mf");
-                DropRateBagGraphPanel panel = new DropRateBagGraphPanel(bag);
-                addPanel(panel);
-            }
-        };
-        bw.openPage(page);
-        bw.makeVisible();
-    }
 }

@@ -8,6 +8,7 @@ import model.map.structure.GraphicLayer;
 import model.map.structure.MapLayer;
 import model.map.structure.MapSet;
 import model.map.structure.RPGMap;
+import model.map.tiles.MapPointer;
 import model.map.tiles.MapTile;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -89,6 +90,11 @@ public class Jsonifier {
         json.put("y",tile.getGridy());
         json.put("rads",tile.getRadians());
         json.put("resource",assetToJSON(tile.getAssetResource()));
+
+        if(tile.getAssetResource().getName().contains("pointer")){
+            json.put("abbreviation",((MapPointer)tile).getAbbreviation());
+            json.put("description",((MapPointer)tile).getDescription());
+        }
 
         return json;
     }

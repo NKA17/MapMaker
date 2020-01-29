@@ -11,6 +11,15 @@ import java.util.HashMap;
 
 public class AssetCache {
     public static HashMap<String,MapAsset> cache = new HashMap<>();
+    public static BufferedImage COG_ICON;
+
+    static{
+        try{
+            COG_ICON = ImageIO.read(new File("C:\\Users\\Nate\\IdeaProjects\\RPGMapMaker\\src\\main\\resources\\icons\\cog.png"));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
     public static MapAsset get(String name){
         try {

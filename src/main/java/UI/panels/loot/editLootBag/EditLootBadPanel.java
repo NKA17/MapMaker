@@ -11,6 +11,7 @@ import UI.pages.loot.editLootBag.EditLootBagPage;
 import UI.windows.BasicWindow;
 import application.config.AppState;
 import application.config.Configuration;
+import application.io.LootIODB;
 import application.loot.structure.DropBag;
 import application.loot.structure.ItemRow;
 
@@ -127,13 +128,17 @@ public class EditLootBadPanel extends ApplicationPanel {
         {
             public void actionPerformed(ActionEvent e)
             {
-                bag.setName(((EditLootBagPage) AppState.ACTIVE_PAGE).getBagName());
-                bag.getItems().remove(item);
-                EditLootBagPage page = new EditLootBagPage(bag);
-                getObserver().openPage(page);
-                page.getLootBagPanel().setScrollPaneValue(scrollPane.getVerticalScrollBar().getValue());
-                getObserver().revalidate();
-
+                try {
+                    bag.setName(((EditLootBagPage) AppState.ACTIVE_PAGE).getBagName());
+                    bag.getItems().remove(item);
+                    LootIODB.deleteItem(item);
+                    EditLootBagPage page = new EditLootBagPage(bag);
+                    getObserver().openPage(page);
+                    page.getLootBagPanel().setScrollPaneValue(scrollPane.getVerticalScrollBar().getValue());
+                    getObserver().revalidate();
+                }catch (Exception ex){
+                    ex.printStackTrace();
+                }
             }
         });
 

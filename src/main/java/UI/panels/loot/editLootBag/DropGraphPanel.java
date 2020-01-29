@@ -6,6 +6,9 @@ import application.loot.structure.DropBag;
 import application.loot.structure.ItemRow;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.Collections;
@@ -19,10 +22,16 @@ public class DropGraphPanel extends DropRateBagGraphPanel {
     private int margin = 20;
     private int w = 200;
     private int h = 200;
+    private int mousex = 0;
+    private int mousey = 0;
+    private boolean drawmouse = false;
 
     public DropGraphPanel(DropBag dropBag) {
         super(dropBag);
         this.dropBag = dropBag;
+        Listener l = new Listener(this);
+        addMouseListener(l);
+        addMouseMotionListener(l);
     }
 
     @Override
@@ -36,6 +45,9 @@ public class DropGraphPanel extends DropRateBagGraphPanel {
         BufferedImage graphImage = new BufferedImage(w, h, BufferedImage.TYPE_4BYTE_ABGR);
         Graphics graph = graphImage.getGraphics();
 
+        g.setFont(new Font("Arial Black",0,10));
+        graph.setFont(new Font("Arial Black",0,10));
+
         g.setColor(Configuration.WINDOW_BG_COLOR);
         g.fillRect(0,0,w,h);
 
@@ -45,8 +57,35 @@ public class DropGraphPanel extends DropRateBagGraphPanel {
         drawHighlight(g,dropBag.getHighlighted());
         drawIntersects(g);
 
+        if(drawmouse && dropBag.getHighlighted()!=null)
+            drawMouse(g);
+
         BufferedImage flippedGraph = createFlipped(graphImage);
         g.drawImage(flippedGraph,0,0,null);
+    }
+
+    private void drawMouse(Graphics g){
+        ItemRow item = dropBag.getHighlighted();
+
+        g.setColor(new Color(150,255,150));
+        g.drawLine(mousex,0,mousex,height);
+
+        int x = (int)Math.round((mousex+0.0-margin)/(gw/20.0));
+        double val = item.solveForY(x);
+        int y = height - (int)Math.round((gh+0.0)*(item.solveForY(x)+0.0));
+        g.drawLine(0,y,width,y);
+
+        if(mousex > width / 2 + 20){
+            g.setColor(new Color(0,0,0,200));
+            g.fillRect(mousex-70,y-15,60,14);
+            g.setColor(new Color(150,255,150));
+            g.drawString(String.format("(%.2f, %d)", val, x), mousex - 65, y - 5);
+        }else {
+            g.setColor(new Color(0,0,0,200));
+            g.fillRect(mousex+3,y+3,60,14);
+            g.setColor(new Color(150,255,150));
+            g.drawString(String.format("(%.2f, %d)", val, x), mousex + 5, y + 14);
+        }
     }
 
     private void paintCurves(Graphics g,Color c){
@@ -81,7 +120,6 @@ public class DropGraphPanel extends DropRateBagGraphPanel {
         g.drawLine(onex,0,onex,h);
         g.drawLine(halfx,0,halfx,h);
 
-        g.setFont(new Font("Arial Black",0,10));
         g.drawString("1.0",0,oney-2);
         g.drawString("0.5",0,halfy-2);
         g.drawString("20",onex,(int)(margin*1.5)+gh);
@@ -145,5 +183,53 @@ public class DropGraphPanel extends DropRateBagGraphPanel {
         g.drawImage(image, 0, 0, null);
         g.dispose();
         return newImage;
+    }
+
+    class Listener implements MouseListener, MouseMotionListener {
+
+
+        private DropGraphPanel dgp;
+
+        public Listener(DropGraphPanel dgp){
+            this.dgp = dgp;
+        }
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            dgp.drawmouse = true;
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            dgp.drawmouse = false;
+            dgp.repaint();
+        }
+
+        @Override
+        public void mouseDragged(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseMoved(MouseEvent e) {
+            dgp.mousex = e.getX();
+            dgp.mousey = e.getY();
+            dgp.repaint();
+        }
     }
 }

@@ -17,6 +17,7 @@ import UI.panels.loot.lootManage.LootManagePanel;
 import UI.windows.BasicWindow;
 import application.config.Configuration;
 import application.io.LootIO;
+import application.io.LootIODB;
 import application.loot.structure.DropBag;
 import application.loot.structure.ItemRow;
 import application.mapEditing.tools.TilePaintTool;
@@ -113,10 +114,14 @@ public class EditLootBagPage extends ApplicationPage {
         {
             public void actionPerformed(ActionEvent e)
             {
-                bag.setName(nameField.getText());
-                LootIO.save(bag);
-                LootManagePage sp = new LootManagePage();
-                getObserver().openPage(sp);
+                try {
+                    bag.setName(nameField.getText());
+                    LootIODB.saveDropBag(bag);
+                    LootManagePage sp = new LootManagePage();
+                    getObserver().openPage(sp);
+                }catch (Exception ex){
+                    ex.printStackTrace();
+                }
             }
         });
 

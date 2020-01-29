@@ -1,6 +1,7 @@
 package application.io;
 
 import application.config.Configuration;
+import application.config.Setup;
 import application.loot.structure.DropBag;
 import application.loot.structure.ItemRow;
 import com.sun.corba.se.impl.presentation.rmi.ExceptionHandler;
@@ -15,6 +16,14 @@ import java.util.List;
 
 public class LootIODB {
 
+    static {
+        try{
+
+            Class.forName("com.mysql.jdbc.Driver");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
     public static void saveDropBag(DropBag bag)throws SQLException{
         Connection con = getConnection();
 
@@ -49,21 +58,19 @@ public class LootIODB {
         }
     }
 
-    private static void deleteBag(DropBag bag)throws SQLException{
+    public static void deleteBag(DropBag bag)throws SQLException{
         Connection con = getConnection();
         deleteBag(bag,con);
         con.close();
     }
     private static void deleteBag(DropBag bag, Connection con) throws SQLException{
         con.createStatement().execute("delete from RPG_MAKER.DropBag where id="+bag.getId());
-        for(ItemRow item: bag.getItems()){
-            deleteItem(item,con);
-        }
+        con.createStatement().execute("delete from RPG_MAKER.ItemRow where dropbag="+bag.getId());
     }
 
     private static void saveBagUpdates(DropBag bag, Connection con) throws SQLException{
         con.createStatement().execute(
-                String.format("update table RPG_MAKER.DropBag set name='%s' " +
+                String.format("update RPG_MAKER.DropBag set name='%s' " +
                         "where id=%d",
                         sanatize(bag.getName()),bag.getId())
         );
@@ -96,7 +103,7 @@ public class LootIODB {
 
     private static void saveItemUpdates(ItemRow item, Connection con) throws SQLException{
         con.createStatement().execute(
-                String.format("update table RPG_MAKER.ItemRow set " +
+                String.format("update RPG_MAKER.ItemRow set " +
                                 "name='%s'," +
                                 "description='%s'," +
                                 "quantity='%s'," +
@@ -162,15 +169,16 @@ public class LootIODB {
     //Establishes a connection to the database
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(
-                "jdbc:mysql://raspberrypi", "nate", "7.51430Nine");
+                Configuration.DATABASE_HOSTNAME, "nate", "7.51430Nine");
     }
     public static Connection getConnection(String host, String user, String pass)throws SQLException{
         return DriverManager.getConnection(host,user,pass);
     }
 
     public static void main(String[] args){
-        deleteAll();
-        pushAll();
+        Setup.setup(args);
+        System.out.println("testing...");
+
         listAllRemote();
     }
 
@@ -196,7 +204,7 @@ public class LootIODB {
                 }
             }
         }catch (Exception e){
-
+            e.printStackTrace();
         }
 
     }

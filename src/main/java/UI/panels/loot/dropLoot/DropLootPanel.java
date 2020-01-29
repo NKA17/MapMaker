@@ -43,7 +43,7 @@ public class DropLootPanel extends ApplicationPanel {
         if(Configuration.WIDTH_CONSTRAINT!=-1){
             scrollPane.setPreferredSize(new Dimension(
                     (Configuration.WIDTH_CONSTRAINT-60)/2,
-                    Configuration.HEIGHT_CONSTRAINT-110));
+                    Configuration.HEIGHT_CONSTRAINT-70));
         }else {
             scrollPane.setPreferredSize(new Dimension(400, 300));
         }
@@ -115,7 +115,7 @@ public class DropLootPanel extends ApplicationPanel {
         if(Configuration.WIDTH_CONSTRAINT!=-1){
             button.setPreferredSize(new Dimension(
                     (Configuration.WIDTH_CONSTRAINT-110)/2,
-                    30));
+                    25));
         }else{
             button.setPreferredSize(new Dimension(350,30));
         }

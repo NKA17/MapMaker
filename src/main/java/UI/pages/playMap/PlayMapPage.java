@@ -21,7 +21,7 @@ public class PlayMapPage extends ApplicationPage {
         }
 
         for(MapTile tile: map.getMechanicsLayer().getTiles()){
-            if(tile.getAssetResource().getName().contains("spawn.png")){
+            if(tile.getAssetResource().getName().contains("spawn")){
                 map.getActiveLayer().toggleFog(tile.getGridx(),tile.getGridy());
             }
         }

@@ -6,6 +6,7 @@ import UI.pages.editmap.EditMapPage;
 import UI.pages.playMap.PlayMapPage;
 import application.config.AppState;
 import application.config.Configuration;
+import application.io.AssetCache;
 import application.mapEditing.toolInterfaces.Draggable;
 import application.mapEditing.toolInterfaces.ITool;
 import application.mapEditing.tools.DragTool;
@@ -13,6 +14,7 @@ import application.mapEditing.tools.DragTool;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
 import java.io.File;
 
 public class AssetTile extends MapTile implements Draggable{

@@ -5,17 +5,20 @@ import application.io.AssetCache;
 
 import java.awt.*;
 
-import static application.io.AssetCache.*;
-
 public class Configuration {
+
+    public static boolean ENABLE_MAP = false;
+    public static boolean ENABLE_LOOT = false;
+
     public static final int TILE_WIDTH = 50;
     public static final int TILE_HEIGHT = 50;
 
     public static int WIDTH_CONSTRAINT = -1;
     public static int HEIGHT_CONSTRAINT = -1;
 
-    public static MapAsset DEFAULT_FLOOR_TILE =
-            get("C:\\Users\\Nate\\IdeaProjects\\RPGMapMaker\\src\\main\\resources\\assets\\map\\floor\\0mechanics\\black.png");
+    public static String DATABASE_HOSTNAME = "jdbc:mysql://raspberrypi";
+
+    public static MapAsset DEFAULT_FLOOR_TILE = AssetCache.get("C:\\Users\\Nate\\IdeaProjects\\RPGMapMaker\\src\\main\\resources\\assets\\map\\floor\\0mechanics\\black.png");
 
     public static Insets GRIDBAG_INSETS = new Insets(4,4,4,10);
     public static Color PLAY_GRID_COLOR = new Color(0,0,0,255);
@@ -25,6 +28,7 @@ public class Configuration {
 
     public static String SAVE_MAP_FOLDER = "./src/main/resources/mapSaves/";
     public static String SAVE_LOOT_FOLDER = "./src/main/resources/lootSaves/";
+    public static String REF_MAP_LOCATION = "./src/main/resources/refMaps/";
     public static final String FILE_EXTENSION = ".mf";
 
     //public static final Color COMP_BG_COLOR = new Color(123,182,255);

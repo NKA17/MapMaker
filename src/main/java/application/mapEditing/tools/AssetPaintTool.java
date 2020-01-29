@@ -6,6 +6,7 @@ import model.map.structure.MapLayer;
 import model.map.structure.RPGMap;
 import model.map.tiles.AssetTile;
 import application.mapEditing.toolInterfaces.IPaintTool;
+import model.map.tiles.MapPointer;
 
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -83,7 +84,7 @@ public class AssetPaintTool implements IPaintTool {
 
             String assetString = getRandomFromPalette();
             MapAsset asset = AssetCache.get(assetString);
-            AssetTile tile = new AssetTile(asset);
+            AssetTile tile = assetString.contains("pointer")?new MapPointer():new AssetTile(asset);
             tile.setGridx(e.getX() - map.getXoffset());
             tile.setGridy(e.getY() - map.getYoffset());
             activeLayer.getTiles().add(tile);

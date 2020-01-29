@@ -5,6 +5,7 @@ import UI.factory.ButtonFactory;
 import UI.pages.loot.lootNavigation.LootNavigationPage;
 import UI.pages.mapSelect.MapSelectPage;
 import UI.pages.newMapSetup.NewMapSetupPage;
+import application.config.Configuration;
 
 import javax.swing.*;
 import java.awt.*;
@@ -54,28 +55,28 @@ public class StartNavigationPanel extends ApplicationPanel {
                 getObserver().dispose();
             }
         });
-
         gbc.anchor = GridBagConstraints.WEST;
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.insets = new Insets(4,4,4,10);
-        gbc.fill = 1;
-        add(new_map,gbc);
+        gbc.insets = new Insets(4, 4, 4, 10);
 
-        gbc.anchor = GridBagConstraints.WEST;
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        add(load_map,gbc);
+        if(Configuration.ENABLE_MAP) {
+            gbc.gridx = 0;
+            gbc.gridy = 0;
+            gbc.fill = 1;
+            add(new_map, gbc);
 
-        gbc.anchor = GridBagConstraints.WEST;
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        add(loot,gbc);
+            gbc.gridx = 0;
+            gbc.gridy = 1;
+            add(load_map, gbc);
+        }
 
-        gbc.anchor = GridBagConstraints.WEST;
+        if(Configuration.ENABLE_LOOT) {
+            gbc.gridx = 0;
+            gbc.gridy = 2;
+            add(loot, gbc);
+        }
+
         gbc.gridx = 0;
         gbc.gridy = 3;
-        gbc.insets = new Insets(4,4,4,10);
         add(close,gbc);
     }
 }

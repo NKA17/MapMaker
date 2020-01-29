@@ -3,10 +3,7 @@ package application.io;
 import UI.app.assets.MapAsset;
 import com.sun.corba.se.impl.orbutil.graph.Graph;
 import model.map.structure.*;
-import model.map.tiles.AssetTile;
-import model.map.tiles.EdgeTile;
-import model.map.tiles.MapTile;
-import model.map.tiles.PatternTile;
+import model.map.tiles.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -125,7 +122,9 @@ public class Objectifier {
 
         load.incrementTotalBytes(jsonArray.length());
         for(int i = 0; i < jsonArray.length(); i++){
-            tiles.add(toGraphicTile(jsonArray.getJSONObject(i)));
+            AssetTile t = toGraphicTile(jsonArray.getJSONObject(i));
+            if(t!=null)
+                tiles.add(t);
         }
 
         return tiles;
@@ -134,8 +133,17 @@ public class Objectifier {
     private static AssetTile toGraphicTile(JSONObject json){
         json = json.getJSONObject("map");
         MapAsset mapAsset = toMapAsset(json.getJSONObject("resource"));
+        if(mapAsset==null)
+            return null;
 
-        AssetTile pTile = new AssetTile(mapAsset,json.getInt("x"),json.getInt("y"));
+        AssetTile pTile;
+        if(mapAsset.getName().contains("pointer")){
+            pTile = new MapPointer(json.getInt("x"),json.getInt("y"));
+            ((MapPointer)pTile).setAbbreviation(json.getString("abbreviation"));
+            ((MapPointer)pTile).setDescription(json.getString("description"));
+        }else{
+            pTile = new AssetTile(mapAsset,json.getInt("x"),json.getInt("y"));
+        }
         if(json.has("rads")){
             pTile.setRadians(json.getDouble("rads"));
         }
@@ -176,6 +184,10 @@ public class Objectifier {
         json = json.getJSONObject("map");
         String name = json.getString("name");
         load.incrementReadBytes(1);
+        if(!(new File(name)).exists()){
+            System.out.println("WARNING: ignored missing file: "+name);
+            return null;
+        }
         return AssetCache.get(name);
     }
 }
