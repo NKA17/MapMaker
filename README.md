@@ -1,5 +1,6 @@
 # MapMaker
-Was not intended to be a collaborative project. If you are going to collaborate, allow me to apologize in advance.
+Was not intended to be a collaborative project. If you are going to collaborate, allow me to apologize in advance. 
+The project is not currently setup in such a way that you could pull the code and have a functional application. You will need to change a bunch of directory variables to save/load your maps and add assets into them.
 
 # Forking
 Make a fork and push all your junk to your own fork. When you make a PR (Pull Request), make it from your fork into this repository.
