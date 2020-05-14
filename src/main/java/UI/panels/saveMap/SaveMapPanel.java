@@ -7,6 +7,7 @@ import UI.pages.LoadPage.LoadPage;
 import application.config.Configuration;
 import application.io.LoadModel;
 import application.io.MapIO;
+import application.mapEditing.transpose.DungeonMasterReferenceMap;
 import model.map.structure.RPGMap;
 
 import javax.swing.*;
@@ -113,7 +114,11 @@ public class SaveMapPanel extends ApplicationPanel{
         Runnable doSave = new Runnable() {
             @Override
             public void run() {
-                MapIO.saveMap(map,Configuration.SAVE_FOLDER+fileName+Configuration.FILE_EXTENSION,loadModel);
+                DungeonMasterReferenceMap dm = new DungeonMasterReferenceMap(map);
+                dm.paintDefault();
+                dm.save();
+
+                MapIO.saveMap(map,Configuration.SAVE_MAP_FOLDER +fileName+Configuration.FILE_EXTENSION,loadModel);
                 getObserver().dispose();
             }
         };

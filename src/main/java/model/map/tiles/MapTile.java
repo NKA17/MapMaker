@@ -1,6 +1,8 @@
 package model.map.tiles;
 
 import UI.app.assets.MapAsset;
+import UI.pages.editmap.EditMapPage;
+import application.config.AppState;
 import application.config.Configuration;
 import application.io.AssetCache;
 
@@ -11,6 +13,7 @@ public abstract class MapTile {
     private int gridx;
     private int gridy;
     private MapAsset assetResource;
+    private double radians = 0;
 
     public MapTile(File assetFile, int gridx, int gridy) {
         this.gridx = gridx;
@@ -61,6 +64,14 @@ public abstract class MapTile {
         boolean validy = gridy >= ymin && gridy <= ymax;
 
         return validx && validy;
+    }
+
+    public double getRadians() {
+        return radians;
+    }
+
+    public void setRadians(double radians) {
+        this.radians = radians;
     }
 
     public String toString(){

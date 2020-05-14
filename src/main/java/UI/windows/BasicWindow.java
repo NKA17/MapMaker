@@ -2,6 +2,8 @@ package UI.windows;
 
 import UI.app.view.ApplicationWindow;
 import UI.pages.start.StartPage;
+import application.config.Configuration;
+import application.config.Setup;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,15 +17,15 @@ public class BasicWindow extends ApplicationWindow {
     }
 
     public static void main(String[] args){
+
+        Setup.setup(args);
+
         BasicWindow sp = new BasicWindow();
         sp.openPage(new StartPage());
         sp.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         sp.makeVisible();
-//        String fonts[] = GraphicsEnvironment
-//                .getLocalGraphicsEnvironment()
-//                .getAvailableFontFamilyNames();
-//        for(String s : fonts){
-//            System.out.println(s);
-//        }
+
+
     }
+
 }

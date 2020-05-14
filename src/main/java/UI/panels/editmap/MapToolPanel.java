@@ -10,13 +10,11 @@ import UI.panels.mapView.MapViewPanel;
 import UI.rendering.RPGMapRenderer;
 import application.config.AppState;
 import application.io.AssetCache;
-import application.mapEditing.MapTranslator;
-import application.mapEditing.toolInterfaces.Draggable;
-import application.mapEditing.toolInterfaces.ITool;
+import application.mapEditing.tools.AssetPaintTool;
+import application.mapEditing.transpose.MapTranslator;
 import application.mapEditing.tools.PanTool;
 import model.map.mechanics.FogBody;
 import model.map.mechanics.FogFactory;
-import model.map.structure.MapSet;
 import model.map.structure.RPGMap;
 import UI.pages.paletteSelect.PaletteSelectPage;
 import UI.pages.start.StartPage;
@@ -30,6 +28,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 public class MapToolPanel extends ApplicationPanel {
 
@@ -118,7 +117,7 @@ public class MapToolPanel extends ApplicationPanel {
                 BasicWindow paletteWindow = new BasicWindow();
                 paletteWindow.setTitle("Tile Palette");
                 paletteWindow.openPage(
-                        new PaletteSelectPage("./src/main/resources/assets/map/floor/",Tools.PAINT_TOOL));
+                        new PaletteSelectPage("./src/main/resources/assets/map/floor/",Tools.PAINT_TOOL),false);
                 paletteWindow.makeVisible();
             }
         });
@@ -130,7 +129,28 @@ public class MapToolPanel extends ApplicationPanel {
                 BasicWindow paletteWindow = new BasicWindow();
                 paletteWindow.setTitle("Edge Palette");
                 paletteWindow.openPage(
-                        new PaletteSelectPage("./src/main/resources/assets/map/structure/",Tools.EDGE_PAINT_TOOL));
+                        new PaletteSelectPage("./src/main/resources/assets/map/structure/",Tools.EDGE_PAINT_TOOL),false);
+                paletteWindow.makeVisible();
+            }
+        });
+
+        JButton mechanicsPaint = ButtonFactory.createButtonWithIcon("cog");
+        mechanicsPaint.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e) {
+                ((AssetPaintTool)Tools.MECHANICAL_PAINT_TOOL).setActiveLayer(map.getMechanicsLayer());
+                getMapViewPanel().getMapEditor().setTool(Tools.MECHANICAL_PAINT_TOOL);
+            }
+        });
+
+        JButton mechanicsSelect = ButtonFactory.createButtonWithIcon("palette");
+        mechanicsSelect.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e) {
+                BasicWindow paletteWindow = new BasicWindow();
+                paletteWindow.setTitle("Mechanics Palette");
+                paletteWindow.openPage(
+                        new PaletteSelectPage("./src/main/resources/assets/map/mechanics/",Tools.MECHANICAL_PAINT_TOOL),false);
                 paletteWindow.makeVisible();
             }
         });
@@ -139,6 +159,7 @@ public class MapToolPanel extends ApplicationPanel {
         assetPaint.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e) {
+                ((AssetPaintTool)Tools.GRAPHIC_PAINT_TOOL).setActiveLayer(map.getActiveLayer().getActiveGraphicLayer());
                 getMapViewPanel().getMapEditor().setTool(Tools.GRAPHIC_PAINT_TOOL);
             }
         });
@@ -150,7 +171,7 @@ public class MapToolPanel extends ApplicationPanel {
                 BasicWindow paletteWindow = new BasicWindow();
                 paletteWindow.setTitle("Graphic Palette");
                 paletteWindow.openPage(
-                        new PaletteSelectPage("./src/main/resources/assets/map/assets/",Tools.GRAPHIC_PAINT_TOOL));
+                        new PaletteSelectPage("./src/main/resources/assets/map/assets/",Tools.GRAPHIC_PAINT_TOOL),false);
                 paletteWindow.makeVisible();
             }
         });
@@ -251,47 +272,61 @@ public class MapToolPanel extends ApplicationPanel {
         gbc.gridy = 3;
         gbc.insets = new Insets(4,4,4,10);
         gbc.fill = 2;
+        add(mechanicsPaint,gbc);
+
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        gbc.insets = new Insets(4,4,4,10);
+        gbc.fill = 2;
+        add(mechanicsSelect,gbc);
+
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        gbc.insets = new Insets(4,4,4,10);
+        gbc.fill = 2;
         add(paintTool,gbc);
 
 
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridx = 1;
-        gbc.gridy = 3;
+        gbc.gridy = 4;
         gbc.insets = new Insets(4,4,4,10);
         gbc.fill = 1;
         add(tileSelect,gbc);
 
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridx = 0;
-        gbc.gridy = 4;
+        gbc.gridy = 5;
         gbc.insets = new Insets(4,4,4,10);
         gbc.fill = 1;
         add(floodTool,gbc);
 
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridx = 0;
-        gbc.gridy = 5;
+        gbc.gridy = 6;
         gbc.insets = new Insets(4,4,4,10);
         gbc.fill = 1;
         add(edgeTool,gbc);
 
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridx = 1;
-        gbc.gridy = 5;
+        gbc.gridy = 6;
         gbc.insets = new Insets(4,4,4,10);
         gbc.fill = 1;
         add(edgeSelect,gbc);
 
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridx = 0;
-        gbc.gridy = 6;
+        gbc.gridy = 7;
         gbc.insets = new Insets(4,4,4,10);
         gbc.fill = 1;
         add(assetPaint,gbc);
 
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridx = 1;
-        gbc.gridy = 6;
+        gbc.gridy = 7;
         gbc.insets = new Insets(4,4,4,10);
         gbc.fill = 1;
         add(graphicSelect,gbc);
@@ -311,19 +346,19 @@ public class MapToolPanel extends ApplicationPanel {
 
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridx = 0;
-        gbc.gridy = 9;
+        gbc.gridy = 10;
         gbc.insets = new Insets(4,4,4,10);
         add(save,gbc);
 
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridx = 1;
-        gbc.gridy = 9;
+        gbc.gridy = 10;
         gbc.insets = new Insets(4,4,4,10);
         add(close,gbc);
 
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridx = 0;
-        gbc.gridy = 10;
+        gbc.gridy = 11;
         gbc.insets = new Insets(4,4,4,10);
         add(flatten,gbc);
     }

@@ -2,13 +2,10 @@ package UI.panels.start;
 
 import UI.app.view.ApplicationPanel;
 import UI.factory.ButtonFactory;
-import UI.pages.editmap.EditMapPage;
+import UI.pages.loot.lootNavigation.LootNavigationPage;
 import UI.pages.mapSelect.MapSelectPage;
 import UI.pages.newMapSetup.NewMapSetupPage;
-import UI.panels.loadPanel.LoadPanel;
-import application.io.LoadModel;
-import application.io.MapIO;
-import model.map.structure.RPGMap;
+import application.config.Configuration;
 
 import javax.swing.*;
 import java.awt.*;
@@ -41,6 +38,15 @@ public class StartNavigationPanel extends ApplicationPanel {
             }
         });
 
+        JButton loot = ButtonFactory.createButton("Loot");
+        loot.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e) {
+                LootNavigationPage page = new LootNavigationPage();
+                getObserver().openPage(page);
+            }
+        });
+
         JButton close = ButtonFactory.createButton("Close");
         close.addActionListener(new ActionListener()
         {
@@ -49,23 +55,28 @@ public class StartNavigationPanel extends ApplicationPanel {
                 getObserver().dispose();
             }
         });
-
         gbc.anchor = GridBagConstraints.WEST;
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.insets = new Insets(4,4,4,10);
-        gbc.fill = 1;
-        add(new_map,gbc);
+        gbc.insets = new Insets(4, 4, 4, 10);
 
-        gbc.anchor = GridBagConstraints.WEST;
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        add(load_map,gbc);
+        if(Configuration.ENABLE_MAP) {
+            gbc.gridx = 0;
+            gbc.gridy = 0;
+            gbc.fill = 1;
+            add(new_map, gbc);
 
-        gbc.anchor = GridBagConstraints.WEST;
+            gbc.gridx = 0;
+            gbc.gridy = 1;
+            add(load_map, gbc);
+        }
+
+        if(Configuration.ENABLE_LOOT) {
+            gbc.gridx = 0;
+            gbc.gridy = 2;
+            add(loot, gbc);
+        }
+
         gbc.gridx = 0;
-        gbc.gridy = 2;
-        gbc.insets = new Insets(4,4,4,10);
+        gbc.gridy = 3;
         add(close,gbc);
     }
 }

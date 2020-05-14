@@ -12,6 +12,7 @@ public abstract class ApplicationPage extends JPanel {
     private List<ApplicationPanel> panels = new ArrayList<>();
     private GridBagLayout gridBagLayout;
     private GridBagConstraints gbc;
+    private ApplicationAction onDisposeAction;
 
     public ApplicationPage(){
         gridBagLayout = new GridBagLayout();
@@ -60,10 +61,21 @@ public abstract class ApplicationPage extends JPanel {
     }
 
     public void dispose(){
+        if(onDisposeAction != null){
+            onDisposeAction.action();
+        }
         for(ApplicationPanel panel: panels){
             panel.dispose();
         }
     }
 
     public abstract void loadPage();
+
+    public ApplicationAction getOnDisposeAction() {
+        return onDisposeAction;
+    }
+
+    public void setOnDisposeAction(ApplicationAction onDisposeAction) {
+        this.onDisposeAction = onDisposeAction;
+    }
 }

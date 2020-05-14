@@ -3,6 +3,7 @@ package model.map.structure;
 import UI.app.assets.MapAsset;
 import application.io.AssetCache;
 import application.mapEditing.toolInterfaces.Draggable;
+import drawing.shapes.Shape;
 import model.map.tiles.AssetTile;
 import model.map.tiles.MapTile;
 import model.map.tiles.PatternTile;
@@ -23,15 +24,20 @@ public class RPGMap {
     private BufferedImage mapImage =  new BufferedImage(Configuration.TILE_WIDTH * gridWidth, Configuration.TILE_HEIGHT*gridHeight,BufferedImage.TYPE_4BYTE_ABGR);
     private MapSet activeLayer;
     private String name = "New_Map";
+    private List<Shape> shapes = new ArrayList<>();
+    private MechanicalLayer mechanicsLayer = new MechanicalLayer();
+
 
     public void init(){
+        mapImage =  new BufferedImage(Configuration.TILE_WIDTH * gridWidth, Configuration.TILE_HEIGHT*gridHeight,BufferedImage.TYPE_4BYTE_ABGR);
         MapSet defaultSet = new MapSet(gridWidth,gridHeight);
         mapImage.createGraphics();
-        MapLayer tileLayer = createTileLayer("./src/main/resources/assets/map/floor/1grass/grass 3.jpg");
+        MapLayer tileLayer = createTileLayer(Configuration.DEFAULT_FLOOR_TILE);
         defaultSet.setTileLayer(tileLayer);
 
         activeLayer = defaultSet;
         layerSets.add(defaultSet);
+
     }
     public int getXoffset() {
         return xoffset;
@@ -43,6 +49,10 @@ public class RPGMap {
 
     public int getYoffset() {
         return yoffset;
+    }
+
+    public void resterizeMapImage(){
+        mapImage =  new BufferedImage(Configuration.TILE_WIDTH * gridWidth, Configuration.TILE_HEIGHT*gridHeight,BufferedImage.TYPE_4BYTE_ABGR);
     }
 
     public void setYoffset(int yoffset) {
@@ -61,23 +71,25 @@ public class RPGMap {
                 draggables.add((Draggable)at);
             }
         }
+        for(MapTile at :  mechanicsLayer.getTiles()){
+                draggables.add((Draggable)at);
+        }
 
         for(int j = draggables.size()-1; j >= 0; j--){
             Draggable draggable = draggables.get(j);
             if( draggable.shouldDrag(
                     x-getXoffset()-activeLayer.getXoffset(),
-                    y-getYoffset()-activeLayer.getYoffset())){
+                    y-getYoffset()-activeLayer.getYoffset()) ){
                 return draggable;
             }
         }
         return null;
     }
 
-    public MapLayer createTileLayer(String defaultAsset){
+    public MapLayer createTileLayer(MapAsset asset){
         MapLayer mapLayer = new MapLayer();
 
         try{
-            MapAsset asset = AssetCache.get(defaultAsset);
             for(int x = 0; x < gridWidth; x++){
                 for(int y = 0; y < gridHeight; y++){
                         PatternTile patternTile = new PatternTile(
@@ -97,7 +109,15 @@ public class RPGMap {
         for(MapSet mapLayer: layerSets){
             mapLayer.draw(g2d,xoffset,yoffset);
         }
-        g.drawImage(mapImage,xoffset,yoffset,null);
+        for(Shape shape: shapes){
+            shape.draw(g2d);
+        }
+
+        mechanicsLayer.draw(g2d,xoffset,yoffset);
+        //System.out.println(String.format("w=%d, h=%d, x=%d, y=%d, x+1199=%d, y+699=%d",mapImage.getWidth(),mapImage.getHeight(),-getXoffset(),-getYoffset(),-getXoffset()+1199,-getYoffset()+699));
+        //System.out.println(String.format("gw=%d, gh=%d",getGridWidth(),getGridHeight()));
+
+        g.drawImage(mapImage.getSubimage(-getXoffset(),-getYoffset(),1199,699),0,0,null);
     }
 
     public void translate(int delta_x, int delta_y){
@@ -169,5 +189,25 @@ public class RPGMap {
     public void setGridDimensions(int width, int height){
         setGridWidth(width);
         setGridHeight(height);
+    }
+
+    public BufferedImage getMapImage() {
+        return mapImage;
+    }
+
+    public List<Shape> getShapes() {
+        return shapes;
+    }
+
+    public void setShapes(List<Shape> shapes) {
+        this.shapes = shapes;
+    }
+
+    public MechanicalLayer getMechanicsLayer() {
+        return mechanicsLayer;
+    }
+
+    public void setMechanicsLayer(MechanicalLayer mechanicsLayer) {
+        this.mechanicsLayer = mechanicsLayer;
     }
 }

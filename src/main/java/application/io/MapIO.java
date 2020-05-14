@@ -22,9 +22,11 @@ public class MapIO {
                 file.createNewFile();
             }
 
+            if(loadModel != null)
             loadModel.setTotalBytes(json.length());
             for(int i = 0; i < json.length(); i+=50){
                 String buffer = json.substring(i,Math.min(json.length(),i+50));
+                if(loadModel != null)
                 loadModel.incrementReadBytes(buffer.length());
                 fos.write(buffer.getBytes());
                 fos.flush();
@@ -35,10 +37,11 @@ public class MapIO {
             e.printStackTrace();
         }
 
+        if(loadModel != null)
         loadModel.finish();
     }
 
-    public static RPGMap loadMap(String fileName,LoadModel load,RPGMap destination){
+    public static RPGMap loadMap2(String fileName,LoadModel load,RPGMap destination){
         try{
             if(!fileName.endsWith(Configuration.FILE_EXTENSION)){
                 fileName += Configuration.FILE_EXTENSION;
@@ -51,7 +54,7 @@ public class MapIO {
             load.incrementTotalBytes(5);
             long read = 0;
             String json = "";
-            byte[] buffer = new byte[50];
+            byte[] buffer = new byte[150];
             FileInputStream is = new FileInputStream(file);
             while ((read = is.read(buffer)) != -1) {
                 String str = new String(buffer);
@@ -63,6 +66,34 @@ public class MapIO {
             destination = Objectifier.toRPGMap(new JSONObject(json),destination,load);
             destination.setName(file.getName().replaceAll(Configuration.FILE_EXTENSION,""));
             load.setTotalBytes(load.getReadBytes());
+            return destination;
+        }catch (Exception e){
+            e.printStackTrace();
+            destination.init();
+            load.finish();
+            return destination;
+        }
+    }
+
+    public static RPGMap loadMap(String fileName,LoadModel load,RPGMap destination){
+        try{
+            if(!fileName.endsWith(Configuration.FILE_EXTENSION)){
+                fileName += Configuration.FILE_EXTENSION;
+            }
+            File file = new File(fileName);
+            if(!file.exists()){
+                throw new FileNotFoundException();
+            }
+            Scanner scan = new Scanner(file);
+            String json = "";
+            while(scan.hasNextLine()){
+                json += scan.nextLine();
+            }
+
+            destination = Objectifier.toRPGMap(new JSONObject(json),destination,load);
+            destination.setName(file.getName().replaceAll(Configuration.FILE_EXTENSION,""));
+            load.setTotalBytes(load.getReadBytes());
+            destination.resterizeMapImage();
             return destination;
         }catch (Exception e){
             e.printStackTrace();

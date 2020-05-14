@@ -8,6 +8,11 @@ import application.config.Configuration;
 import application.mapEditing.tools.DragTool;
 import application.mapEditing.tools.FogOfWarTool;
 import application.mapEditing.tools.PanTool;
+import application.mapEditing.tools.ShapeTool;
+import drawing.shapes.Circle;
+import drawing.shapes.Line;
+import drawing.shapes.Square;
+import drawing.shapes.Triangle;
 import model.map.structure.MapSet;
 
 import javax.swing.*;
@@ -49,7 +54,7 @@ public class PlayToolPanel extends ApplicationPanel {
                     set.destroyFog();
                 }
                 getObserver().openPage(new EditMapPage(
-                        Configuration.SAVE_FOLDER+viewPanel.getMap().getName()));
+                        Configuration.SAVE_MAP_FOLDER +viewPanel.getMap().getName()));
             }
         });
 
@@ -67,6 +72,47 @@ public class PlayToolPanel extends ApplicationPanel {
         {
             public void actionPerformed(ActionEvent e) {
                 viewPanel.getMapEditor().setTool(new FogOfWarTool());
+            }
+        });
+
+        JButton circle = ButtonFactory.createButtonWithIcon("circle");
+        circle.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e) {
+                ShapeTool tool = new ShapeTool();
+                tool.setShape(new Circle());
+                viewPanel.getMapEditor().setTool(tool);
+            }
+        });
+
+
+        JButton tri = ButtonFactory.createButtonWithIcon("triangle");
+        tri.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e) {
+                ShapeTool tool = new ShapeTool();
+                tool.setShape(new Triangle());
+                viewPanel.getMapEditor().setTool(tool);
+            }
+        });
+
+        JButton square = ButtonFactory.createButtonWithIcon("square");
+        square.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e) {
+                ShapeTool tool = new ShapeTool();
+                tool.setShape(new Square());
+                viewPanel.getMapEditor().setTool(tool);
+            }
+        });
+
+        JButton line = ButtonFactory.createButtonWithIcon("line");
+        line.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e) {
+                ShapeTool tool = new ShapeTool();
+                tool.setShape(new Line());
+                viewPanel.getMapEditor().setTool(tool);
             }
         });
 
@@ -96,5 +142,21 @@ public class PlayToolPanel extends ApplicationPanel {
         gbc.gridx = 1;
         gbc.gridy = 2;
         add(dragTool, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        add(circle, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        add(tri, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        add(square, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 4;
+        add(line, gbc);
     }
 }

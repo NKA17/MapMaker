@@ -1,5 +1,6 @@
 package UI.app.assets;
 
+import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -14,10 +15,13 @@ public class MapAsset {
     private int y = 0;
 
     public MapAsset(File file) {
-        try{
+        try {
             image = ImageIO.read(file);
             name = file.getAbsolutePath();
-        }catch (Exception e){
+        }catch(IIOException e){
+            System.out.println("IIOException on: "+file.getPath());
+            e.printStackTrace();
+        } catch (Exception e){
             e.printStackTrace();
         }
     }

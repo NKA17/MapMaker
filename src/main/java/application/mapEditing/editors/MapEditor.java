@@ -32,6 +32,7 @@ public class MapEditor implements MouseListener, MouseMotionListener, KeyListene
         tool.activateTool(e,map);
         mapViewPanel.getObserver().requestFocus();
         mapViewPanel.repaint();
+        System.out.println("MapEditor "+map);
     }
     public void mouseReleased(MouseEvent e) {
         tool.deactivateTool(e,map);
@@ -112,6 +113,19 @@ public class MapEditor implements MouseListener, MouseMotionListener, KeyListene
                 break;
             }
         }
+        if(AppState.ACTIVE_DRAGGABLE!=null){
+            map.getMechanicsLayer().getTiles().remove(AppState.ACTIVE_DRAGGABLE);
+            AppState.ACTIVE_DRAGGABLE = null;
+            mapViewPanel.repaint();
+        }
+    }
+
+    public MapViewPanel getMapViewPanel() {
+        return mapViewPanel;
+    }
+
+    public void setMapViewPanel(MapViewPanel mapViewPanel) {
+        this.mapViewPanel = mapViewPanel;
     }
 
     @Override

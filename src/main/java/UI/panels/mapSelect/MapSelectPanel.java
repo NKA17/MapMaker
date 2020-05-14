@@ -5,13 +5,11 @@ import UI.factory.ButtonFactory;
 import UI.pages.editmap.EditMapPage;
 import UI.pages.mapSelect.MapSelectPage;
 import application.config.Configuration;
-import application.io.MapIO;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeListener;
 import java.io.File;
 
 public class MapSelectPanel extends ApplicationPanel{
@@ -40,7 +38,7 @@ public class MapSelectPanel extends ApplicationPanel{
         add(scrollPane);
 
 
-        File dir = new File(Configuration.SAVE_FOLDER);
+        File dir = new File(Configuration.SAVE_MAP_FOLDER);
         for(File mapFile: dir.listFiles()){
             if(mapFile.getName().endsWith(Configuration.FILE_EXTENSION)){
                 gbc.gridx = 0;

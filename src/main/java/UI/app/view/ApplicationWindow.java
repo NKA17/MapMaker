@@ -54,13 +54,20 @@ public abstract class ApplicationWindow extends JFrame {
         contentPane.removeAll();
         appPage.setObserver(this);
         appPage.loadPage();
+        constrainSize(appPage);
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.fill = 1;
         contentPane.add(appPage,gbc);
+
         reloadWindow();
 
         currentPage = appPage;
+//        System.out.println(String.format(
+//                "Page Opened: %s\n\twidth=%d, height=%d",
+//                appPage.getClass().getName(),
+//                appPage.getWidth(),
+//                appPage.getHeight()));
     }
 
     public void reloadWindow(){
@@ -73,5 +80,20 @@ public abstract class ApplicationWindow extends JFrame {
         EventQueue.invokeLater(() -> {
             setVisible(true);
         });
+    }
+
+    public void dispose(){
+        if(currentPage!=null){
+            currentPage.dispose();
+        }
+        super.dispose();
+    }
+
+    private void constrainSize(ApplicationPage appPage){
+        int w = ((Configuration.WIDTH_CONSTRAINT==-1)? appPage.getWidth():Configuration.WIDTH_CONSTRAINT);
+        int h = ((Configuration.HEIGHT_CONSTRAINT==-1)? appPage.getHeight():Configuration.HEIGHT_CONSTRAINT);
+
+        if(w!=0 && h!=0)
+        appPage.setPreferredSize(new Dimension(w,h));
     }
 }

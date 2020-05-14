@@ -16,7 +16,7 @@ import java.util.Random;
 
 public class TilePaintTool implements IPaintTool {
     private List<String> palette = new ArrayList<>();
-    private String defaultAsset = "./src/main/resources/assets/map/floor/wood/wood 1.png";
+    private String defaultAsset = "./src/main/resources/assets/map/floor/0mechanics/black.png";
 
     public TilePaintTool(){
         addAssetToPaint(defaultAsset);
@@ -109,5 +109,9 @@ public class TilePaintTool implements IPaintTool {
 
     public List<String> getPalette(){
         return palette;
+    }
+
+    public MapAsset getRandomAsset(){
+        return AssetCache.get(getRandomFromPalette());
     }
 }
