@@ -1,6 +1,10 @@
 # MapMaker
 Was not intended to be a collaborative project. If you are going to collaborate, allow me to apologize in advance. 
-The project is not currently setup in such a way that you could pull the code and have a functional application. You will need to change a bunch of directory variables to save/load your maps and add assets into them.
+The project is not currently setup in such a way that you could pull the code and have a functional application. You will need to change a bunch of directory variables to save/load your maps and add assets into them. Java swing is also stupid so your window wont even render anything unless your screen dimensions are 700x1200 or larger.
+
+The first thing that needs to be fixed is to make the project portable so anyone can download the code base in their favorite IDE, change some configurations/preferences, and hit play.
+
+After that, is to make GUI to guide user through those configuration changes. Until that, you must edit the code directly.
 
 # Forking
 Make a fork and push all your junk to your own fork. When you make a PR (Pull Request), make it from your fork into this repository.
