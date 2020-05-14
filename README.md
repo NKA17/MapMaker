@@ -12,5 +12,5 @@ You may have noticed that a release is branched off of master at the chronologic
 # Git Flow
 ![alt text](https://github.com/NKA17/MapMaker/blob/develop/src/main/resources/github/gitflow.JPG?raw=true)
 
-#Hot Fixes
+# Hot Fixes
 If a hotfix is ever needed, the hotfix branch can pull latest from the current release, the fix can be made, and merged back into release. Then that release is merged back into master. Since different things can be deprecated in different ways between releases, a hotfix may need to be made for each release (hotfix/release/x).
