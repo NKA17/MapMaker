@@ -1,6 +1,9 @@
 # MapMaker
 Was not intended to be a collaborative project. If you are going to collaborate, allow me to apologize in advance.
 
+# Forking
+Make a fork and push all your junk to your own fork. When you make a PR (Pull Request), make it from your fork into this repository.
+
 # Branching
 * **Master** Keep the up to date with latest release branch. This is the branch which installs of the project *can* be made off of.
 * **release/x** Release branches off of master when a new release epic is opened. These branches are the branches that installs *should* be made off of. Allowing the user to choose what version of the application they want. Every release branch should be fully functional, stable, and complete.
@@ -14,3 +17,9 @@ You may have noticed that a release is branched off of master at the chronologic
 
 # Hot Fixes
 If a hotfix is ever needed, the hotfix branch can pull latest from the current release, the fix can be made, and merged back into release. Then that release is merged back into master. Since different things can be deprecated in different ways between releases, a hotfix may need to be made for each release (hotfix/release/x).
+
+# Stories/Feature
+No story board currently exists, so for now just make feature branches for an intened change.
+
+When a story board exists...
+Pick a story (you can make one too). Create your feature branch from the develop branch. If your story is called 'RPG-19 Cool Feature' name your feature branch 'feature/RPG-19-CoolFeature'. After completing your work, make a PR from your feature into develop.
