@@ -14,6 +14,8 @@ public class MapAsset {
     private int x = 0;
     private int y = 0;
 
+    public MapAsset(){}
+
     public MapAsset(File file) {
         try {
             image = ImageIO.read(file);

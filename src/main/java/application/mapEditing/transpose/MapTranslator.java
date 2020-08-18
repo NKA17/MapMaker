@@ -1,7 +1,12 @@
 package application.mapEditing.transpose;
 
+import UI.app.view.ApplicationPage;
+import UI.windows.BasicWindow;
 import application.config.Configuration;
 import application.io.AssetCache;
+import application.io.LoadModel;
+import application.io.MapIO;
+import application.utils.ImageUtils;
 import model.map.structure.GraphicLayer;
 import model.map.structure.MapLayer;
 import model.map.structure.MapSet;
@@ -9,6 +14,11 @@ import model.map.structure.RPGMap;
 import model.map.tiles.AssetTile;
 import model.map.tiles.MapTile;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 
@@ -86,5 +96,46 @@ public class MapTranslator {
         retMap.resterizeMapImage();
         retMap.setMechanicsLayer(map.getMechanicsLayer());
         return retMap;
+    }
+
+    public static void main(String[] args){
+        try{
+            String mapName = "Water";
+            RPGMap map = new RPGMap();
+            MapIO.loadMap("C:\\Users\\Nate\\IdeaProjects\\RPGMapMaker\\src\\main\\resources\\mapSaves\\"+mapName,new LoadModel(),map);
+            RPGMap dmrm = toFlattenedMap(map);
+
+            BufferedImage bimg = new BufferedImage(dmrm.getGridWidth()*50, dmrm.getGridHeight()*50,BufferedImage.TYPE_4BYTE_ABGR);
+
+            for(MapSet mapSet: dmrm.getLayerSets()){
+                for(MapTile ml: mapSet.getTileLayer().getTiles()){
+                    ml.draw(bimg.getGraphics());
+                    bimg.getGraphics().setColor(Color.BLACK);
+
+                    bimg.getGraphics().drawRect(ml.getGridx()*50+1,ml.getGridy()*50+1,48,48);
+                }
+
+                for(MapTile ml: mapSet.getSubGridGraphics().getTiles()){
+                    ml.draw(bimg.getGraphics());
+                }
+                mapSet.getGridLayer().draw(bimg.getGraphics(),0,0);
+                for(GraphicLayer gl: mapSet.getGraphicLayers()){
+                    for(MapTile ml: gl.getTiles()){
+                        ml.draw(bimg.getGraphics());
+                    }
+                }
+
+                for(MapTile ml: mapSet.getEdgeLayer().getTiles()){
+                    ml.draw(bimg.getGraphics());
+                }
+            }
+
+            bimg = ImageUtils.resize(bimg,3600,2100);
+            ImageIO.write(bimg,"png",new File("C:\\Users\\Nate\\Pictures\\dnd\\in\\maps\\"+mapName+".png"));
+
+            System.out.println("\t~fin");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

@@ -52,7 +52,7 @@ public class LootManagePanel extends ApplicationPanel {
         add(scrollPane);
 
         try {
-            List<DropBag> dropBagList = LootIODB.getEmptyDropBags();
+            List<DropBag> dropBagList = LootIO.getEmptyDropBags();
             Collections.sort(dropBagList, new Comparator<DropBag>() {
                 @Override
                 public int compare(DropBag o1, DropBag o2) {
@@ -96,7 +96,7 @@ public class LootManagePanel extends ApplicationPanel {
             public void actionPerformed(ActionEvent e)
             {
                 try {
-                    LootIODB.fillBag(bag);
+                    LootIO.load(bag);
                     EditLootBagPage page = new EditLootBagPage(bag);
                     getObserver().openPage(page);
                 }catch (Exception ex){
@@ -124,7 +124,7 @@ public class LootManagePanel extends ApplicationPanel {
             public void actionPerformed(ActionEvent e)
             {
                 try{
-                    LootIODB.deleteBag(bag);
+                    LootIO.deleteBag(bag.getName());
                 }catch (Exception ex){
                     ex.printStackTrace();
                 }

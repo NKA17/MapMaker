@@ -19,11 +19,14 @@ public class FogFactory {
     private static final MapAsset asset = AssetCache.get(
            ".\\src\\main\\resources\\assets\\map\\floor\\0mechanics\\black.png");
 
+    private static int sizeProtection = 0;
+    private static int maxSize = 16 * 26;
     private static void floodFog(MapTile[][][] mapTiles, int[][] flags, int orix, int oriy,FogBody fog){
 
-        if(flags[orix][oriy] > 0){
+        if(flags[orix][oriy] > 0 || sizeProtection > maxSize){
             return ;
         }
+        sizeProtection++;
         flags[orix][oriy]++;
         MapTile newt = new PatternTile(asset,orix,oriy);
         fog.getTiles().add(newt);
@@ -54,6 +57,7 @@ public class FogFactory {
         }
 
         for(MapTile mapTile: origins){
+            sizeProtection = 0;
             FogBody fog = new FogBody();
             try {
                 if(flags[mapTile.getGridx()][mapTile.getGridy()]==0) {

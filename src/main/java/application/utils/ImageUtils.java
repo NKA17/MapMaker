@@ -88,9 +88,16 @@ public class ImageUtils {
 
     public static void main(String[] args){
         try{
-            BufferedImage image = ImageIO.read(new File("C:\\Users\\Nate\\IdeaProjects\\RPGMapMaker\\src\\main\\resources\\assets\\map\\assets\\Infrastructure\\Lamp 1.png"));
-            image = resize(image,50,50);
-            ImageIO.write(image,"png",new File("output.png"));
+
+            File dir = new File("C:\\Users\\Nate\\School\\notSchool\\handDetection\\hand_png");
+            for(File f : dir.listFiles()){
+                if(f.getName().endsWith("png")){
+                    BufferedImage bimg = ImageIO.read(f);
+                    bimg = resize(bimg,32,32);
+                    String name = f.getName().replaceAll("png","jpg");
+                    ImageIO.write(bimg,"jpg",new File("C:\\Users\\Nate\\School\\notSchool\\handDetection\\hand_jpg\\"+name));
+                }
+            }
         }catch (Exception e){
             e.printStackTrace();
         }

@@ -10,7 +10,7 @@ public class ExternalCommandClient {
         try {
             Gson gson = new Gson();
             String json = gson.toJson(command);
-            Socket socket = new Socket("localhost",8080);
+            Socket socket = new Socket("192.168.0.12",8080);
             PrintWriter pw = new PrintWriter(socket.getOutputStream());
             pw.println(json);
             pw.flush();

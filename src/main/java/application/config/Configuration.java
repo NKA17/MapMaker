@@ -16,7 +16,8 @@ public class Configuration {
     public static int WIDTH_CONSTRAINT = -1;
     public static int HEIGHT_CONSTRAINT = -1;
 
-    public static String DATABASE_HOSTNAME = "jdbc:mysql://raspberrypi";
+    public static String DATABASE_HOSTNAME = "jdbc:mysql://192.168.0.12:3306/RPG_MAKER";
+    public static String DATABASE_NAME = "RPG_MAKER";
 
     public static MapAsset DEFAULT_FLOOR_TILE = AssetCache.get("C:\\Users\\Nate\\IdeaProjects\\RPGMapMaker\\src\\main\\resources\\assets\\map\\floor\\0mechanics\\black.png");
 

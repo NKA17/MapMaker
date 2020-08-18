@@ -116,7 +116,8 @@ public class EditLootBagPage extends ApplicationPage {
             {
                 try {
                     bag.setName(nameField.getText());
-                    LootIODB.saveDropBag(bag);
+                    LootIO.save(bag);
+                    //LootIODB.saveDropBag(bag);
                     LootManagePage sp = new LootManagePage();
                     getObserver().openPage(sp);
                 }catch (Exception ex){

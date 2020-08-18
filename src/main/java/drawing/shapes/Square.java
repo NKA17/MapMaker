@@ -33,8 +33,9 @@ public class Square extends Shape {
 
         g.drawPolygon(p);
 
-        g.setColor(new Color(255,90,90,140));
+        g.setColor(new Color(255,90,90,70));
         g.fillPolygon(p);
+        drawEffectedSquares(g, p);
 
         if(AppState.ACTIVE_DRAGGABLE==this
                 && AppState.ACTIVE_TOOL instanceof DragTool

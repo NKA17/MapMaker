@@ -20,8 +20,14 @@ public class Circle extends Shape {
 
         g.drawOval(x1-(getLineLength()),y1-(getLineLength()),getLineLength()*2,getLineLength()*2);
 
-        g.setColor(new Color(255,90,90,140));
+        g.setColor(new Color(255,90,90,70));
         g.fillOval(x1-(getLineLength()),y1-(getLineLength()),getLineLength()*2,getLineLength()*2);
+
+        javafx.scene.shape.Circle circle = new javafx.scene.shape.Circle();
+        circle.setCenterX(x1);
+        circle.setCenterY(y1);
+        circle.setRadius(getLineLength());
+        drawEffectedSquares(g, circle);
 
         if(AppState.ACTIVE_DRAGGABLE==this
                 && AppState.ACTIVE_TOOL instanceof DragTool

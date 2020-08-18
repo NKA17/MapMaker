@@ -3,7 +3,11 @@ package UI.panels.playMap;
 import UI.app.view.ApplicationPanel;
 import UI.factory.ButtonFactory;
 import UI.pages.editmap.EditMapPage;
+import UI.pages.playMap.mob.AddMobPage;
+import UI.pages.playMap.mob.GridColorPickerPage;
+import UI.pages.saveMap.SaveMapPage;
 import UI.panels.mapView.MapViewPanel;
+import UI.windows.BasicWindow;
 import application.config.Configuration;
 import application.mapEditing.tools.DragTool;
 import application.mapEditing.tools.FogOfWarTool;
@@ -116,6 +120,28 @@ public class PlayToolPanel extends ApplicationPanel {
             }
         });
 
+        JButton mob = ButtonFactory.createButtonWithIcon("helmet");
+        mob.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e) {
+                AddMobPage addMobPage = new AddMobPage(viewPanel.getMap(), viewPanel);
+                BasicWindow bs = new BasicWindow();
+                bs.openPage(addMobPage,false);
+                bs.makeVisible();
+            }
+        });
+
+        JButton gridcolor = ButtonFactory.createButtonWithIcon("gridcolor");
+        gridcolor.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e) {
+                GridColorPickerPage gridColorPickerPage = new GridColorPickerPage(viewPanel.getMap(), viewPanel, true);
+                BasicWindow bs = new BasicWindow();
+                bs.openPage(gridColorPickerPage,false);
+                bs.makeVisible();
+            }
+        });
+
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(4,4,4,10);
@@ -158,5 +184,13 @@ public class PlayToolPanel extends ApplicationPanel {
         gbc.gridx = 1;
         gbc.gridy = 4;
         add(line, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 5;
+        add(mob, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        add(gridcolor, gbc);
     }
 }

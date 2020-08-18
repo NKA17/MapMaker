@@ -6,6 +6,8 @@ import application.config.AppState;
 import application.config.Configuration;
 import application.mapEditing.toolInterfaces.Draggable;
 import application.mapEditing.tools.DragTool;
+import javafx.geometry.Point2D;
+import model.map.structure.RPGMap;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -125,5 +127,36 @@ public abstract class Shape implements Draggable{
         int height = Math.abs(y1 - y2);
         return x >= x1 - width && x <= x1 + width &&
                 y >= y1 - height && y <= y2 + height;
+    }
+
+    public void drawEffectedSquares(Graphics g, Polygon p){
+        Rectangle bounds = p.getBounds();
+        g.setColor(new Color(255,90,90,140));
+        for(int i = 0; i < bounds.x + bounds.getWidth(); i += Configuration.TILE_WIDTH){
+            for(int j = 0; j < bounds.y + bounds.getHeight(); j += Configuration.TILE_HEIGHT) {
+                int midx = i + Configuration.TILE_WIDTH / 2;
+                int midy = j + Configuration.TILE_HEIGHT / 2;
+                if(p.contains(new Point(midx,midy))){
+                    g.fillRect(i,j,Configuration.TILE_WIDTH,Configuration.TILE_HEIGHT);
+                }
+            }
+        }
+    }
+    public void drawEffectedSquares(Graphics g, javafx.scene.shape.Circle p){
+        Rectangle bounds = new Rectangle(
+                (int)(p.getCenterX()-p.getRadius()),
+                (int)(p.getCenterY()-p.getRadius()),
+                (int)p.getRadius()*2,
+                (int)p.getRadius()*2);
+        g.setColor(new Color(255,90,90,140));
+        for(int i = 0; i < bounds.x + bounds.getWidth(); i += Configuration.TILE_WIDTH){
+            for(int j = 0; j < bounds.y + bounds.getHeight(); j += Configuration.TILE_HEIGHT) {
+                int midx = i + Configuration.TILE_WIDTH / 2;
+                int midy = j + Configuration.TILE_HEIGHT / 2;
+                if(p.contains(new Point2D(midx,midy))){
+                    g.fillRect(i,j,Configuration.TILE_WIDTH,Configuration.TILE_HEIGHT);
+                }
+            }
+        }
     }
 }

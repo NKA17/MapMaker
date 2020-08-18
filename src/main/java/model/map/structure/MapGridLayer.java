@@ -1,6 +1,7 @@
 package model.map.structure;
 
 import UI.pages.editmap.EditMapPage;
+import UI.pages.playMap.PlayMapPage;
 import application.config.AppState;
 import application.config.Configuration;
 
@@ -17,7 +18,11 @@ public class MapGridLayer extends MapLayer {
         this.columns = columns;
     }
 
-    public void draw(Graphics g,int mapxoffset,int mapyoffset){
+    public void setGridColor(Color playColor) {
+        this.playColor = playColor;
+    }
+
+    public void draw(Graphics g, int mapxoffset, int mapyoffset){
         Color color = AppState.ACTIVE_PAGE instanceof EditMapPage? editColor : playColor;
         g.setColor(color);
         for(int x = 0; x < columns; x++){
@@ -38,7 +43,11 @@ public class MapGridLayer extends MapLayer {
                             Configuration.TILE_WIDTH - 1,
                             Configuration.TILE_HEIGHT - 1);
 
-                    if(AppState.ACTIVE_PAGE instanceof EditMapPage && x % 5 == 0 && y % 5 == 0) {
+                    if((
+                            AppState.ACTIVE_PAGE instanceof EditMapPage
+                            //|| AppState.ACTIVE_PAGE instanceof PlayMapPage
+                            )
+                            && x % 5 == 0 && y % 5 == 0) {
                         g.setColor(new Color(180, 250, 180, 200));
                         g.drawString(String.format("%d:%d", x, y),
                                 x * Configuration.TILE_HEIGHT + 5, y * Configuration.TILE_HEIGHT + 15);

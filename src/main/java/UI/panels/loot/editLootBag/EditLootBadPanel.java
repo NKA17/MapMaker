@@ -131,7 +131,7 @@ public class EditLootBadPanel extends ApplicationPanel {
                 try {
                     bag.setName(((EditLootBagPage) AppState.ACTIVE_PAGE).getBagName());
                     bag.getItems().remove(item);
-                    LootIODB.deleteItem(item);
+                    //LootIODB.deleteItem(item);
                     EditLootBagPage page = new EditLootBagPage(bag);
                     getObserver().openPage(page);
                     page.getLootBagPanel().setScrollPaneValue(scrollPane.getVerticalScrollBar().getValue());

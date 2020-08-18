@@ -24,6 +24,7 @@ public class LootIODB {
             e.printStackTrace();
         }
     }
+
     public static void saveDropBag(DropBag bag)throws SQLException{
         Connection con = getConnection();
 
@@ -44,7 +45,7 @@ public class LootIODB {
     private static void saveNewBag(DropBag bag, Connection con) throws SQLException{
 
         con.createStatement().execute(
-                "Insert into RPG_MAKER.DropBag " +
+                "Insert into "+Configuration.DATABASE_NAME+".DropBag " +
                         "(name) " +
                         String.format("values ('%s')",sanatize(bag.getName()))
         );
@@ -64,13 +65,13 @@ public class LootIODB {
         con.close();
     }
     private static void deleteBag(DropBag bag, Connection con) throws SQLException{
-        con.createStatement().execute("delete from RPG_MAKER.DropBag where id="+bag.getId());
-        con.createStatement().execute("delete from RPG_MAKER.ItemRow where dropbag="+bag.getId());
+        con.createStatement().execute("delete from "+Configuration.DATABASE_NAME+".DropBag where id="+bag.getId());
+        con.createStatement().execute("delete from "+Configuration.DATABASE_NAME+".ItemRow where dropbag="+bag.getId());
     }
 
     private static void saveBagUpdates(DropBag bag, Connection con) throws SQLException{
         con.createStatement().execute(
-                String.format("update RPG_MAKER.DropBag set name='%s' " +
+                String.format("update "+Configuration.DATABASE_NAME+".DropBag set name='%s' " +
                         "where id=%d",
                         sanatize(bag.getName()),bag.getId())
         );
@@ -88,7 +89,7 @@ public class LootIODB {
 
     private static void saveNewItem(ItemRow item, Connection con) throws SQLException{
         con.createStatement().execute(
-                "Insert into RPG_MAKER.ItemRow " +
+                "Insert into "+Configuration.DATABASE_NAME+".ItemRow " +
                         "(name,description,quantity,min,max,dropbag) " +
                         String.format("values ('%s','%s','%s','%.2f','%.2f',%d)",
                                 sanatize(item.getName()),
@@ -103,7 +104,7 @@ public class LootIODB {
 
     private static void saveItemUpdates(ItemRow item, Connection con) throws SQLException{
         con.createStatement().execute(
-                String.format("update RPG_MAKER.ItemRow set " +
+                String.format("update "+Configuration.DATABASE_NAME+".ItemRow set " +
                                 "name='%s'," +
                                 "description='%s'," +
                                 "quantity='%s'," +
@@ -122,7 +123,7 @@ public class LootIODB {
 
         List<DropBag> bags = new ArrayList<>();
 
-        ResultSet rs = con.createStatement().executeQuery("Select * from RPG_MAKER.DropBag");
+        ResultSet rs = con.createStatement().executeQuery("Select * from "+Configuration.DATABASE_NAME+".DropBag");
         while(rs.next()){
             DropBag bag = new DropBag();
             bag.setId(rs.getLong("id"));
@@ -138,7 +139,7 @@ public class LootIODB {
     public static void fillBag(DropBag bag) throws SQLException{
         Connection con = getConnection();
 
-        ResultSet rs = con.createStatement().executeQuery("Select * from RPG_MAKER.ItemRow " +
+        ResultSet rs = con.createStatement().executeQuery("Select * from "+Configuration.DATABASE_NAME+".ItemRow " +
                 "where dropbag="+bag.getId());
 
         while (rs.next()){
@@ -163,13 +164,13 @@ public class LootIODB {
     }
 
     private static void deleteItem(ItemRow item,Connection con) throws SQLException{
-        con.createStatement().execute("Delete from RPG_MAKER.ItemRow where id="+item.getId());
+        con.createStatement().execute("Delete from "+Configuration.DATABASE_NAME+".ItemRow where id="+item.getId());
     }
 
     //Establishes a connection to the database
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(
-                Configuration.DATABASE_HOSTNAME, "nate", "7.51430Nine");
+                Configuration.DATABASE_HOSTNAME, "mapmaker", "M@pM@k3r");
     }
     public static Connection getConnection(String host, String user, String pass)throws SQLException{
         return DriverManager.getConnection(host,user,pass);
@@ -180,17 +181,6 @@ public class LootIODB {
         System.out.println("testing...");
 
         listAllRemote();
-    }
-
-    private static void listAllLocal(){
-        File folder = new File(Configuration.SAVE_LOOT_FOLDER);
-        for(File f: folder.listFiles()){
-            DropBag bag = LootIO.load(f.getName());
-            System.out.println(bag.getName());
-            for(ItemRow i: bag.getItems()){
-                System.out.println("\t"+i.getName());
-            }
-        }
     }
 
     private static void listAllRemote(){
@@ -207,18 +197,6 @@ public class LootIODB {
             e.printStackTrace();
         }
 
-    }
-
-    private static void pushAll(){
-        try {
-            File folder = new File(Configuration.SAVE_LOOT_FOLDER);
-            for (File f : folder.listFiles()) {
-                DropBag bag = LootIO.load(f.getName());
-                saveDropBag(bag);
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
     }
 
     private static void deleteAll(){
@@ -242,5 +220,19 @@ public class LootIODB {
             }
         }
         return s;
+    }
+
+    private static void buildDatabase(){
+        try{
+            Connection conn = getConnection();
+            conn.createStatement().execute(
+                    "Create table RPG_MAKER.DropBag (id bigint NOT NULL AUTO_INCREMENT,name nvarchar(255),PRIMARY KEY (id));"
+            );
+            conn.createStatement().execute(
+                    "Create table RPG_MAKER.ItemRow (id bigint NOT NULL AUTO_INCREMENT,dropBag bigint,name nvarchar(255),description nvarchar(999),quantity nvarchar(10),min nvarchar(10),max nvarchar(10),PRIMARY KEY (id));"
+            );
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

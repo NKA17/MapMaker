@@ -15,6 +15,11 @@ public abstract class MapTile {
     private MapAsset assetResource;
     private double radians = 0;
 
+    public MapTile(int gridx, int gridy) {
+        this.gridx = gridx;
+        this.gridy = gridy;
+    }
+
     public MapTile(File assetFile, int gridx, int gridy) {
         this.gridx = gridx;
         this.gridy = gridy;

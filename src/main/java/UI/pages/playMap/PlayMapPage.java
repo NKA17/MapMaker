@@ -39,4 +39,8 @@ public class PlayMapPage extends ApplicationPage {
         PlayToolPanel toolPanel = new PlayToolPanel(viewPanel);
         addPanel(toolPanel,0,0);
     }
+
+    public RPGMap getMap() {
+        return map;
+    }
 }
